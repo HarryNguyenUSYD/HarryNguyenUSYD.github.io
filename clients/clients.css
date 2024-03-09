@@ -1,0 +1,68 @@
+/* Title */
+
+#title {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+    align-items: center;
+}
+
+#title>.bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    filter: brightness(0.5);
+    z-index: -2;
+}
+
+#title>.title_card {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border: 10px solid red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#title>.quote {
+    width: 400px;
+    height: auto;
+    font-size: 25px;
+    color: #fff;
+    text-shadow: 5px 5px 10px #000;
+
+}
+
+#title>.title_card>.name {
+    font-size: 80px;
+    color: #fff;
+    text-shadow: 5px 5px 10px #000;
+    text-align: left;
+    padding-left: 10px;
+    z-index: 1;
+}
+
+#title>.title_card:hover .zoom_ani {
+    border: 150px solid red;
+}
+
+/* Clients */
+
+#clients {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#clients>.client {
+    width: 80%;
+    height: auto;
+}
