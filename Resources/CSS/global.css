@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Arial";
+    scroll-behavior: smooth;
+    pointer-events: auto;
+}
+
+@font-face {
+    font-family: "Arial";
+    src: url(/Resources/Fonts/AfacadFlux-VariableFont_slnt,wght.ttf);
+}
+
+button {
+    border: none;
+    background-color: transparent;
+}
+
+:root {
+    --head-gap: 4vmin;
+    --section-gap: 10vh;
+    --section-height: 100vh;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: white black;
+}
