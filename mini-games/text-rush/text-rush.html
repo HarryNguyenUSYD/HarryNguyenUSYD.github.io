@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Rush</title>
+    <link rel="icon" type="image/x-icon" href="">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./textBlock.js" type="module"></script>
+    
+    <link rel="stylesheet" href="./text-rush.css" type="text/css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+
+<body>
+    <div id="dark-mode" class="text-block" value="Dark Mode"></div>
+
+    <div id="entry">
+        <div class="title text-block" value="Text Rush"></div>
+    
+        <div class="mode-selection">
+            <div class="mode text-block" value="Rapid"></div>
+            <div class="mode text-block" value="Survival"></div>
+            <div class="mode text-block" value="Apocalyspe"></div>
+        </div>
+
+        <div class="guiding-text">Select a game mode!</div>
+    </div>
+
+    <!-- Hidden -->
+    <div id="text-block-content-base" class="text-block" style="display: none;">
+        <span class="typed"></span><span class="cursor"></span><span class="next"></span>
+    </div>
+
+    <textarea id="input-box" maxlength="1"></textarea>
+</body>
