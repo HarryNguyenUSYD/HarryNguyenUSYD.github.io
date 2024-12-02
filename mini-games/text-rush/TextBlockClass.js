@@ -6,10 +6,11 @@ export const TYPE_OUTPUT = Object.freeze({
 
 export class TextBlock {
     constructor(sourceEle, ele) {
+        this.sourceEle = sourceEle;
+        this.ele = ele;
         this.value = sourceEle.attr("value");
         this.acceptfids = sourceEle.attr("acceptfid")?.split(' ');
         this.finishfids = sourceEle.attr("finishfid")?.split(' ');
-        this.ele = ele;
         this.cursor = 0;
     }
 
@@ -52,5 +53,9 @@ export class TextBlock {
         this.ele.find(".typed").text(strings[0]);
         this.ele.find(".cursor").text(strings[1]);
         this.ele.find(".next").text(strings[2]);
+    }
+
+    destroy() {
+        this.ele.find(".border").css({"transform": "scale(2)"});
     }
 }

@@ -2,6 +2,7 @@ import { TextBlock, TYPE_OUTPUT } from "./TextBlockClass.js";
 import { processTypeOutput } from "./typeOutputProcess.js";
 
 let textBlocks = [];
+let heldKeys = [];
 
 function init() {
     createInitTextBlocks();
@@ -16,11 +17,26 @@ function initInputBox() {
     $("#input-box").on("focusout", function() {
         $("#input-box").focus();
     });
+    $("#input-box").on("keydown", function(e) {
+        if (heldKeys.includes(e.which)) {
+            return false;
+        } else {
+            heldKeys.push(e.which);
+            return true;
+        }
+    })
     $("#input-box").on("keyup blur", function(e) {
         let input = $("#input-box").val();
         processInput(input[0]);
 
+        var index = heldKeys.indexOf(e.which);
+        if (index > -1) {
+            heldKeys.splice(index, 1);
+        }
         $("#input-box").val(input.slice(1, input.length));
+    });
+    $("#input-box").on("paste", function(e) {
+        e.preventDefault();
     });
 }
 
@@ -78,6 +94,10 @@ function createTextBlock(ele) {
 
     ele.append(textBlockEle);
     textBlocks.push(textBlock);
+}
+
+function destroyTextBlock(textBlock) {
+    textBlock.sourceEle.animate();
 }
 
 init();
