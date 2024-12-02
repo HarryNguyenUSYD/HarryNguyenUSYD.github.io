@@ -1,4 +1,5 @@
-import { TextBlock } from "./TextBlockClass.js";
+import { TextBlock, TYPE_OUTPUT } from "./TextBlockClass.js";
+import { processTypeOutput } from "./typeOutputProcess.js";
 
 let textBlocks = [];
 
@@ -15,16 +16,31 @@ function initInputBox() {
     $("#input-box").on("focusout", function() {
         $("#input-box").focus();
     });
-    $("#input-box").on("keyup", function() {
-        processInput($("#input-box").val());
+    $("#input-box").on("keyup blur", function(e) {
+        let input = $("#input-box").val();
+        processInput(input[0]);
 
-        $("#input-box").val("");
+        $("#input-box").val(input.slice(1, input.length));
     });
 }
 
 function processInput(input) {
     textBlocks.forEach(function(textBlock) {
-        textBlock.type(input);
+        let output = textBlock.type(input);
+        switch (output) {
+            case TYPE_OUTPUT.REJECT:
+                break;
+            case TYPE_OUTPUT.ACCEPT:
+                textBlock.acceptfids?.forEach(function(acceptfid) {
+                    processTypeOutput(acceptfid);
+                });
+                break;
+            case TYPE_OUTPUT.FINISH:
+                textBlock.finishfids?.forEach(function(finishfid) {
+                    processTypeOutput(finishfid);
+                });
+                break;
+        }
     });
 }
 
@@ -38,7 +54,7 @@ function createInitTextBlocks() {
         }
 
         let textBlockEle = $("#text-block-content-base").clone(false);
-        let textBlock = new TextBlock($(this).attr("value"), textBlockEle);
+        let textBlock = new TextBlock($(this), textBlockEle);
 
         textBlock.injectUI(textBlockEle);
         textBlockEle.css("display", "block");
@@ -55,7 +71,7 @@ function createInitTextBlocks() {
  */
 function createTextBlock(ele) {
     let textBlockEle = $("#text-block-content-base").clone(false);
-    let textBlock = new TextBlock($(this).attr("value"), textBlockEle);
+    let textBlock = new TextBlock($(this), textBlockEle);
 
     textBlock.injectUI(textBlockEle);
     textBlockEle.css("display", "block");

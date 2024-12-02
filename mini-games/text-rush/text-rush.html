@@ -24,12 +24,13 @@
         <div class="title text-block" value="Text Rush"></div>
     
         <div class="mode-selection">
-            <div class="mode text-block" value="Rapid"></div>
-            <div class="mode text-block" value="Survival"></div>
-            <div class="mode text-block" value="Apocalyspe"></div>
+            <div class="mode text-block" id="paragraph-mode" value="Asasasasasasasasasa" acceptfid="[entry]mode-paragraph-desc" finishfid="[entry]mode-paragraph-select"></div>
+            <div class="mode text-block" id="countdown-mode" value="Countdown" acceptfid="[entry]mode-countdown-desc" finishfid="[entry]mode-countdown-select"></div>
+            <div class="mode text-block" id="survival-mode" value="Survival" acceptfid="[entry]mode-survival-desc" finishfid="[entry]mode-survival-select"></div>
         </div>
 
-        <div class="guiding-text">Select a game mode!</div>
+        <div id="guiding-text" class="guiding-text">Select a game mode!</div>
+        <div class="guide">Note: Select an option by typing it out!</div>
     </div>
 
     <!-- Hidden -->
@@ -37,5 +38,5 @@
         <span class="typed"></span><span class="cursor"></span><span class="next"></span>
     </div>
 
-    <textarea id="input-box" maxlength="1"></textarea>
+    <textarea id="input-box"></textarea>
 </body>

@@ -103,3 +103,10 @@ body {
     font-size: 5vmin;
     color: var(--text-color);
 }
+
+#entry > .guide {
+    font-style: italic;
+    font-weight: bold;
+    font-size: 3vmin;
+    color: var(--text-color);
+}

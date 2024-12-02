@@ -1,6 +1,14 @@
+export const TYPE_OUTPUT = Object.freeze({
+    REJECT: 0,
+    ACCEPT: 1,
+    FINISH: 2
+});
+
 export class TextBlock {
-    constructor(value, ele) {
-        this.value = value;
+    constructor(sourceEle, ele) {
+        this.value = sourceEle.attr("value");
+        this.acceptfids = sourceEle.attr("acceptfid")?.split(' ');
+        this.finishfids = sourceEle.attr("finishfid")?.split(' ');
         this.ele = ele;
         this.cursor = 0;
     }
@@ -16,7 +24,11 @@ export class TextBlock {
     }
 
     /**
-     * If the typed char is the cursor, move the cursor right by one. If the string finishes, return true. Else, return false.
+     * If the typed char is the cursor, move the cursor right by one. \
+     * Returns TYPE_OUTPUT.REJECT if the char is not the cursor. \
+     * Returns TYPE_OUTPUT.ACCEPT if the char is the cursor. \
+     * Returns TYPE_OUTPUT.FINISH if the string finishes.
+     * 
      * @param {String} char a 1-length string that denotes a character
      */
     type(char) {
@@ -24,12 +36,14 @@ export class TextBlock {
             ++this.cursor;
             this.injectUI();
 
-            if (this.cursor == this.value.length - 1) {
-                return true;
+            if (this.cursor == this.value.length) {
+                return TYPE_OUTPUT.FINISH;
+            } else {
+                return TYPE_OUTPUT.ACCEPT;
             }
         }
 
-        return false;
+        return TYPE_OUTPUT.REJECT;
     }
 
     injectUI() {
