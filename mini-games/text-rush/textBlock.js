@@ -1,3 +1,4 @@
+import { darkMode } from "./settings.js";
 import { TextBlock, TYPE_OUTPUT } from "./TextBlockClass.js";
 import { processTypeOutput } from "./typeOutputProcess.js";
 
@@ -7,6 +8,8 @@ let heldKeys = [];
 function init() {
     createInitTextBlocks();
     initInputBox();
+
+    darkMode(true);
 }
 
 /**
@@ -101,3 +104,4 @@ function destroyTextBlock(textBlock) {
 }
 
 init();
+$(":root").css("--text-color", "white");
