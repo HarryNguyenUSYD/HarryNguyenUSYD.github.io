@@ -1,8 +1,15 @@
 @import "tailwindcss";
+@plugin 'tailwind-scrollbar';
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+
+@theme {
+    --spacing-line: 7.5vw;
+    --spacing-wrapper: 15vw;
+    --spacing-content: 75vw;
 }
 
 @theme inline {

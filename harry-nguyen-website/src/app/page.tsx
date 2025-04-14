@@ -1,19 +1,43 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
-type Container = {
+import { SiLinkedin, SiGithub, SiPython, SiC, SiCplusplus } from "react-icons/si";
+import { FaRegSmile, FaUser, FaBriefcase } from "react-icons/fa";
+import { IconType } from "react-icons";
+import { LuGamepad2 } from "react-icons/lu";
+
+type SectionWrapperProps = {
+    id: string,
     children: React.ReactElement,
+    Icon: IconType,
     className?: string
 };
 
+type LinkWrapperProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
+    href: string,
+    children: React.ReactElement,
+    className?: string
+}
+
+type SkillProps = {
+    name: string,
+    Icon: IconType
+}
+
 export default function Home() {
     return (
-        <div className="w-screen h-screen overflow-x-hidden text-white">
-            <main>
+        <div className="w-full h-auto overflow-x-hidden text-white scrollbar-thin scrollbar-thumb-white scrollbar-track-black">
+            <main className="relative w-full h-auto">
                 <Background />
+                <ConnectingLine />
                 <IntroductionSection />
+                <AboutMeSection />
+                <MySkillsSection />
+                <MyProjectsSection />
+                <MyExperienceSection />
             </main>
         </div>
     );
@@ -31,41 +55,194 @@ function Background() {
     );
 }
 
-function IntroductionSection() {
+function ConnectingLine() {
     return (
-        <div className="w-full h-screen">
-            <div className="w-[80%] h-full ml-[10%] flex flex-col justify-center items-start gap-14">
-                <p className="text-5xl">Hello there! My name is</p>
-                <p className="text-8xl font-bold">Hoang "Harry" Nguyen</p>
-                <p className="text-6xl italic">Computer Science student at the University of Sydney</p>
-                <div className="w-full h-auto flex flex-row justify-start items-start gap-8">
-                    <DecoratedButton>
-                        <p>Get Started</p>
-                    </DecoratedButton>
-                    <DecoratedButton>
-                        <p>Get Started</p>
-                    </DecoratedButton>
-                    <DecoratedButton>
-                        <p>Get Started</p>
-                    </DecoratedButton>
-                </div>
-            </div>
-        </div>
+        <div className={`absolute left-line top-0 mt-[50vh] w-0 h-[calc(100%-100vh)] border-8 border-dashed border-white`}></div>
     );
 }
 
-function DecoratedButton({
+function SectionWrapper({
+    id,
+    children,
+    Icon,
+    className = ""
+}: SectionWrapperProps) {
+    return (
+        <div id={id} className={`w-full h-auto ${className} flex flex-row`}>
+            <div className={`w-wrapper h-auto flex justify-center items-center`}>
+                <div className="ml-4 w-20 aspect-square bg-white flex justify-center items-center">
+                    <Icon className="text-5xl text-black z-10" />
+                </div>
+            </div>
+            <div className={`w-content h-auto`}>
+                {children}
+            </div>
+        </div>
+    )
+}
+
+function DecoratedAnchor({
+    href,
     children,
     className = "",
     ...props
-} : Container & React.HTMLAttributes<HTMLButtonElement>) {
+} : LinkWrapperProps) {
     return (
-        <button
+        <Link
+            href={href}
             className={`w-auto h-auto text-4xl font-bold cursor-pointer border-4 border-white
                 px-5 py-3 hover:bg-white hover:text-black duration-200 ${className}`}
             {...props}
         >
             {children}
-        </button>
+        </Link>
     )
+}
+
+function Skill({
+    name,
+    Icon
+}: SkillProps) {
+    return (
+        <div className="group">
+            <Icon className={`text-5xl`} />
+            <p
+                className="absolute mt-5 text-3xl text-white p-3 border border-white bg-black
+                    opacity-0 duration-200 group-hover:opacity-100"
+            >
+                {name}
+            </p>
+        </div>
+    )
+}
+
+function IntroductionSection() {
+    return (
+        <SectionWrapper id="introduction" Icon={FaRegSmile}>
+            <div className="w-full h-screen">
+                <div className="w-full h-full flex flex-col justify-center items-start gap-14">
+                    <p className="text-4xl">Hello there! My name is</p>
+                    <p className="text-8xl font-bold">Hoang "Harry" Nguyen</p>
+                    <p className="text-5xl italic">Computer Science student at the University of Sydney</p>
+                    <div className="w-full h-auto flex flex-row justify-between items-center">
+                        <DecoratedAnchor href="#about-me">
+                            <p>Get Started</p>
+                        </DecoratedAnchor>
+                        <div className="w-1/2 h-auto flex flex-row justify-end items-center gap-10">
+                            <p className="text-4xl italic font-thin">My socials:</p>
+                            <a href="https://www.linkedin.com/in/hoang-quan-nguyen-304705266/">
+                                <SiLinkedin className="text-4xl" />
+                            </a>
+                            <a href="https://github.com/HarryNguyenUSYD/">
+                                <SiGithub className="text-4xl" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </SectionWrapper>
+    );
+}
+
+function AboutMeSection() {
+    return (
+        <SectionWrapper id="about-me" Icon={FaUser}>
+            <div className="w-full h-screen">
+                <div className="w-[80%] h-full flex flex-col justify-center items-start gap-14">
+                    <p className="text-6xl font-bold">About me</p>
+                    <p className="text-4xl">
+                        I'm a student at The University of Sydney,
+                        studying Bachelor of Advanced Computing, Computer Science major. 
+                        I enrolled in February of 2023, and expects to graduate in late 2026.
+                    </p>
+                    <p className="text-4xl">
+                        I'm passionate about web, software, and game development.
+                        As such, I always try to learn new tools and techniques to improve my development skills.
+                    </p>
+                    <p className="text-4xl">
+                        My desire is to make all of my projects fun, either it's to make, use, or play.
+                    </p>
+                </div>
+            </div>
+        </SectionWrapper>
+    );
+}
+
+function MySkillsSection() {
+    return (
+        <SectionWrapper id="my-skills" Icon={FaUser}>
+            <div className="w-full h-screen">
+                <div className="w-[80%] h-full flex flex-col justify-center items-start gap-14">
+                    <p className="text-6xl font-bold">My skills</p>
+                    <p className="text-4xl">
+                        While my university has taught me tons of programming languages and tools within the computer science field, 
+                        most of my knowledge has been through self studying (I made this website using React, which I taught myself!). 
+                        I am constantly learning new skills in all areas, most importantly in AI and software development.
+                    </p>
+                    <p className="text-4xl">
+                        Here are my list of skills I have learned until now:
+                    </p>
+                    <div className="grid grid-rows-3 h-1/2 w-full">
+                        <div className="flex flex-row justify-start items-center">
+                            <p className="w-60 text-5xl mr-5 italic">Proficient</p>
+                            <Skill name="Python" Icon={SiPython} />
+                        </div>
+                        <div className="flex flex-row justify-start items-center">
+                            <p className="w-60 text-5xl mr-5 italic">Competent</p>
+                            <Skill name="Python" Icon={SiPython} />
+                        </div>
+                        <div className="flex flex-row justify-start items-center">
+                            <p className="w-60 text-5xl mr-5 italic">Novice</p>
+                            <Skill name="Python" Icon={SiPython} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </SectionWrapper>
+    );
+}
+
+function MyProjectsSection() {
+    return (
+        <SectionWrapper id="my-projects" Icon={LuGamepad2}>
+            <div className="w-full h-screen">
+                <div className="w-[80%] h-full flex flex-col justify-center items-start gap-14">
+                    <p className="text-6xl font-bold">My projects</p>
+                    <p className="text-4xl">
+                        I love playing video games, but only half as much as I love making them.
+                    </p>
+                    <p className="text-4xl">
+                        Game development is my way of learning new knowledge and techniques of the tools I use.
+                        It also challenges my software design skills, most importantly on system design and improving user experience.
+                    </p>
+                    <p className="text-4xl">
+                        You can view my full list of games and other projects <Link className="underline cursor-pointer" href="/">here</Link>.
+                    </p>
+                </div>
+            </div>
+        </SectionWrapper>
+    );
+}
+
+function MyExperienceSection() {
+    return (
+        <SectionWrapper id="my-experience" Icon={FaBriefcase}>
+            <div className="w-full h-screen">
+                <div className="w-[80%] h-full flex flex-col justify-center items-start gap-14">
+                    <p className="text-6xl font-bold">My experience</p>
+                    <p className="text-4xl">
+                        Being a student, I find joy in getting real life experience through all kinds of work.
+                        They can be short internships, contracting jobs, or even online courses.
+                    </p>
+                    <p className="text-4xl">
+                        I try my best to apply the knowledge I learned from these sessions in my projects, 
+                        so the next one will always be better than the last.
+                    </p>
+                    <p className="text-4xl">
+                        You can view my full list of experience <Link className="underline cursor-pointer" href="/">here</Link>.
+                    </p>
+                </div>
+            </div>
+        </SectionWrapper>
+    );
 }
