@@ -2,51 +2,39 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { SiLinkedin, SiGithub, SiPython, SiC, SiCplusplus, SiJavascript, SiTypescript, SiUnity, SiDotnet, SiFirebase, SiJira, SiMysql, SiPostgresql } from "react-icons/si";
-import { FaRegSmile, FaUser, FaBriefcase, FaCog, FaReact, FaHtml5, FaJava, FaNodeJs  } from "react-icons/fa";
+import { FaRegSmile, FaUser, FaBriefcase, FaCog, FaReact, FaHtml5, FaJava, FaNodeJs, FaRegCopy } from "react-icons/fa";
 import { IconType } from "react-icons";
-import { LuGamepad2 } from "react-icons/lu";
-
-type SectionWrapperProps = {
-    id: string,
-    children: React.ReactElement,
-    Icon: IconType,
-    className?: string
-};
-
-type LinkWrapperProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-    href: string,
-    children: React.ReactElement,
-    className?: string
-}
-
-type SkillProps = {
-    name: string,
-    Icon: IconType
-}
+import { LuGamepad2, LuNewspaper } from "react-icons/lu";
+import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/CopiableText";
 
 export default function Home() {
     return (
-        <div className="w-full h-auto overflow-x-hidden text-white scrollbar-thin scrollbar-thumb-white scrollbar-track-black">
-            <main className="relative w-full h-auto">
-                <Background />
-                <ConnectingLine />
-                <IntroductionSection />
-                <AboutMeSection />
-                <MySkillsSection />
-                <MyProjectsSection />
-                <MyExperienceSection />
-            </main>
-        </div>
+        <CopiableTextContextProvider>
+            <div className="w-full h-auto overflow-x-hidden text-white">
+                <main className="relative w-full h-auto">
+                    <Background />
+                    <ConnectingLine />
+                    <IntroductionSection />
+                    <AboutMeSection />
+                    <MySkillsSection />
+                    <MyBlogsSection />
+                    <MyProjectsSection />
+                    <MyExperienceSection />
+                    <ContactMeSection />
+                    <CopiedTextNotification />
+                </main>
+            </div>
+        </CopiableTextContextProvider>
     );
 }
 
 function Background() {
     return (
         <Image
-            src="/images/Starlight-Neon-210.png"
+            src="/images/Background/Starlight-Neon-210.png"
             alt="Website background"
             width={2880}
             height={1000}
@@ -66,7 +54,12 @@ function SectionWrapper({
     children,
     Icon,
     className = ""
-}: SectionWrapperProps) {
+}: {
+    id: string,
+    children: React.ReactElement,
+    Icon: IconType,
+    className?: string
+}) {
     return (
         <div id={id} className={`w-full h-auto ${className} flex flex-row`}>
             <div className={`w-wrapper h-auto flex justify-center items-center`}>
@@ -86,7 +79,11 @@ function DecoratedAnchor({
     children,
     className = "",
     ...props
-} : LinkWrapperProps) {
+} : React.AnchorHTMLAttributes<HTMLAnchorElement> & {
+    href: string,
+    children: React.ReactElement,
+    className?: string
+}) {
     return (
         <Link
             href={href}
@@ -102,7 +99,10 @@ function DecoratedAnchor({
 function Skill({
     name,
     Icon
-}: SkillProps) {
+}: {
+    name: string,
+    Icon: IconType
+}) {
     return (
         <div className="group flex flex-col justify-center items-center">
             <Icon className={`text-5xl`} />
@@ -130,10 +130,20 @@ function IntroductionSection() {
                         </DecoratedAnchor>
                         <div className="w-1/2 h-auto flex flex-row justify-end items-center gap-10">
                             <p className="text-4xl italic font-thin">My socials:</p>
-                            <a href="https://www.linkedin.com/in/hoang-quan-nguyen-304705266/">
+                            <a 
+                                className="highlight-text"
+                                href="https://www.linkedin.com/in/hoang-quan-nguyen-304705266/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <SiLinkedin className="text-4xl" />
                             </a>
-                            <a href="https://github.com/HarryNguyenUSYD/">
+                            <a
+                                className="highlight-text"
+                                href="https://github.com/HarryNguyenUSYD/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <SiGithub className="text-4xl" />
                             </a>
                         </div>
@@ -180,7 +190,7 @@ function MySkillsSection() {
                         I am constantly learning new skills in all areas, most importantly in AI and software development.
                     </p>
                     <p className="text-4xl">
-                        Here are my list of skills I have learned until now:
+                        Here is a list of skills I have learned until now:
                     </p>
                     <div className="grid grid-rows-3 h-auto w-full gap-2">
                         <div className="h-20 flex flex-row justify-start items-center">
@@ -231,6 +241,46 @@ function MySkillsSection() {
     );
 }
 
+function MyBlogsSection() {
+    const { setValue } = useCopiableTextContext();
+
+    const handleCopyTextToClipboard = async (text: string) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setValue(true);
+            setTimeout(() => setValue(false), 2000);
+        } catch (err) {
+            console.error("Failed to copy!", err);
+        }
+    }
+
+    return (
+        <SectionWrapper id="my-blog" Icon={LuNewspaper}>
+            <div className="w-full h-screen">
+                <div className="w-[80%] h-full flex flex-col justify-center items-start gap-14">
+                    <p className="text-6xl font-bold">My blogs</p>
+                    <p className="text-4xl">
+                        Blogs are the way I showcase my knowledge, projects, and other fun things I have learnt across the years.
+                        I will often upload my devlogs and guides on this website, so make sure to check it out regularly.
+                    </p>
+                    <p className="text-4xl">
+                        Please support me by following my uploads and share them if you find them helpful.
+                    </p>
+                    <p className="text-4xl">
+                        If you have an idea for a post, perhaps a concept you want me to cover,
+                        please send me an email at <span className="highlight-text" onClick={() => handleCopyTextToClipboard("nguyenhoangquan2122@gmail.com")}>
+                            nguyenhoangquan2122@gmail.com
+                        </span>.
+                    </p>
+                    <p className="text-4xl">
+                        You can view my full list of blogs <Link className="highlight-text" href="/">here</Link>.
+                    </p>
+                </div>
+            </div>
+        </SectionWrapper>
+    );
+}
+
 function MyProjectsSection() {
     return (
         <SectionWrapper id="my-projects" Icon={LuGamepad2}>
@@ -245,7 +295,7 @@ function MyProjectsSection() {
                         It also challenges my software design skills, most importantly on system design and improving user experience.
                     </p>
                     <p className="text-4xl">
-                        You can view my full list of games and other projects <Link className="underline cursor-pointer" href="/">here</Link>.
+                        You can view my full list of games and other projects <Link className="highlight-text" href="/">here</Link>.
                     </p>
                 </div>
             </div>
@@ -268,7 +318,51 @@ function MyExperienceSection() {
                         so the next one will always be better than the last.
                     </p>
                     <p className="text-4xl">
-                        You can view my full list of experience <Link className="underline cursor-pointer" href="/">here</Link>.
+                        You can view my full list of experience <Link className="highlight-text" href="/">here</Link>.
+                    </p>
+                </div>
+            </div>
+        </SectionWrapper>
+    );
+}
+
+function ContactMeSection() {
+    const { setValue } = useCopiableTextContext();
+
+    const handleCopyTextToClipboard = async (text: string) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setValue(true);
+            setTimeout(() => setValue(false), 2000);
+        } catch (err) {
+            console.error("Failed to copy!", err);
+        }
+    }
+
+    return (
+        <SectionWrapper id="my-experience" Icon={FaBriefcase}>
+            <div className="w-full h-screen">
+                <div className="w-[80%] h-full flex flex-col justify-center items-start gap-14">
+                    <p className="text-6xl font-bold">Contact me!</p>
+                    <p className="text-4xl">
+                        As a student, I would love to have as many hands-on experience as one can possibly get. 
+                        With my graduation year getting closer, I am always hunting for internships, part-time jobs or opportunities, especially if it relates to software, game or web development.
+                    </p>
+                    <p className="text-4xl">
+                        If you need someone to help out in your project, startup or company, feel free to contact me, and I will reply as soon as I can.
+                    </p>
+                    <p className="text-4xl">
+                        Contact me via email at <span className="highlight-text" onClick={() => handleCopyTextToClipboard("nguyenhoangquan2122@gmail.com")}>nguyenhoangquan2122@gmail.com</span>.
+                    </p>
+                    <p className="text-4xl">
+                        Or message me via LinkedIn <a
+                            className="highlight-text"
+                            href="https://www.linkedin.com/in/nguyen-hoang-quan-304705266/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            here
+                        </a>.
                     </p>
                 </div>
             </div>
