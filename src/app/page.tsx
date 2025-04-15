@@ -9,11 +9,14 @@ import { FaRegSmile, FaUser, FaBriefcase, FaCog, FaReact, FaHtml5, FaJava, FaNod
 import { IconType } from "react-icons";
 import { LuGamepad2, LuNewspaper } from "react-icons/lu";
 import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/CopiableText";
+import Background from "@/global/Background";
+import Navbar from "@/global/Navbar";
 
 export default function Home() {
     return (
         <CopiableTextContextProvider>
             <div className="w-full h-auto overflow-x-hidden text-white">
+                <Navbar />
                 <main className="relative w-full h-auto">
                     <Background />
                     <ConnectingLine />
@@ -28,18 +31,6 @@ export default function Home() {
                 </main>
             </div>
         </CopiableTextContextProvider>
-    );
-}
-
-function Background() {
-    return (
-        <Image
-            src="/images/Background/Starlight-Neon-210.png"
-            alt="Website background"
-            width={2880}
-            height={1000}
-            className="w-full h-full -z-50 fixed top-0 left-0 brightness-50"
-        />
     );
 }
 
