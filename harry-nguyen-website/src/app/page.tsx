@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { SiLinkedin, SiGithub, SiPython, SiC, SiCplusplus } from "react-icons/si";
-import { FaRegSmile, FaUser, FaBriefcase } from "react-icons/fa";
+import { SiLinkedin, SiGithub, SiPython, SiC, SiCplusplus, SiJavascript, SiTypescript, SiUnity, SiDotnet, SiFirebase, SiJira, SiMysql, SiPostgresql } from "react-icons/si";
+import { FaRegSmile, FaUser, FaBriefcase, FaCog, FaReact, FaHtml5, FaJava, FaNodeJs  } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { LuGamepad2 } from "react-icons/lu";
 
@@ -104,11 +104,11 @@ function Skill({
     Icon
 }: SkillProps) {
     return (
-        <div className="group">
+        <div className="group flex flex-col justify-center items-center">
             <Icon className={`text-5xl`} />
             <p
-                className="absolute mt-5 text-3xl text-white p-3 border border-white bg-black
-                    opacity-0 duration-200 group-hover:opacity-100"
+                className="absolute mt-40 text-3xl text-white p-3 border border-white bg-black
+                    pointer-events-none opacity-0 duration-200 group-hover:opacity-100"
             >
                 {name}
             </p>
@@ -170,7 +170,7 @@ function AboutMeSection() {
 
 function MySkillsSection() {
     return (
-        <SectionWrapper id="my-skills" Icon={FaUser}>
+        <SectionWrapper id="my-skills" Icon={FaCog}>
             <div className="w-full h-screen">
                 <div className="w-[80%] h-full flex flex-col justify-center items-start gap-14">
                     <p className="text-6xl font-bold">My skills</p>
@@ -182,19 +182,48 @@ function MySkillsSection() {
                     <p className="text-4xl">
                         Here are my list of skills I have learned until now:
                     </p>
-                    <div className="grid grid-rows-3 h-1/2 w-full">
-                        <div className="flex flex-row justify-start items-center">
-                            <p className="w-60 text-5xl mr-5 italic">Proficient</p>
-                            <Skill name="Python" Icon={SiPython} />
+                    <div className="grid grid-rows-3 h-auto w-full gap-2">
+                        <div className="h-20 flex flex-row justify-start items-center">
+                            <p className="w-64 h-full text-5xl px-5 font-bold bg-green-500 flex justify-start items-center flex-none">Proficient</p>
+                            <div className="w-full h-full px-8 flex flex-row justify-start items-center gap-5 bg-[#00000088]">
+                                <Skill name="Python" Icon={SiPython} />
+                                <Skill name="JavaScript" Icon={SiJavascript} />
+                                <Skill name="TypeScript" Icon={SiTypescript} />
+                                <Skill name="React" Icon={FaReact} />
+                                <Skill name="HTML5" Icon={FaHtml5} />
+                                <Skill name="Node.js" Icon={FaNodeJs} />
+                            </div>
                         </div>
-                        <div className="flex flex-row justify-start items-center">
-                            <p className="w-60 text-5xl mr-5 italic">Competent</p>
-                            <Skill name="Python" Icon={SiPython} />
+                        <div className="h-20 flex flex-row justify-start items-center">
+                            <p className="w-64 h-full text-5xl px-5 font-bold bg-yellow-500 flex justify-start items-center flex-none">Competent</p>
+                            <div className="w-full h-full px-8 flex flex-row justify-start items-center gap-5 bg-[#00000088]">
+                                <Skill name="C" Icon={SiC} />
+                                <Skill name="Java" Icon={FaJava} />
+                                <Skill name="Firebase" Icon={SiFirebase} />
+                                <Skill name="Unity" Icon={SiUnity} />
+                                <Skill name="MySQL" Icon={SiMysql} />
+                                <Skill name="PostgreSQL" Icon={SiPostgresql} />
+                            </div>
                         </div>
-                        <div className="flex flex-row justify-start items-center">
-                            <p className="w-60 text-5xl mr-5 italic">Novice</p>
-                            <Skill name="Python" Icon={SiPython} />
+                        <div className="h-20 flex flex-row justify-start items-center">
+                            <p className="w-64 h-full text-5xl px-5 font-bold bg-red-500 flex justify-start items-center flex-none">Novice</p>
+                            <div className="w-full h-full px-8 flex flex-row justify-start items-center gap-5 bg-[#00000088]">
+                                <Skill name="C++" Icon={SiCplusplus} />
+                                <Skill name=".NET" Icon={SiDotnet} />
+                                <Skill name="Jira" Icon={SiJira} />
+                            </div>
                         </div>
+                    </div>
+                    <div className="flex flex-col justify-start items-start text-xl">
+                        <p>
+                            * Proficient: Have learnt intensively in uni, and/or have made several projects with
+                        </p>
+                        <p>
+                            * Competent: Have learnt basics in uni, and/or have made one project with
+                        </p>
+                        <p>
+                            * Novice: Have only used basic features
+                        </p>
                     </div>
                 </div>
             </div>
