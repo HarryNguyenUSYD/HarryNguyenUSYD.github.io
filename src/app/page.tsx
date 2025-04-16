@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 import { SiLinkedin, SiGithub, SiPython, SiC, SiCplusplus, SiJavascript, SiTypescript, SiUnity, SiDotnet, SiFirebase, SiJira, SiMysql, SiPostgresql } from "react-icons/si";
 import { FaRegSmile, FaUser, FaBriefcase, FaCog, FaReact, FaHtml5, FaJava, FaNodeJs, FaRegCopy } from "react-icons/fa";
