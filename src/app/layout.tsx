@@ -20,7 +20,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${afacad_flux.className} antialiased`}
+                className={`${afacad_flux.className} antialiased pt-10`}
             >
                 {children}
             </body>

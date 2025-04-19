@@ -6,9 +6,10 @@ import { SiLinkedin, SiGithub, SiPython, SiC, SiCplusplus, SiJavascript, SiTypes
 import { FaRegSmile, FaUser, FaBriefcase, FaCog, FaReact, FaHtml5, FaJava, FaNodeJs, FaRegCopy } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { LuGamepad2, LuNewspaper } from "react-icons/lu";
-import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/CopiableText";
-import Background from "@/global/Background";
-import Navbar from "@/global/Navbar";
+import { MdOutlineAlternateEmail } from "react-icons/md";
+import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/component/CopiableText";
+import Background from "@/global/component/Background";
+import Navbar from "@/global/component/Navbar";
 
 export default function Home() {
     return (
@@ -85,26 +86,6 @@ function DecoratedAnchor({
     )
 }
 
-function Skill({
-    name,
-    Icon
-}: {
-    name: string,
-    Icon: IconType
-}) {
-    return (
-        <div className="group flex flex-col justify-center items-center">
-            <Icon className={`text-5xl`} />
-            <p
-                className="absolute mt-40 text-3xl text-white p-3 border border-white bg-black
-                    pointer-events-none opacity-0 duration-200 group-hover:opacity-100"
-            >
-                {name}
-            </p>
-        </div>
-    )
-}
-
 function IntroductionSection() {
     return (
         <SectionWrapper id="introduction" Icon={FaRegSmile}>
@@ -168,6 +149,23 @@ function AboutMeSection() {
 }
 
 function MySkillsSection() {
+    const Skill = ({ name, Icon }: {
+        name: string,
+        Icon: IconType
+    }) => {
+        return (
+            <div className="group flex flex-col justify-center items-center">
+                <Icon className={`text-5xl`} />
+                <p
+                    className="absolute mt-40 text-3xl p-3 border border-white bg-black
+                        pointer-events-none opacity-0 duration-200 group-hover:opacity-100"
+                >
+                    {name}
+                </p>
+            </div>
+        )
+    }
+
     return (
         <SectionWrapper id="my-skills" Icon={FaCog}>
             <div className="w-full h-screen">
@@ -244,7 +242,7 @@ function MyBlogsSection() {
     }
 
     return (
-        <SectionWrapper id="my-blog" Icon={LuNewspaper}>
+        <SectionWrapper id="my-blogs" Icon={LuNewspaper}>
             <div className="w-full h-screen">
                 <div className="w-[80%] h-full flex flex-col justify-center items-start gap-14">
                     <p className="text-6xl font-bold">My blogs</p>
@@ -262,7 +260,7 @@ function MyBlogsSection() {
                         </span>.
                     </p>
                     <p className="text-4xl">
-                        You can view my full list of blogs <Link className="highlight-text" href="/">here</Link>.
+                        You can view my full list of blogs <Link className="highlight-text" href="/blogs">here</Link>.
                     </p>
                 </div>
             </div>
@@ -284,7 +282,7 @@ function MyProjectsSection() {
                         It also challenges my software design skills, most importantly on system design and improving user experience.
                     </p>
                     <p className="text-4xl">
-                        You can view my full list of games and other projects <Link className="highlight-text" href="/">here</Link>.
+                        You can view my full list of games and other projects <Link className="highlight-text" href="/projects">here</Link>.
                     </p>
                 </div>
             </div>
@@ -329,7 +327,7 @@ function ContactMeSection() {
     }
 
     return (
-        <SectionWrapper id="my-experience" Icon={FaBriefcase}>
+        <SectionWrapper id="contact-me" Icon={MdOutlineAlternateEmail}>
             <div className="w-full h-screen">
                 <div className="w-[80%] h-full flex flex-col justify-center items-start gap-14">
                     <p className="text-6xl font-bold">Contact me!</p>
