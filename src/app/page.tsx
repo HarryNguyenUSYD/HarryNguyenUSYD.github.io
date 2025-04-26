@@ -3,32 +3,28 @@
 import Link from "next/link";
 
 import { SiLinkedin, SiGithub, SiPython, SiC, SiCplusplus, SiJavascript, SiTypescript, SiUnity, SiDotnet, SiFirebase, SiJira, SiMysql, SiPostgresql } from "react-icons/si";
-import { FaRegSmile, FaUser, FaBriefcase, FaCog, FaReact, FaHtml5, FaJava, FaNodeJs, FaRegCopy } from "react-icons/fa";
+import { FaRegSmile, FaUser, FaCog, FaReact, FaHtml5, FaJava, FaNodeJs } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { LuGamepad2, LuNewspaper } from "react-icons/lu";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/component/CopiableText";
-import Background from "@/global/component/Background";
-import Navbar from "@/global/component/Navbar";
+import PageWrapper from "@/global/component/PageTemplate";
 
 export default function Home() {
     return (
         <CopiableTextContextProvider>
-            <div className="w-full h-auto overflow-x-hidden text-white">
-                <Navbar />
+            <PageWrapper>
                 <main className="relative w-full h-auto">
-                    <Background />
                     <ConnectingLine />
                     <IntroductionSection />
                     <AboutMeSection />
                     <MySkillsSection />
                     <MyBlogsSection />
                     <MyProjectsSection />
-                    <MyExperienceSection />
                     <ContactMeSection />
                     <CopiedTextNotification />
                 </main>
-            </div>
+            </PageWrapper>
         </CopiableTextContextProvider>
     );
 }
@@ -290,29 +286,6 @@ function MyProjectsSection() {
     );
 }
 
-function MyExperienceSection() {
-    return (
-        <SectionWrapper id="my-experience" Icon={FaBriefcase}>
-            <div className="w-full h-screen">
-                <div className="w-[80%] h-full flex flex-col justify-center items-start gap-14">
-                    <p className="text-6xl font-bold">My experience</p>
-                    <p className="text-4xl">
-                        Being a student, I find joy in getting real life experience through all kinds of work.
-                        They can be short internships, contracting jobs, or even online courses.
-                    </p>
-                    <p className="text-4xl">
-                        I try my best to apply the knowledge I learned from these sessions in my projects, 
-                        so the next one will always be better than the last.
-                    </p>
-                    <p className="text-4xl">
-                        You can view my full list of experience <Link className="highlight-text" href="/">here</Link>.
-                    </p>
-                </div>
-            </div>
-        </SectionWrapper>
-    );
-}
-
 function ContactMeSection() {
     const { setValue } = useCopiableTextContext();
 
@@ -344,7 +317,7 @@ function ContactMeSection() {
                     <p className="text-4xl">
                         Or message me via LinkedIn <a
                             className="highlight-text"
-                            href="https://www.linkedin.com/in/nguyen-hoang-quan-304705266/"
+                            href="https://www.linkedin.com/in/hoang-quan-nguyen-304705266/"
                             target="_blank"
                             rel="noopener noreferrer"
                         >

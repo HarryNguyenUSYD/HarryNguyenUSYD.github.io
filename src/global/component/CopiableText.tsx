@@ -7,7 +7,7 @@ interface CopiableTextType {
 
 const CopiableTextContext = createContext<CopiableTextType | undefined>(undefined);
 
-export function CopiableTextContextProvider({ children } : { children: React.ReactElement}) {
+export function CopiableTextContextProvider({ children } : { children: React.ReactElement }) {
     const [value, setValue] = useState(false); // initial value
 
     return (

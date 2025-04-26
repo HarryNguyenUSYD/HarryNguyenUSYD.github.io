@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaBars } from "react-icons/fa6";
 
 export default function Navbar() {
     const [isShowing, setIsShowing] = useState(false);
@@ -50,9 +49,10 @@ export default function Navbar() {
                 />
             </a>
             <div className="w-full h-full mr-5 flex flex-row justify-end items-center">
+                <DecoratedLink name="Home" href="/" />
                 <DecoratedLink name="Blogs" href="/blogs" />
                 <DecoratedLink name="Projects" href="/projects" />
-                <DecoratedLink name="Experience" href="/experience" />
+                <DecoratedLink name="Contact Me" href="/#contact-me" />
             </div>
         </div>
     );

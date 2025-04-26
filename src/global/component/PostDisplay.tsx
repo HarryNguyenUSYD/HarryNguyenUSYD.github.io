@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { BsShare } from "react-icons/bs";
 import { PostTag, PostTags } from "../const/enums";
+import Link from "next/link";
 
 export default function PostDisplay() {
     return (
@@ -48,17 +49,20 @@ function Post() {
     }
 
     return (
-        <div className="w-full h-[35vh] rounded-xl flex flex-col justify-center items-center gap-10 group cursor-pointer">
+        <Link
+            href="/blogs/hello"
+            className="w-full h-[35vh] rounded-xl flex flex-col justify-center items-center gap-10 group cursor-pointer"
+        >
             <div className="w-full h-full flex flex-row justify-center items-start overflow-hidden">
                 <div className="w-[30vw] h-full overflow-hidden">
                     <Image src="/images/Icon/Website Favicon.png" width={120} height={120} alt="Post's image" className="w-full h-full group-hover:scale-110 duration-150" />
                 </div>
                 <div className="w-full h-full p-5 flex flex-col items-start">
                     <div className="w-full h-auto flex flex-row justify-between items-start">
-                        <p className="text-5xl font-bold whitespace-nowrap group-hover:text-highlighted duration-150">Hello</p>
+                        <p className="text-5xl font-bold whitespace-nowrap group-hover:text-blue-highlighted duration-150">Hello</p>
                         <p className="text-2xl font-thin italic">01/01/01</p>
                     </div>
-                    <p className="text-2xl w-full h-full pt-2 group-hover:text-highlighted duration-150">
+                    <p className="text-2xl w-full h-full pt-2 group-hover:text-blue-highlighted duration-150">
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab officia et quaerat sequi alias? Quos voluptatum nesciunt non et, voluptates, iste voluptatem ratione qui rem debitis, earum tempora. Accusamus, similique.
                     </p>
                     <div className="w-full h-auto flex flex-row justify-between items-center">
@@ -82,6 +86,6 @@ function Post() {
                 </div>
             </div>
             <div className="w-full h-0 border-t border-white opacity-50"></div>
-        </div>
+        </Link>
     );
 }

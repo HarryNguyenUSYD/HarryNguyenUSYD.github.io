@@ -13,7 +13,7 @@
     --spacing-line: 7.5vw;
     --spacing-wrapper: 15vw;
     --spacing-content: 80vw;
-    --color-highlighted: oklch(70.7% 0.165 254.624)
+    --color-blue-highlighted: oklch(70.7% 0.165 254.624)
 }
 
 @theme inline {
@@ -37,5 +37,5 @@ body {
 }
 
 .highlight-text {
-    @apply cursor-pointer underline hover:text-highlighted duration-100;
+    @apply cursor-pointer underline hover:text-blue-highlighted duration-100;
 }

@@ -1,14 +1,11 @@
-import Background from "@/global/component/Background";
-import Navbar from "@/global/component/Navbar";
+import PageWrapper from "@/global/component/PageTemplate";
 import PostDisplay from "@/global/component/PostDisplay";
 
 export default function MyBlogs() {
     return (
-        <div className="w-full h-auto overflow-x-hidden text-white">
-            <Navbar />
-            <Background />
+        <PageWrapper>
             <BlogsContainer />
-        </div>
+        </PageWrapper>
     );
 }
 
