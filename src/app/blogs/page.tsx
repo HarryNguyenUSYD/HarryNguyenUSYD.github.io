@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation'
 
 import PageWrapper from "@/global/component/PageTemplate";
 import Image from "next/image";
 import { FaRegHeart } from "react-icons/fa";
 import { BsEye, BsShare } from "react-icons/bs";
-import Link from "next/link";
 import { stringToTagButton } from "@/global/component/TagButton";
-import { fetchBlogs } from "./func";
-import { Blog } from "@/global/database/tables";
+import { fetchBlogs } from "@/global/supabase/supabaseClient";
+import { Blog } from "@/global/supabase/tables";
+import { useBlogData } from "@/global/zustand/zustandSetup";
 
 export default function MyBlogs() {
     const [items, setItems] = useState<Blog[]>([])
@@ -84,22 +85,30 @@ function Post({
 }: {
     blog: Blog
 }) {
+    const setBlogData = useBlogData((state) => state.setBlog);
+    const router = useRouter();
+
+    const handleOnClick = () => {
+        setBlogData(blog);
+        router.push("/blogs/" + blog.url);
+    }
+
     return (
         <div className="w-full h-[35vh] rounded-xl flex flex-col justify-center items-center gap-10">
             <div className="w-full h-full flex flex-row justify-center items-start overflow-hidden">
-                <Link href={"/blogs/" + blog.url} className="w-[30vw] h-full overflow-hidden">
+                <button onClick={handleOnClick} className="w-[30vw] h-full overflow-hidden">
                     <Image src="/images/Icon/Website Favicon.png" width={120} height={120} alt="Post's image" className="w-full h-full hover:scale-110 duration-150" />
-                </Link>
-                <div className="w-full h-full p-5 flex flex-col items-start">
-                    <Link href={"/blogs/" + blog.url} className="w-full h-full cursor-pointer group">
+                </button>
+                <div className="w-full h-full p-5 flex flex-col justify-start items-start">
+                    <button onClick={handleOnClick} className="w-full h-full cursor-pointer group">
                         <div className="w-full h-auto flex flex-row justify-between items-start">
                             <p className="text-5xl font-bold whitespace-nowrap group-hover:text-blue-highlighted duration-150">{blog.title}</p>
                             <p className="text-2xl font-thin italic">{new Date(blog.date).toLocaleDateString()}</p>
                         </div>
-                        <p className="text-2xl w-full h-full pt-2 group-hover:text-blue-highlighted duration-150">
+                        <p className="text-2xl w-full h-full pt-2 text-left group-hover:text-blue-highlighted duration-150">
                             {blog.desc}
                         </p>
-                    </Link>
+                    </button>
                     <div className="w-full h-auto flex flex-row justify-between items-center">
                         <div className="flex flex-row justify-start items-center gap-3 text-xl">
                             <p className="text-2xl mr-3">Tags:</p>
