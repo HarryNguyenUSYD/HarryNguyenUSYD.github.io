@@ -10,7 +10,7 @@ import Background from "./Background";
 export default function PageWrapper({
     children
 }: {
-    children: React.ReactElement
+    children: React.ReactNode
 }) {
     return (
         <div className="w-full h-auto p-10 overflow-x-hidden text-white">

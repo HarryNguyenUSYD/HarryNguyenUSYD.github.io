@@ -42,7 +42,7 @@ function SectionWrapper({
     className = ""
 }: {
     id: string,
-    children: React.ReactElement,
+    children: React.ReactNode,
     Icon: IconType,
     className?: string
 }) {
@@ -67,7 +67,7 @@ function DecoratedAnchor({
     ...props
 } : React.AnchorHTMLAttributes<HTMLAnchorElement> & {
     href: string,
-    children: React.ReactElement,
+    children: React.ReactNode,
     className?: string
 }) {
     return (
