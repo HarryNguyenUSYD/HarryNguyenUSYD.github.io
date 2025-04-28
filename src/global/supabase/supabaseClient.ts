@@ -5,11 +5,18 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function fetchBlogs() {
+export async function fetchAllBlogs() {
     return await supabase
         .from('Blog')
         .select("*")
-        .limit(10);
+        .range(0, 9);
+}
+
+export async function fetchBlogFromUrl(url: string) {
+    return await supabase
+        .from('Blog')
+        .select("*")
+        .eq("url", url);
 }
 
 export async function fetchBlogMdx(path: string) {

@@ -8,7 +8,7 @@ import Image from "next/image";
 import { FaRegHeart } from "react-icons/fa";
 import { BsEye, BsShare } from "react-icons/bs";
 import { stringToTagButton } from "@/global/component/TagButton";
-import { fetchBlogs } from "@/global/supabase/supabaseClient";
+import { fetchAllBlogs } from "@/global/supabase/supabaseClient";
 import { Blog } from "@/global/supabase/tables";
 import { useBlogData } from "@/global/zustand/zustandSetup";
 
@@ -18,7 +18,7 @@ export default function MyBlogs() {
 
     useEffect(() => {
         async function fetchData() {
-            const { data, error } = await fetchBlogs();
+            const { data, error } = await fetchAllBlogs();
         
             if (error) {
                 console.error('Error fetching data:', error);
