@@ -60,28 +60,6 @@ function SectionWrapper({
     )
 }
 
-function DecoratedAnchor({
-    href,
-    children,
-    className = "",
-    ...props
-} : React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-    href: string,
-    children: React.ReactNode,
-    className?: string
-}) {
-    return (
-        <Link
-            href={href}
-            className={`w-auto h-auto text-4xl font-bold cursor-pointer border-4 border-white
-                px-5 py-3 hover:bg-white hover:text-black duration-200 ${className}`}
-            {...props}
-        >
-            {children}
-        </Link>
-    )
-}
-
 function IntroductionSection() {
     return (
         <SectionWrapper id="introduction" Icon={FaRegSmile}>
@@ -91,9 +69,13 @@ function IntroductionSection() {
                     <p className="text-8xl font-bold">Hoang "Harry" Nguyen</p>
                     <p className="text-5xl italic">Computer Science student at the University of Sydney</p>
                     <div className="w-full h-auto flex flex-row justify-between items-center">
-                        <DecoratedAnchor href="#about-me">
+                        <Link
+                            href="#about-me"
+                            className="w-auto h-auto text-4xl font-bold cursor-pointer border-4 border-white
+                                px-5 py-3 hover:bg-white hover:text-black duration-200"
+                        >
                             <p>Get Started</p>
-                        </DecoratedAnchor>
+                        </Link>
                         <div className="w-1/2 h-auto flex flex-row justify-end items-center gap-10">
                             <p className="text-4xl italic font-thin">My socials:</p>
                             <a 

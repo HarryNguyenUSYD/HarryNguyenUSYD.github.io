@@ -1,36 +1,45 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+
+import { fetchBlogs, fetchBlogsCount } from "@/global/supabase/supabaseClient";
 
 import PageWrapper from "@/global/component/PageTemplate";
 import Image from "next/image";
 import { FaRegHeart } from "react-icons/fa";
 import { BsEye, BsShare } from "react-icons/bs";
+import { MdOutlineSearch } from "react-icons/md";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { stringToTagButton } from "@/global/component/TagButton";
-import { fetchAllBlogs } from "@/global/supabase/supabaseClient";
 import { Blog } from "@/global/supabase/tables";
-import { useBlogData } from "@/global/zustand/zustandSetup";
+import Link from "next/link";
 
 export default function MyBlogs() {
-    const [items, setItems] = useState<Blog[]>([])
-    const [loading, setLoading] = useState(true)
+    const [items, setItems] = useState<Blog[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    const searchParams = useSearchParams();
+    const page = Number(searchParams.get('page'));
+    const searchTitle = searchParams.get('title') ?? "";
+    const searchTag = searchParams.get('tag') ?? "";
+    const searchOrder = searchParams.get('order') ?? "newest";
 
     useEffect(() => {
         async function fetchData() {
-            const { data, error } = await fetchAllBlogs();
+            const { data: pageItems, error: pageItemsError } = await fetchBlogs(page, searchTitle, searchTag, searchOrder);
         
-            if (error) {
-                console.error('Error fetching data:', error);
+            if (pageItemsError) {
+                console.error('Error fetching page items:', pageItemsError);
             } else {
-                setItems(data || []);
+                setItems(pageItems || []);
             }
 
             setLoading(false);
         }
     
         fetchData();
-    }, []);
+    }, [page, searchOrder, searchTag, searchTitle]);
 
     return (
         <PageWrapper>
@@ -45,8 +54,124 @@ function BlogsContainer({
     blogs: Blog[]
 }) {
     return (
-        <div className="w-full h-auto p-[5%]">
+        <div className="w-full h-auto p-[5%] flex flex-col justify-start items-center gap-5">
+            <Title />
+            <SearchBar />
+            <PageBar />
             <PostDisplay blogs={blogs} />
+            <PageBar />
+        </div>
+    );
+}
+
+function Title() {
+    return (
+        <div className="w-full flex flex-row justify-start items-end gap-4">
+            <p className="text-7xl font-bold whitespace-nowrap">My Blogs</p>
+            <p className="text-3xl font-thin italic whitespace-nowrap">- Guides, Devlogs and other things that happened</p>
+        </div>
+    )
+}
+
+function SearchBar() {
+    return (
+        <div className="w-full h-auto flex flex-row justify-between items-end text-3xl">
+            <button className="w-auto h-full flex flex-row justify-start items-center gap-2 rounded px-4 py-2 highlight-black-button">
+                <p>Search</p>
+                <MdOutlineSearch />
+            </button>
+            <div className="w-auto h-full flex flex-row justify-end items-center gap-2">
+                <label htmlFor="sort-by" className="whitespace-nowrap">Sort by:</label>
+                <select name="sort-by" id="sort-by" className="bg-black border border-white rounded-sm px-2 py-1 whitespace-nowrap text-2xl cursor-pointer">
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="most-viewed">Most Viewed</option>
+                    <option value="most-liked">Most Liked</option>
+                </select>
+            </div>
+        </div>
+    )
+}
+
+/**
+ * Creates the bar for users to select which page to navigate to
+ * @returns The PageBar element
+ */
+function PageBar() {
+    const [pageCount, setPageCount] = useState(0);
+
+    const searchParams = useSearchParams();
+    const page = Number(searchParams.get('page'));
+
+    const router = useRouter();
+
+    const handleChangePage = (toPage: number) => {
+        const params = new URLSearchParams(searchParams)
+        params.set('page', toPage.toString());
+        router.push(`/blogs?${params.toString()}`);
+    }
+
+    useEffect(() => {
+        async function fetchData() {
+            const { data: postCount, error: postCountError } = await fetchBlogsCount();
+        
+            if (postCountError) {
+                console.error('Error fetching post count:', postCountError);
+            } else {
+                setPageCount(Math.floor(Number(postCount) / 10));
+            }
+        }
+    
+        fetchData();
+    });
+
+    return (
+        <div className="w-full h-full flex flex-row justify-center items-center gap-1 text-3xl">
+            <button onClick={() => handleChangePage(0)} className="p-3 hover:bg-white hover:text-black duration-100 cursor-pointer">
+                <MdKeyboardDoubleArrowLeft />
+            </button>
+            <button onClick={() => handleChangePage(Math.max(page - 1, 0))} className="p-3 hover:bg-white hover:text-black duration-100 cursor-pointer">
+                <MdKeyboardArrowLeft />
+            </button>
+            {(page - 2 > 0) && (<p className="p-3">...</p>)}
+            {
+                (page - 1 > 0) && (
+                    <button onClick={() => handleChangePage(page - 2)} className="p-3 hover:bg-white hover:text-black duration-100 cursor-pointer">
+                        {page - 1}
+                    </button>
+                )
+            }
+            {
+                (page > 0) && (
+                    <button onClick={() => handleChangePage(page - 1)} className="p-3 hover:bg-white hover:text-black duration-100 cursor-pointer">
+                        {page}
+                    </button>
+                )
+            }
+            <button onClick={() => handleChangePage(page)} className="p-3 border-2 border-white hover:bg-white hover:text-black duration-100 cursor-pointer">
+                {page + 1}
+            </button>
+            {
+                (page < pageCount) && (
+                    <button onClick={() => handleChangePage(page + 1)} className="p-3 hover:bg-white hover:text-black duration-100 cursor-pointer">
+                        {page + 2}
+                    </button>
+                )
+            }
+            {
+                (page + 1 < pageCount) && (
+                    <button onClick={() => handleChangePage(page + 2)} className="p-3 hover:bg-white hover:text-black duration-100 cursor-pointer">
+                        {page + 3}
+                    </button>
+                )
+            }
+            {(page + 2 < pageCount) && (<p className="p-3">...</p>)}
+            <button onClick={() => handleChangePage(Math.min(page + 1, pageCount))} className="p-3 hover:bg-white hover:text-black duration-100 cursor-pointer">
+                <MdKeyboardArrowRight />
+            </button>
+            <button onClick={() => handleChangePage(pageCount)} className="p-3 hover:bg-white hover:text-black duration-100 cursor-pointer">
+                <MdKeyboardDoubleArrowRight />
+            </button>
         </div>
     );
 }
@@ -58,21 +183,6 @@ function PostDisplay({
 }) {
     return (
         <div className="relative w-full h-auto flex flex-col justify-start items-center gap-10">
-            <div className="w-full h-auto flex flex-row justify-between items-end">
-                <div className="w-full flex flex-row justify-start items-end gap-4">
-                    <p className="text-7xl font-bold whitespace-nowrap">My Blogs</p>
-                    <p className="text-3xl font-thin italic whitespace-nowrap">- Guides, Devlogs and other things that happened</p>
-                </div>
-                <div className="w-auto h-full flex flex-row justify-end items-center gap-2 text-2xl">
-                    <label htmlFor="sort-by" className="whitespace-nowrap">Sort by:</label>
-                    <select name="sort-by" id="sort-by" className="bg-black border rounded-sm px-2 py-1 whitespace-nowrap">
-                        <option value="newest">Newest</option>
-                        <option value="oldest">Oldest</option>
-                        <option value="most-viewed">Most Viewed</option>
-                        <option value="most-liked">Most Liked</option>
-                    </select>
-                </div>
-            </div>
             <div className="w-full h-auto flex flex-col justify-start items-center gap-10">
                 {blogs.map((blog) => (<Post key={blog.id} blog={blog} />))}
             </div>
@@ -85,22 +195,14 @@ function Post({
 }: {
     blog: Blog
 }) {
-    const setBlogData = useBlogData((state) => state.setBlog);
-    const router = useRouter();
-
-    const handleOnClick = () => {
-        setBlogData(blog);
-        router.push("/blogs/" + blog.url);
-    }
-
     return (
         <div className="w-full h-[35vh] rounded-xl flex flex-col justify-center items-center gap-10">
             <div className="w-full h-full flex flex-row justify-center items-start overflow-hidden">
-                <button onClick={handleOnClick} className="w-[30vw] h-full overflow-hidden">
+                <Link href={"/blogs/" + blog.url} className="w-[30vw] h-full overflow-hidden">
                     <Image src="/images/Icon/Website Favicon.png" width={120} height={120} alt="Post's image" className="w-full h-full hover:scale-110 duration-150" />
-                </button>
+                </Link>
                 <div className="w-full h-full p-5 flex flex-col justify-start items-start">
-                    <button onClick={handleOnClick} className="w-full h-full cursor-pointer group">
+                    <Link href={"/blogs/" + blog.url} className="w-full h-full cursor-pointer group">
                         <div className="w-full h-auto flex flex-row justify-between items-start">
                             <p className="text-5xl font-bold whitespace-nowrap group-hover:text-blue-highlighted duration-150">{blog.title}</p>
                             <p className="text-2xl font-thin italic">{new Date(blog.date).toLocaleDateString()}</p>
@@ -108,13 +210,13 @@ function Post({
                         <p className="text-2xl w-full h-full pt-2 text-left group-hover:text-blue-highlighted duration-150">
                             {blog.desc}
                         </p>
-                    </button>
+                    </Link>
                     <div className="w-full h-auto flex flex-row justify-between items-center">
                         <div className="flex flex-row justify-start items-center gap-3 text-xl">
                             <p className="text-2xl mr-3">Tags:</p>
                             {blog.tags.map((tag) => (stringToTagButton(tag, blog.id + tag)))}
                         </div>
-                        <div className="w-auto h-auto self-end flex flex-row justify-end items-center gap-5">
+                        <div className="w-auto h-auto flex flex-row justify-end items-center gap-5">
                             <div className="flex flex-row justify-center items-center gap-2">
                                 <BsEye className="text-2xl font-thin opacity-50" />
                                 <p className="text-2xl font-thin opacity-50">{blog.like_count}</p>

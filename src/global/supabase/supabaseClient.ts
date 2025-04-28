@@ -3,13 +3,72 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function fetchAllBlogs() {
+/**
+ * Returns the total number of blogs
+ * @returns the number of blogs
+ */
+export async function fetchBlogsCount() {
     return await supabase
         .from('Blog')
-        .select("*")
-        .range(0, 9);
+        .select('*', { count: 'exact', head: true });
+}
+
+/**
+ * Returns 10 blogs by page and search params
+ * @param page the page number
+ * @param name the name number
+ * @param order the order to fetch in
+ * @param tag the tag to search for, "" means all posts
+ * @returns the 10 blogs in page
+ */
+export async function fetchBlogs(page: number, name: string, tag: string, order: string) {
+    const min = Math.min(10 * Math.floor(page), 0);
+    const max = 10 * Math.floor(page) + 9;
+
+    let column = 'date';
+    let ascending = false;
+
+    switch (order) {
+        case 'newest': // Newest first
+            column = 'date';
+            ascending = false;
+        break;
+        case 'oldest': // Oldest first
+            column = 'date';
+            ascending = true;
+        break;
+        case 'most-viewed': // Highest views first
+            column = 'view_count';
+            ascending = false;
+        break;
+        case 'most-liked': // Highest likes first
+            column = 'most_count';
+            ascending = false;
+        break;
+        default: // Defaults to newest first
+            column = 'date';
+            ascending = false;
+    }
+
+    if (tag !== "") { // If we are looking for a specific tag, add .contains() to find the tag
+        return await supabase
+            .from('Blog')
+            .select("*")
+            .ilike('title', `%${name}%`)
+            .contains('tags', [tag])
+            .range(min, max)
+            .order(column, { ascending });
+    } else {
+        return await supabase
+            .from('Blog')
+            .select("*")
+            .ilike('title', `%${name}%`)
+            .range(min, max)
+            .order(column, { ascending });
+    }
+
 }
 
 export async function fetchBlogFromUrl(url: string) {
