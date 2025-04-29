@@ -44,7 +44,7 @@ export async function fetchBlogs(page: number, name: string, tag: string, order:
             ascending = false;
         break;
         case 'most-liked': // Highest likes first
-            column = 'most_count';
+            column = 'like_count';
             ascending = false;
         break;
         default: // Defaults to newest first

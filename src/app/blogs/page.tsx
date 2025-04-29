@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 import { fetchBlogs, fetchBlogsCount } from "@/global/supabase/supabaseClient";
 
@@ -11,6 +11,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { BsEye, BsShare } from "react-icons/bs";
 import { MdOutlineSearch } from "react-icons/md";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { ImCross } from "react-icons/im";
 import { stringToTagButton } from "@/global/component/TagButton";
 import { Blog } from "@/global/supabase/tables";
 import Link from "next/link";
@@ -74,23 +75,105 @@ function Title() {
 }
 
 function SearchBar() {
+    const searchParams = useSearchParams();
+    const searchOrder = searchParams.get('order') ?? "newest";
+
+    const handleOnSelect = (value: string) => {
+        const params = new URLSearchParams(searchParams)
+        params.set('order', value);
+        window.location.href = `/blogs?${params.toString()}`;
+    }
+
+    const [isSearching, setIsSearching] = useState(false);
+
+    const handleBeginSearch = () => {
+        setIsSearching(true);
+    }
+
+    const handleExitSearch = () => {
+        setIsSearching(false);
+    }
+
     return (
         <div className="w-full h-auto flex flex-row justify-between items-end text-3xl">
-            <button className="w-auto h-full flex flex-row justify-start items-center gap-2 rounded px-4 py-2 highlight-black-button">
+            <SearchMenu enabled={isSearching} handleExitSearch={handleExitSearch} />
+            <button onClick={handleBeginSearch} className="w-auto h-full flex flex-row justify-start items-center gap-2 rounded px-4 py-2 highlight-black-button">
                 <p>Search</p>
                 <MdOutlineSearch />
             </button>
             <div className="w-auto h-full flex flex-row justify-end items-center gap-2">
-                <label htmlFor="sort-by" className="whitespace-nowrap">Sort by:</label>
-                <select name="sort-by" id="sort-by" className="bg-black border border-white rounded-sm px-2 py-1 whitespace-nowrap text-2xl cursor-pointer">
-                    <option value="newest">Newest</option>
-                    <option value="oldest">Oldest</option>
-                    <option value="most-viewed">Most Viewed</option>
-                    <option value="most-liked">Most Liked</option>
-                </select>
+                <label htmlFor="sort-by" className="whitespace-nowrap">
+                    Sort by:
+                    <select
+                        name="sort-by"
+                        id="sort-by"
+                        className="bg-black border border-white rounded-sm px-2 py-1 whitespace-nowrap text-2xl cursor-pointer"
+                        value={searchOrder}
+                        onChange={(e) => handleOnSelect(e.target.value)}
+                    >
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="most-viewed">Most Viewed</option>
+                        <option value="most-liked">Most Liked</option>
+                    </select>
+                </label>
             </div>
         </div>
     )
+}
+
+function SearchMenu({
+    enabled,
+    handleExitSearch
+}: {
+    enabled: boolean,
+    handleExitSearch: () => void
+}) {
+    const searchParams = useSearchParams();
+    const searchTitle = searchParams.get('title') ?? "";
+
+    const [titleInput, setTitleInput] = useState(searchTitle);
+
+    const handleOnTitleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const params = new URLSearchParams(searchParams)
+        params.set('title', titleInput);
+        window.location.href = `/blogs?${params.toString()}`;
+    }
+
+    return (
+        <div 
+            className={`fixed top-0 left-0 w-screen h-screen z-50 flex flex-col justify-center items-center
+                bg-[#000000af] backdrop-blur-xl text-5xl ${enabled ? "" : "hidden"}`}
+        >
+            <div className="w-auto h-auto flex flex-col justify-center items-center gap-10">
+                <div className="w-full h-auto flex flex-row justify-end items-end">
+                    <button onClick={handleExitSearch} className="cursor-pointer"><ImCross className="text-4xl" /></button>
+                </div>
+                <form onSubmit={handleOnTitleSubmit} className="w-full h-auto flex flex-row justify-start items-center gap-5">
+                    <label htmlFor="title" className="flex flex-row justify-start items-center gap-5">
+                        Search by title:
+                        <input
+                            onChange={(e) => setTitleInput(e.target.value)}
+                            id="title"
+                            name="title"
+                            type="text"
+                            value={titleInput}
+                            className="border-b border-white outline-none focus:ring-0" />
+                    </label>
+                    <input type="submit" value="Submit" className="highlight-black-button py-2 px-4" />
+                </form>
+                <div className="w-full h-auto flex flex-row justify-start items-center gap-5">
+                    Search by tag:
+                    {stringToTagButton("Admin", "search-admin")}
+                    {stringToTagButton("Devlog", "search-devlog")}
+                    {stringToTagButton("Guide", "search-guide")}
+                    {stringToTagButton("Self Promotion", "search-selfpromotion")}
+                </div>
+            </div>
+        </div>
+    );
 }
 
 /**
@@ -103,12 +186,10 @@ function PageBar() {
     const searchParams = useSearchParams();
     const page = Number(searchParams.get('page'));
 
-    const router = useRouter();
-
     const handleChangePage = (toPage: number) => {
         const params = new URLSearchParams(searchParams)
         params.set('page', toPage.toString());
-        router.push(`/blogs?${params.toString()}`);
+        window.location.href = `/blogs?${params.toString()}`;
     }
 
     useEffect(() => {

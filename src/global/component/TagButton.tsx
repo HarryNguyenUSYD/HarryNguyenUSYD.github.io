@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 /**
  * Returns a TagButton object that redirects to the search page when clicked
@@ -6,10 +6,19 @@ import Link from "next/link";
  * @returns The TagButton object
  */
 export default function TagButton({ tag } : { tag: PostTag }) {
+    const searchParams = useSearchParams();
+
+    function handleOnSelect (value: string) {
+        const params = new URLSearchParams(searchParams)
+        params.set('tag', value);
+
+        window.location.href = `/blogs?${params.toString()}`;
+    }
+
     return (
-        <Link href="/" className={`py-1 px-5 ${tag.bgColor} cursor-pointer`}>
+        <button onClick={() => handleOnSelect(tag.name)} className={`py-1 px-5 ${tag.bgColor} cursor-pointer`}>
             <p>{tag.name}</p>
-        </Link>
+        </button>
     )
 }
 
