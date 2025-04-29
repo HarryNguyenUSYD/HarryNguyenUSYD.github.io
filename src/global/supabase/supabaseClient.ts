@@ -84,3 +84,45 @@ export async function fetchBlogMdx(path: string) {
         .from('mdx-bucket')
         .download(path);
 }
+
+export async function incrementBlogView(blogId: number | undefined) {
+    if (blogId === undefined || blogId === null) {
+        return;
+    }
+
+    const { error } = await supabase.rpc('increment_view_count', {
+        post_id: blogId,
+    });
+
+    if (error) {
+        console.log("Failed to increment view count: ", error);
+    }
+}
+
+export async function incrementBlogLike(blogId: number | undefined) {
+    if (blogId === undefined || blogId === null) {
+        return;
+    }
+
+    const { error } = await supabase.rpc('increment_like_count', {
+        post_id: blogId,
+    });
+
+    if (error) {
+        console.log("Failed to increment like count: ", error);
+    }
+}
+
+export async function incrementBlogShare(blogId: number | undefined) {
+    if (blogId === undefined || blogId === null) {
+        return;
+    }
+
+    const { error } = await supabase.rpc('increment_share_count', {
+        post_id: blogId,
+    });
+
+    if (error) {
+        console.log("Failed to increment share count: ", error);
+    }
+}

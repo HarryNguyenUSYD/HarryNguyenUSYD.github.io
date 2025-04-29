@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation'
 
-import { fetchBlogs, fetchBlogsCount } from "@/global/supabase/supabaseClient";
+import { fetchBlogs, fetchBlogsCount, incrementBlogLike, incrementBlogShare } from "@/global/supabase/supabaseClient";
 
 import PageWrapper from "@/global/component/PageTemplate";
 import Image from "next/image";
-import { FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { BsEye, BsShare } from "react-icons/bs";
 import { MdOutlineSearch } from "react-icons/md";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
@@ -15,6 +15,7 @@ import { ImCross } from "react-icons/im";
 import { stringToTagButton } from "@/global/component/TagButton";
 import { Blog } from "@/global/supabase/tables";
 import Link from "next/link";
+import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/component/CopiableText";
 
 export default function MyBlogs() {
     const [items, setItems] = useState<Blog[]>([]);
@@ -43,9 +44,12 @@ export default function MyBlogs() {
     }, [page, searchOrder, searchTag, searchTitle]);
 
     return (
-        <PageWrapper>
-            {loading ? <LoadingScreen /> : <BlogsContainer blogs={items} />}
-        </PageWrapper>
+        <CopiableTextContextProvider>
+            <PageWrapper>
+                {loading ? <LoadingScreen /> : <BlogsContainer blogs={items} />}
+                <CopiedTextNotification />
+            </PageWrapper>
+        </CopiableTextContextProvider>
     );
 }
 
@@ -97,7 +101,10 @@ function SearchBar() {
     return (
         <div className="w-full h-auto flex flex-row justify-between items-end text-3xl">
             <SearchMenu enabled={isSearching} handleExitSearch={handleExitSearch} />
-            <button onClick={handleBeginSearch} className="w-auto h-full flex flex-row justify-start items-center gap-2 rounded px-4 py-2 highlight-black-button">
+            <button
+                onClick={handleBeginSearch}
+                className="w-auto h-full flex flex-row justify-start items-center gap-2 rounded px-4 py-2 highlight-black-button"
+            >
                 <p>Search</p>
                 <MdOutlineSearch />
             </button>
@@ -149,7 +156,9 @@ function SearchMenu({
         >
             <div className="w-auto h-auto flex flex-col justify-center items-center gap-10">
                 <div className="w-full h-auto flex flex-row justify-end items-end">
-                    <button onClick={handleExitSearch} className="cursor-pointer"><ImCross className="text-4xl" /></button>
+                    <button onClick={handleExitSearch} className="cursor-pointer hover:text-blue-highlighted duration-100">
+                        <ImCross className="text-4xl" />
+                    </button>
                 </div>
                 <form onSubmit={handleOnTitleSubmit} className="w-full h-auto flex flex-row justify-start items-center gap-5">
                     <label htmlFor="title" className="flex flex-row justify-start items-center gap-5">
@@ -276,6 +285,53 @@ function Post({
 }: {
     blog: Blog
 }) {
+    const [isLiked, setIsLiked] = useState(false);
+    const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
+
+    const [isShared, setIsShared] = useState(false);
+    
+    // The like is only counted 3 seconds after the user presses like
+    const handleLikeClick = () => {
+        if (!isLiked) {
+            setIsLiked(true);
+
+            const timeout = setTimeout(async () => {
+                incrementBlogLike(blog.id);
+            }, 3000);
+
+            setTimerId(timeout);
+        } else { // If the user cancels the like, remove the timeout
+            setIsLiked(false);
+
+            if (timerId) {
+                clearTimeout(timerId);
+                setTimerId(null);
+            }
+        }
+    };
+
+    // The share is counted immediately, but only once
+    const { setValue } = useCopiableTextContext();
+
+    const handleCopyTextToClipboard = async (text: string) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setValue(true);
+            setTimeout(() => setValue(false), 2000);
+        } catch (err) {
+            console.error("Failed to copy!", err);
+        }
+    }
+
+    const handleShareClick = () => {
+        if (!isShared) {
+            setIsShared(true);
+            incrementBlogShare(blog.id);
+            handleCopyTextToClipboard(window.location.href + "/" + blog.url);
+        }
+    };
+
+    
     return (
         <div className="w-full h-[35vh] rounded-xl flex flex-col justify-center items-center gap-10">
             <div className="w-full h-full flex flex-row justify-center items-start overflow-hidden">
@@ -297,18 +353,24 @@ function Post({
                             <p className="text-2xl mr-3">Tags:</p>
                             {blog.tags.map((tag) => (stringToTagButton(tag, blog.id + tag)))}
                         </div>
-                        <div className="w-auto h-auto flex flex-row justify-end items-center gap-5">
+                        <div className="w-auto h-auto self-end flex flex-row justify-end items-center gap-5">
                             <div className="flex flex-row justify-center items-center gap-2">
                                 <BsEye className="text-2xl font-thin opacity-50" />
-                                <p className="text-2xl font-thin opacity-50">{blog.like_count}</p>
+                                <p className="text-2xl font-thin opacity-50">{blog.view_count}</p>
                             </div>
-                            <button className="flex flex-row justify-center items-center gap-2 cursor-pointer">
-                                <FaRegHeart className="text-2xl" />
-                                <p className="text-2xl">{blog.like_count}</p>
+                            <button
+                                className="flex flex-row justify-center items-center gap-2 cursor-pointer"
+                                onClick={handleLikeClick}
+                            >
+                                {isLiked ? <FaHeart className="text-2xl" /> : <FaRegHeart className="text-2xl" />}
+                                <p className="text-2xl">{isLiked ? blog.like_count + 1 : blog.like_count}</p>
                             </button>
-                            <button className="flex flex-row justify-center items-center gap-2 cursor-pointer">
+                            <button
+                                className="flex flex-row justify-center items-center gap-2 cursor-pointer"
+                                onClick={handleShareClick}
+                            >
                                 <BsShare className="text-2xl" />
-                                <p className="text-2xl">{blog.share_count}</p>
+                                <p className="text-2xl">{isShared ? blog.share_count + 1 : blog.share_count}</p>
                             </button>
                         </div>
                     </div>
