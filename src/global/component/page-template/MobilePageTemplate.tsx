@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "./Navbar";
-import Background from "./Background";
+import Navbar from "../navbar/MobileNavbar";
+import Background from "../Background";
 
 /**
  * A wrapper that covers the page, used as the highest level of most pages here

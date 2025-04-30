@@ -1,11 +1,9 @@
 import React, { createContext, useContext, useState } from "react";
 
-interface CopiableTextType {
+const CopiableTextContext = createContext<{
     value: boolean;
     setValue: (newValue: boolean) => void;
-}
-
-const CopiableTextContext = createContext<CopiableTextType | undefined>(undefined);
+} | undefined>(undefined);
 
 export function CopiableTextContextProvider({ children } : { children: React.ReactNode }) {
     const [value, setValue] = useState(false); // initial value
