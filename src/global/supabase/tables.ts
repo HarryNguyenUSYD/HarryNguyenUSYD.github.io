@@ -8,7 +8,8 @@ export type Blog = {
     tags: string[],
     like_count: number,
     view_count: number,
-    share_count: number
+    share_count: number,
+    avatar: string
 }
 
 export type Project = {
@@ -17,5 +18,6 @@ export type Project = {
     desc: string,
     date: string,
     src: string,
-    url: string
+    url: string,
+    avatar: string
 }

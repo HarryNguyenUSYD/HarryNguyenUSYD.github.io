@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-// import { Blog } from './tables';
+import { Blog, Project } from './tables';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -79,11 +79,11 @@ export async function fetchBlogFromUrl(url: string) {
         .eq("url", url);
 }
 
-export async function fetchBlogItem(url: string, src: string) {
+export async function fetchBlogMdx(blog: Blog) {
     return await supabase
         .storage
         .from('mdx-bucket')
-        .download('blogs/' + url + "/" + src);
+        .download('blogs/' + blog.url + "/" + blog.src);
 }
 
 export async function incrementBlogView(blogId: number | undefined) {
@@ -138,9 +138,16 @@ export async function fetchProjects() {
         .select("*");
 }
 
-export async function fetchProjectItem(url: string, src: string) {
+export async function fetchProjectMdx(project: Project) {
     return await supabase
         .storage
         .from('mdx-bucket')
-        .download('projects/' + url + "/" + src);
+        .download('projects/' + project.url + "/" + project.src);
+}
+
+export async function fetchProjectAvatar(project: Project) {
+    return await supabase
+        .storage
+        .from('mdx-bucket')
+        .getPublicUrl('projects/' + project.url + "/" + project.avatar);
 }

@@ -7,7 +7,7 @@ import PageWrapper from "@/global/component/page-wrapper/DesktopPageWrapper";
 import { Project } from "@/global/supabase/tables";
 import Link from "next/link";
 import Image from "next/image";
-import { fetchProjects } from "@/global/supabase/supabaseClient";
+import { fetchProjectAvatar, fetchProjects } from "@/global/supabase/supabaseClient";
 
 export default function Projects() {
     const [items, setItems] = useState<Project[]>([]);
@@ -80,11 +80,28 @@ function Post({
 }: {
     project: Project
 }) {
+    const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function fetchAvatar() {
+            const { data: avatarData } = await fetchProjectAvatar(project);
+            
+            if (avatarData === null) {
+                console.error('Error fetching project avatar data');
+                return;
+            } else {
+                setAvatarSrc(avatarData.publicUrl);
+            }
+        }
+
+        fetchAvatar();
+    }, [project]);
+
     return (
         <div className="w-full h-[60vh] rounded-xl flex flex-col justify-center items-center gap-10">
             <div className="w-full h-full flex flex-col justify-start items-center overflow-hidden">
                 <Link href={"/projects/" + project.url} className="w-full h-auto overflow-hidden">
-                    <Image src="/images/Icon/Website Favicon.png" width={120} height={120} alt="Post's image" className="w-full h-full hover:scale-110 duration-150" />
+                    {avatarSrc !== null && <Image src={avatarSrc} width={120} height={120} alt="Post's image" className="w-full h-full hover:scale-110 duration-150" />}
                 </Link>
                 <div className="w-full h-full p-5 flex flex-col justify-start items-start">
                     <Link href={"/projects/" + project.url} className="w-full h-full cursor-pointer group">
