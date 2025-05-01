@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { Blog } from './tables';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -78,11 +79,18 @@ export async function fetchBlogFromUrl(url: string) {
         .eq("url", url);
 }
 
-export async function fetchBlogMdx(path: string) {
+export async function fetchBlogItem(blog: Blog | null) {
+    if (blog === null || blog.url === undefined || blog.src === undefined) {
+        return {
+            data: null,
+            error: null
+        };
+    }
+
     return await supabase
         .storage
         .from('mdx-bucket')
-        .download(path);
+        .download('blogs/' + blog.url + "/" + blog.src);
 }
 
 export async function incrementBlogView(blogId: number | undefined) {
@@ -125,4 +133,21 @@ export async function incrementBlogShare(blogId: number | undefined) {
     if (error) {
         console.log("Failed to increment share count: ", error);
     }
+}
+
+/**
+ * Get all projects for the /projects page
+ * @returns All Projects
+ */
+export async function fetchProjects() {
+    return await supabase
+        .from('Project')
+        .select("*");
+}
+
+export async function fetchProjectItem(url: string, src: string) {
+    return await supabase
+        .storage
+        .from('mdx-bucket')
+        .download('projects/' + url + "/" + src);
 }

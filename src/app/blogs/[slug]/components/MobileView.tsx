@@ -2,7 +2,7 @@
 
 import { useEffect, useState, use } from "react";
 
-import { fetchBlogMdx as fetchBlogBlob, fetchBlogFromUrl, incrementBlogLike, incrementBlogShare, incrementBlogView } from "@/global/supabase/supabaseClient";
+import { fetchBlogItem as fetchBlogBlob, fetchBlogFromUrl, incrementBlogLike, incrementBlogShare, incrementBlogView } from "@/global/supabase/supabaseClient";
 
 import { stringToTagButton } from "@/global/component/TagButton";
 import { FaRegHeart, FaHeart } from "react-icons/fa";

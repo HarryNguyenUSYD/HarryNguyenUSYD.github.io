@@ -2,7 +2,7 @@
 
 import { useEffect, useState, use } from "react";
 
-import { fetchBlogMdx as fetchBlogBlob, fetchBlogFromUrl, incrementBlogLike, incrementBlogShare, incrementBlogView } from "@/global/supabase/supabaseClient";
+import { fetchBlogItem as fetchBlogBlob, fetchBlogFromUrl, incrementBlogLike, incrementBlogShare, incrementBlogView } from "@/global/supabase/supabaseClient";
 
 import { stringToTagButton } from "@/global/component/TagButton";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
@@ -38,9 +38,9 @@ export default function BlogPage({ params } : { params: Promise<{slug: string}>}
                 setBlog(blogData[0]);
             }
 
-            const { data: blogBlob, error: blogBlobError } = await fetchBlogBlob(blog?.src || "404.mdx");
+            const { data: blogBlob, error: blogBlobError } = await fetchBlogBlob(blog);
         
-            if (blogBlobError) {
+            if (blogBlob === null || blogBlobError) {
                 console.error('Error fetching blog blob:', blogBlobError);
             } else {
                 const parsed = await mdxParse(blogBlob);
@@ -53,7 +53,7 @@ export default function BlogPage({ params } : { params: Promise<{slug: string}>}
         }
     
         fetchData();
-    }, [blog?.src, blog?.id, blogUrl]);
+    }, [blog, blogUrl]);
 
     return (
         <CopiableTextContextProvider>

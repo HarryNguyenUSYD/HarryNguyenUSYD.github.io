@@ -52,7 +52,6 @@ export default function Navbar() {
                 <DecoratedLink name="Home" href="/" />
                 <DecoratedLink name="Blogs" href="/blogs" />
                 <DecoratedLink name="Projects" href="/projects" />
-                <DecoratedLink name="Contact Me" href="/#contact-me" />
             </div>
         </div>
     );
