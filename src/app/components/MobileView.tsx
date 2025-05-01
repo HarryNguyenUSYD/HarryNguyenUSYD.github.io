@@ -6,7 +6,7 @@ import { SiLinkedin, SiGithub, SiPython, SiC, SiCplusplus, SiJavascript, SiTypes
 import { FaReact, FaHtml5, FaJava, FaNodeJs } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/component/CopiableText";
-import PageWrapper from "@/global/component/page-template/MobilePageTemplate";
+import PageWrapper from "@/global/component/page-wrapper/MobilePageWrapper";
 
 export default function Home() {
     return (

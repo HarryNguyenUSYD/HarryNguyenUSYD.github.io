@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { CopiableTextContextProvider, CopiedTextNotification } from "@/global/component/CopiableText";
-import PageWrapper from "@/global/component/page-template/DesktopPageTemplate";
+import PageWrapper from "@/global/component/page-wrapper/DesktopPageWrapper";
 import { Project } from "@/global/supabase/tables";
 import Link from "next/link";
 import Image from "next/image";
@@ -56,7 +56,7 @@ function Title() {
     return (
         <div className="w-full flex flex-row justify-start items-end gap-4">
             <p className="text-7xl font-bold whitespace-nowrap">My Projects</p>
-            <p className="text-3xl font-thin italic whitespace-nowrap">- Cool things I've made and lessons I've learnt</p>
+            <p className="text-3xl font-thin italic whitespace-nowrap">- Cool things I have made and lessons I have learnt</p>
         </div>
     )
 }

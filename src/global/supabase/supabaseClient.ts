@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import { Blog } from './tables';
+// import { Blog } from './tables';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -79,18 +79,11 @@ export async function fetchBlogFromUrl(url: string) {
         .eq("url", url);
 }
 
-export async function fetchBlogItem(blog: Blog | null) {
-    if (blog === null || blog.url === undefined || blog.src === undefined) {
-        return {
-            data: null,
-            error: null
-        };
-    }
-
+export async function fetchBlogItem(url: string, src: string) {
     return await supabase
         .storage
         .from('mdx-bucket')
-        .download('blogs/' + blog.url + "/" + blog.src);
+        .download('blogs/' + url + "/" + src);
 }
 
 export async function incrementBlogView(blogId: number | undefined) {

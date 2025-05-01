@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 
 import { fetchBlogs, fetchBlogsCount, incrementBlogLike, incrementBlogShare } from "@/global/supabase/supabaseClient";
 
-import PageWrapper from "@/global/component/page-template/DesktopPageTemplate";
+import PageWrapper from "@/global/component/page-wrapper/DesktopPageWrapper";
 import Image from "next/image";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { BsEye, BsShare } from "react-icons/bs";

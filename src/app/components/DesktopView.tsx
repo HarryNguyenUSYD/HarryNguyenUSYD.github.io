@@ -8,7 +8,7 @@ import { IconType } from "react-icons";
 import { LuGamepad2, LuNewspaper } from "react-icons/lu";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/component/CopiableText";
-import PageWrapper from "@/global/component/page-template/DesktopPageTemplate";
+import PageWrapper from "@/global/component/page-wrapper/DesktopPageWrapper";
 
 export default function Home() {
     return (

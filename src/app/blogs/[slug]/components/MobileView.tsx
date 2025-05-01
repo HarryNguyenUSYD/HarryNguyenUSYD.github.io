@@ -9,12 +9,12 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { BsEye, BsShare } from "react-icons/bs";
 import { FaArrowLeft } from "react-icons/fa";
 
-import PageWrapper from "@/global/component/page-template/MobilePageTemplate";
+import PageWrapper from "@/global/component/page-wrapper/MobilePageWrapper";
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { Blog } from "@/global/supabase/tables";
 import { mdxParse } from "@/global/mdx/mdxParse";
 
-import ErrorPage from  "@/global/premade-mdx/404.mdx";
+import ErrorPage from  "@/global/component/error-page/MobileErrorPage";
 import { useMDXComponents } from "@/global/mdx/mdxComponents";
 import Link from "next/link";
 import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/component/CopiableText";
@@ -34,14 +34,16 @@ export default function BlogPage({ params } : { params: Promise<{slug: string}>}
 
             if (blogDataError) {
                 console.error('Error fetching blog data:', blogDataError);
+                return;
             } else {
                 setBlog(blogData[0]);
             }
 
-            const { data: blogBlob, error: blogBlobError } = await fetchBlogBlob(blog?.src || "404.mdx");
+            const { data: blogBlob, error: blogBlobError } = await fetchBlogBlob(blogUrl, blogData[0].src);
         
-            if (blogBlobError) {
+            if (blogBlob === null || blogBlobError) {
                 console.error('Error fetching blog blob:', blogBlobError);
+                return;
             } else {
                 const parsed = await mdxParse(blogBlob);
                 setBlogMdx(parsed);
@@ -49,11 +51,11 @@ export default function BlogPage({ params } : { params: Promise<{slug: string}>}
 
             setLoading(false);
 
-            incrementBlogView(blog?.id);
+            incrementBlogView(blogData[0]?.id);
         }
     
         fetchData();
-    }, [blog?.src, blog?.id, blogUrl]);
+    }, [blogUrl]);
 
     return (
         <CopiableTextContextProvider>
