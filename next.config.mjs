@@ -6,7 +6,7 @@ const nextConfig = {
     pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
     // Optionally, add any other Next.js config below
     images: {
-        remotePatterns: [new URL('https://pedaftyzzomigkmrbcle.supabase.co/storage/v1/object/public/mdx-bucket/projects/**')],
+        remotePatterns: [new URL(process.env.NEXT_PUBLIC_SUPABASE_REMOTE_PATTERN)],
     },
 }
  

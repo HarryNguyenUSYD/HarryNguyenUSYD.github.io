@@ -100,10 +100,10 @@ function Post({
     return (
         <div className="w-full h-[60vh] rounded-xl flex flex-col justify-center items-center gap-10">
             <div className="w-full h-full flex flex-col justify-start items-center overflow-hidden">
-                <Link href={"/projects/" + project.url} className="w-full h-auto overflow-hidden">
-                    {avatarSrc !== null && <Image src={avatarSrc} width={120} height={120} alt="Post's image" className="w-full h-full hover:scale-110 duration-150" />}
+                <Link href={"/projects/" + project.url} className="w-full h-[50%] overflow-hidden">
+                    {avatarSrc !== null && <Image src={avatarSrc} width={1000} height={500} alt="Post's image" className="w-full h-full object-fill object-center hover:scale-110 duration-150" />}
                 </Link>
-                <div className="w-full h-full p-5 flex flex-col justify-start items-start">
+                <div className="w-full h-[50%] p-5 flex flex-col justify-start items-start">
                     <Link href={"/projects/" + project.url} className="w-full h-full cursor-pointer group">
                         <div className="w-full h-auto flex flex-row justify-between items-start">
                             <p className="text-5xl font-bold whitespace-nowrap group-hover:text-blue-highlighted duration-150">{project.title}</p>
