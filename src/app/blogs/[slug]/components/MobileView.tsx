@@ -2,7 +2,7 @@
 
 import { useEffect, useState, use } from "react";
 
-import { fetchBlogMdx as fetchBlogBlob, fetchBlogFromUrl, incrementBlogLike, incrementBlogShare, incrementBlogView } from "@/global/supabase/supabaseClient";
+import { fetchBlogMdx, fetchBlogFromUrl, incrementBlogLike, incrementBlogShare, incrementBlogView } from "@/global/supabase/supabaseClient";
 
 import { stringToTagButton } from "@/global/component/TagButton";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
@@ -39,7 +39,7 @@ export default function BlogPage({ params } : { params: Promise<{slug: string}>}
                 setBlog(blogData[0]);
             }
 
-            const { data: blogBlob, error: blogBlobError } = await fetchBlogBlob(blogData[0]);
+            const { data: blogBlob, error: blogBlobError } = await fetchBlogMdx(blogData[0]);
         
             if (blogBlob === null || blogBlobError) {
                 console.error('Error fetching blog blob:', blogBlobError);

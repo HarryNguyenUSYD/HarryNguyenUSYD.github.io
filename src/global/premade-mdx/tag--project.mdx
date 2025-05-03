@@ -1,6 +1,55 @@
-# Totally Average Game
+# The Average Game
 
-T.A.G (Totally Average Game) is a numerical puzzle game with a simple rule: to turn all numbers on the field into the same number,
+T.A.G (The Average Game) is a numerical puzzle game with a simple rule: to turn all numbers on the field into the same number,
 in as few moves as possible. The player makes a move by choosing two numbers, which will cause both of them to become their average, rounded up.
 A level starts with only two numbers, then increases to three, four, and can be as high as eight. This game is easy to learn but difficult to master,
 testing your calculation skills, planning, and strategy.
+
+# Gameplay
+
+The game has two gamemodes: Story and Survival
+
+Story mode begins as a small guide to the game, showing you the basic rules and letting you experiment with them. There is no limit to
+the number of moves you can make in a level, as well as hints to guide you with the next move. You also get unlimited restarts, so you can reattempt
+the level as many time as you want.
+
+There are 50 levels in the story mode, each more difficult in the last. Every level has three "medals", each of which requires the player
+to solve the level in a certain numbers of moves to accquire. Try to get all of them and show off your puzzle skills!
+
+Survival mode increases the difficulty by a lot by strictly limiting the number of moves a player can make. You start with 3 lives, and lose one
+every time you go over the move limit, or restarting. Of course, you lose when all of your lives are gone, but you can gain more lives by solving
+a level with less moves than required.
+
+# Visuals
+
+All the sprites in the games are done by me, using Photoshop. I try to keep the graphics simple using only using only black and white colors,
+in combination with changing the alpha (opacity) value to produce more color variance.
+
+The title screen uses some simple animations, as well as Unity's particle effects. From there, you can access the settings, quitting the app,
+and obviously, starting the game.
+
+> Fun fact: The title screen text can be changed to whatever you like! Try it!
+
+The story mode's game selection scene is created as a container, with each level being a box that falls from the sky. You can double tap
+each box to enter the level (in hindsight, this approach was difficult to understand, and caused quite a lot of confusion). Each box can has up to three
+dots, each symbolizing a medal. A box with all medals collected will change to green.
+
+The main game scene contains a group of numbers shown as columns, the height of which increases depending on the number value. Taping two columns will
+set them to the same average height, similar to their numbers. Winning the game can be visualized as setting all the columns to the same height.
+
+For the Story mode, there is a move counter in the center of the screen. For the Survival mode, there is a life counter and a life charge bar.
+Beating a level with a move to spare increases the life charge bar by one, rewarding the player with one life when fully charged.
+
+# Release
+
+The game is available for PC and Android. Since the project was my first project starting out, I wasn't confident enough to release it on Steam or Google
+Play Store, nor do I have a Mac to make an iOS build. For now, you can try the game by downloading it via Google Drive
+[here]("https://drive.google.com/file/d/1qNjGHcrScqphwH2JH-r8UVtJ1B3mVVnq/view") (for PC) and
+[here]("https://drive.google.com/file/d/1NykIILdBwfnzGNPJVyD2nAOZfHZdqTQE/view") (for Android).
+
+<ImgGallery url="projects/tag" srcs={[
+    "Screenshot_20241002_225636_TAG.jpg",
+    "Screenshot_20241002_225547_TAG.jpg",
+    "Screenshot_20241002_225507_TAG.jpg",
+    "Screenshot_20241002_225423_TAG.jpg"
+]} />

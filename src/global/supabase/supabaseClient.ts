@@ -138,6 +138,13 @@ export async function fetchProjects() {
         .select("*");
 }
 
+export async function fetchProjectFromUrl(url: string) {
+    return await supabase
+        .from('Project')
+        .select("*")
+        .eq("url", url);
+}
+
 export async function fetchProjectMdx(project: Project) {
     return await supabase
         .storage
@@ -150,4 +157,11 @@ export async function fetchProjectAvatar(project: Project) {
         .storage
         .from('mdx-bucket')
         .getPublicUrl('projects/' + project.url + "/" + project.avatar);
+}
+
+export async function fetchImage(url: string, imgSrc: string) {
+    return await supabase
+        .storage
+        .from('mdx-bucket')
+        .getPublicUrl(url + "/" + imgSrc);
 }

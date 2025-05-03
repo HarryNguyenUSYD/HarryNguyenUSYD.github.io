@@ -2,24 +2,24 @@
 
 import { useEffect, useState, use } from "react";
 
-import { fetchBlogMdx, fetchBlogFromUrl, incrementBlogLike, incrementBlogShare, incrementBlogView } from "@/global/supabase/supabaseClient";
-import { mdxParse } from "@/global/mdx/mdxParse";
+import { fetchBlogMdx as fetchBlogBlob, fetchBlogFromUrl, incrementBlogLike, incrementBlogShare, incrementBlogView } from "@/global/supabase/supabaseClient";
 
 import { stringToTagButton } from "@/global/component/TagButton";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { BsEye, BsShare } from "react-icons/bs";
 import { FaArrowLeft } from "react-icons/fa";
 
-import PageWrapper from "@/global/component/page-wrapper/DesktopPageWrapper";
+import PageWrapper from "@/global/component/page-wrapper/MobilePageWrapper";
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { Blog } from "@/global/supabase/tables";
-import ErrorPage from "@/global/component/error-page/DesktopErrorPage";
+import { mdxParse } from "@/global/mdx/mdxParse";
 
+import ErrorPage from  "@/global/component/error-page/MobileErrorPage";
 import { useMDXComponents } from "@/global/mdx/mdxComponents";
 import Link from "next/link";
 import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/component/CopiableText";
 
-export default function BlogPage({ params } : { params: Promise<{slug: string}>}) {
+export default function ProjectPage({ params } : { params: Promise<{slug: string}>}) {
     const { slug: blogUrl } = use(params);
 
     const [blog, setBlog] = useState<Blog | null>(null);
@@ -39,7 +39,7 @@ export default function BlogPage({ params } : { params: Promise<{slug: string}>}
                 setBlog(blogData[0]);
             }
 
-            const { data: blogBlob, error: blogBlobError } = await fetchBlogMdx(blogData[0]);
+            const { data: blogBlob, error: blogBlobError } = await fetchBlogBlob(blogData[0]);
         
             if (blogBlob === null || blogBlobError) {
                 console.error('Error fetching blog blob:', blogBlobError);
@@ -60,14 +60,14 @@ export default function BlogPage({ params } : { params: Promise<{slug: string}>}
     return (
         <CopiableTextContextProvider>
             <PageWrapper>
-                <div className="w-full h-full p-10 mt-10">
+                <div className="w-full h-full mt-10">
                     {
                         (loading) ? <LoadingScreen /> : 
                         (blogUrl === null || blog === null || blogMdx === null) ? <ErrorPage /> :
                         (
                             <>
                                 <BlogHeader blog={blog} />
-                                <div className="w-full h-auto p-10 mt-5 bg-[#000000af] rounded-3xl">
+                                <div className="w-full h-auto p-5 mt-5 bg-[#000000af] rounded-3xl">
                                     {(loading || blogMdx === null) ? <LoadingScreen /> : <MDXRemote {...blogMdx} components={components} />}
                                 </div>
                             </>
@@ -134,18 +134,18 @@ function BlogHeader({
     return (
         <div className="w-full h-auto flex flex-col justify-center items-center gap-3">
             <div className="w-full flex flex-row justify-start items-center">
-                <Link href="/blogs" className="flex flex-row justify-start items-center gap-3 hover:text-blue-highlighted duration-100">
-                    <FaArrowLeft className="text-xl" />
-                    <p className="text-3xl">Back</p>
+                <Link href="/blogs" className="flex flex-row justify-start items-center gap-3">
+                    <FaArrowLeft className="text-base" />
+                    <p className="text-2xl">Back</p>
                 </Link>
             </div>
-            <p className="text-7xl font-bold my-2">{blog.title}</p>
-            <p className="text-xl font-thin italic">Uploaded on: {new Date(blog.date).toLocaleDateString()}</p>
-            <div className="text-xl flex flex-row justify-center items-center gap-2">
+            <p className="text-4xl font-bold my-2">{blog.title}</p>
+            <p className="text-sm font-thin italic">Uploaded on: {new Date(blog.date).toLocaleDateString()}</p>
+            <div className="text-sm flex flex-row justify-center items-center gap-2">
                 <span>Tags: </span>
                 {blog.tags.map((tag) => stringToTagButton(tag, tag))}
             </div>
-            <div className="w-auto h-auto self-end flex flex-row justify-end items-center gap-5 text-2xl">
+            <div className="w-auto h-auto self-end flex flex-row justify-end items-center gap-5 text-base">
                 <div className="flex flex-row justify-center items-center gap-2">
                     <BsEye className="font-thin opacity-50" />
                     <p className="font-thin opacity-50">{blog.view_count}</p>
@@ -172,7 +172,7 @@ function BlogHeader({
 
 function LoadingScreen() {
     return (
-        <div className="w-full h-auto my-10 flex justify-center items-center text-3xl italic">
+        <div className="w-full h-auto my-10 flex justify-center items-center text-xl italic">
             <p>Loading the blog, this might take a few seconds...</p>
         </div>
     );
