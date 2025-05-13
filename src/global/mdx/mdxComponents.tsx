@@ -1,5 +1,5 @@
 import type { MDXComponents } from 'mdx/types'
-import ImgGallery from './ImgGallery/DesktopImgGallery';
+import ImageGallery from './ImageGallery/ImageGallery';
  
 export function useMDXComponents(components?: MDXComponents): MDXComponents {
     return {
@@ -9,9 +9,9 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
         li: (props) => <li className="mb-2" {...props} />,
         a: (props) => <a className="highlight-text" target='_blank' rel="noopener noreferrer" {...props} />,
         blockquote: (props) => (
-            <blockquote className="border-l-4 pl-4 italic" {...props} />
+            <blockquote className="border-l-4 pl-4 italic mx-5 my-8" {...props} />
         ),
-        ImgGallery,
+        ImageGallery,
         ...components
     };
 }
