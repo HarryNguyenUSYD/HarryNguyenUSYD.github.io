@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation'
 
-import { fetchBlogs, fetchBlogsCount, incrementBlogLike, incrementBlogShare } from "@/global/supabase/supabaseClient";
+import { fetchBlogAvatar, fetchBlogs, fetchBlogsCount, incrementBlogLike, incrementBlogShare } from "@/global/supabase/supabaseClient";
 
 import PageWrapper from "@/global/component/page-wrapper/MobilePageWrapper";
 import Image from "next/image";
@@ -339,12 +339,29 @@ function Post({
             handleCopyTextToClipboard(window.location.href + "/" + blog.url);
         }
     };
+
+    const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+    
+    useEffect(() => {
+        async function fetchAvatar() {
+            const { data: avatarData } = await fetchBlogAvatar(blog);
+            
+            if (avatarData === null) {
+                console.error('Error fetching blog avatar data');
+                return;
+            } else {
+                setAvatarSrc(avatarData.publicUrl);
+            }
+        }
+
+        fetchAvatar();
+    }, [blog]);
     
     return (
-        <div className="w-full h-[100vh] rounded-xl flex flex-col justify-center items-center gap-5">
+        <div className="w-full h-[80vh] rounded-xl flex flex-col justify-center items-center gap-5">
             <div className="w-full h-full flex flex-col justify-start items-center overflow-hidden">
-                <Link href={"/blogs/" + blog.url} className="w-full h-auto overflow-hidden">
-                    <Image src="/images/Icon/Website Favicon.png" width={120} height={120} alt="Post's image" className="w-full h-full" />
+                <Link href={"/blogs/" + blog.url} className="w-full h-[40%] flex-none overflow-hidden">
+                    {avatarSrc !== null && <Image src={avatarSrc} width={1000} height={500} alt="Post's image" className="w-full h-full object-cover object-center" />}
                 </Link>
                 <div className="w-full h-full p-5 flex flex-col justify-start items-start">
                     <Link href={"/blogs/" + blog.url} className="w-full h-full cursor-pointer">

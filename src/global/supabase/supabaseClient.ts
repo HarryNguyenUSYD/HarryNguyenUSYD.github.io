@@ -128,6 +128,13 @@ export async function incrementBlogShare(blogId: number | undefined) {
     }
 }
 
+export async function fetchBlogAvatar(blog: Blog) {
+    return await supabase
+        .storage
+        .from('mdx-bucket')
+        .getPublicUrl('blogs/' + blog.url + "/" + blog.avatar);
+}
+
 /**
  * Get all projects for the /projects page
  * @returns All Projects
