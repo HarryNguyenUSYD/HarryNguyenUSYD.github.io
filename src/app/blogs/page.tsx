@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const DesktopView = dynamic(() => import('./components/DesktopView'));
 const MobileView = dynamic(() => import('./components/MobileView'));
@@ -20,5 +20,13 @@ export default function Blogs() {
         return () => window.removeEventListener('resize', update);
     }, [])
   
-    return (isDesktop) ? <DesktopView /> : <MobileView />
+    return (isDesktop) ? (
+        <Suspense>
+            <DesktopView />
+        </Suspense>
+    ) : (
+        <Suspense>
+            <MobileView />
+        </Suspense>
+    )
 }
