@@ -88,7 +88,7 @@ function ProjectHeader({
                     <p className="text-3xl">Back</p>
                 </Link>
             </div>
-            <p className="text-7xl font-bold my-2">{project.title}</p>
+            <p className="text-7xl font-bold my-2 text-center">{project.title}</p>
             <p className="text-xl font-thin italic">Uploaded on: {new Date(project.date).toLocaleDateString()}</p>
             <div className="w-full border border-white opacity-50 my-5"></div>
         </div>

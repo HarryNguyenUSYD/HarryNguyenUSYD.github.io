@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation'
 
-import { fetchBlogs, fetchBlogsCount, incrementBlogLike, incrementBlogShare } from "@/global/supabase/supabaseClient";
+import { fetchBlogAvatar, fetchBlogs, fetchBlogsCount, incrementBlogLike, incrementBlogShare } from "@/global/supabase/supabaseClient";
 
 import PageWrapper from "@/global/component/page-wrapper/DesktopPageWrapper";
 import Image from "next/image";
@@ -336,11 +336,28 @@ function Post({
         }
     };
     
+    const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+        
+    useEffect(() => {
+        async function fetchAvatar() {
+            const { data: avatarData } = await fetchBlogAvatar(blog);
+            
+            if (avatarData === null) {
+                console.error('Error fetching blog avatar data');
+                return;
+            } else {
+                setAvatarSrc(avatarData.publicUrl);
+            }
+        }
+
+        fetchAvatar();
+    }, [blog]);
+
     return (
         <div className="w-full h-[35vh] rounded-xl flex flex-col justify-center items-center gap-10">
             <div className="w-full h-full flex flex-row justify-center items-start overflow-hidden">
                 <Link href={"/blogs/" + blog.url} className="w-[30vw] h-full overflow-hidden">
-                    <Image src="/images/Icon/Website Favicon.png" width={120} height={120} alt="Post's image" className="w-full h-full hover:scale-110 duration-150" />
+                    {avatarSrc !== null && <Image src={avatarSrc} width={1000} height={500} alt="Post's image" className="w-full h-full object-cover object-center hover:scale-110 duration-150" />}
                 </Link>
                 <div className="w-full h-full p-5 flex flex-col justify-start items-start">
                     <Link href={"/blogs/" + blog.url} className="w-full h-full cursor-pointer group">

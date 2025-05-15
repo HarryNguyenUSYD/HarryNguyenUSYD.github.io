@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 interface ImgData {
-    id: string
     src: string,
     width: number,
     height: number,
@@ -14,9 +13,11 @@ interface ImgData {
 
 export default function ImageGallery({
     url,
+    id,
     imgsData
 }: {
     url: string,
+    id: string,
     imgsData: ImgData[]
 }) {
     const [images, setImages] = useState<ImgData[]>([]);
@@ -42,9 +43,9 @@ export default function ImageGallery({
     return (
         <div className="relative w-full h-[50vh] lg:h-[75vh] overflow-x-auto my-3 lg:my-10">
             <div className="w-auto h-full flex flex-row justify-start items-center gap-2 lg:gap-5 pb-3 lg:pb-5">
-                {images.map((image) => {
+                {images.map((image, i) => {
                     return (
-                        <div key={image.id} className='relative w-auto h-full flex-none'>
+                        <div key={id + i} className='relative w-auto h-full flex-none'>
                             <Image src={image.src} alt={image.alt ?? ""} width={image.width} height={image.height} className='w-auto h-full' />
                         </div>
                     )

@@ -139,7 +139,7 @@ function BlogHeader({
                     <p className="text-3xl">Back</p>
                 </Link>
             </div>
-            <p className="text-7xl font-bold my-2">{blog.title}</p>
+            <p className="text-7xl font-bold my-2 text-center">{blog.title}</p>
             <p className="text-xl font-thin italic">Uploaded on: {new Date(blog.date).toLocaleDateString()}</p>
             <div className="text-xl flex flex-row justify-center items-center gap-2">
                 <span>Tags: </span>
