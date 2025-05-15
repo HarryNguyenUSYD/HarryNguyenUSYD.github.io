@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const DesktopView = dynamic(() => import('./components/DesktopView'));
 const MobileView = dynamic(() => import('./components/MobileView'));
@@ -35,5 +35,13 @@ export default function MdxTest() {
         return () => window.removeEventListener('resize', update);
     }, [])
   
-    return (isDesktop) ? <DesktopView TestMdx={TestMdx} mdxData={mdxData} /> : <MobileView TestMdx={TestMdx} mdxData={mdxData} />
+    return (isDesktop) ? (
+        <Suspense>
+            <DesktopView TestMdx={TestMdx} mdxData={mdxData} />
+        </Suspense>
+    ) : (
+        <Suspense>
+            <MobileView TestMdx={TestMdx} mdxData={mdxData} />
+        </Suspense>
+    )
 }

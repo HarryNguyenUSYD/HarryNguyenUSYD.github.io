@@ -9,12 +9,13 @@ import { Blog } from "@/global/supabase/tables";
 import Link from "next/link";
 import { CopiableTextContextProvider, CopiedTextNotification } from "@/global/component/CopiableText";
 import { JSX } from "react";
+import { MDXProps } from "mdx/types";
 
 export default function MdxTest({
     TestMdx,
     mdxData
 } : {
-    TestMdx: (props: { readonly components?: object | undefined; }) => JSX.Element,
+    TestMdx: (props: MDXProps) => JSX.Element,
     mdxData: Blog
 }) {
     return (
