@@ -37,7 +37,7 @@ body {
 }
 
 .highlight-text {
-    @apply cursor-pointer underline hover:text-blue-highlighted duration-100;
+    @apply cursor-pointer border-b lg:border-b-2 hover:text-blue-highlighted duration-100;
 }
 
 .highlight-black-button {
