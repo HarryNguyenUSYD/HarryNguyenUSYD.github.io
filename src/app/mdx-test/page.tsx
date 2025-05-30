@@ -6,13 +6,13 @@ import { Suspense, useEffect, useState } from "react";
 const DesktopView = dynamic(() => import('./components/DesktopView'));
 const MobileView = dynamic(() => import('./components/MobileView'));
 
-import TestMdx from "@/global/wip-mdx/dotnet-guide-1.mdx";
+import TestMdx from "@/global/wip-mdx/dotnet-guide-2.mdx";
 
 export default function MdxTest() {
     const [isDesktop, setIsDesktop] = useState(true);
     const mdxData = {
         id: 0,
-        title: "Introduction to .NET - #1 - Welcome to .NET",
+        title: "Introduction to .NET - #2 - Getting Started",
         desc: "",
         date: "01/01/2000",
         src: "",

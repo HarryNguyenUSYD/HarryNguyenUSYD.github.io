@@ -88,7 +88,7 @@ function IntroductionSection() {
                         <div className="w-auto h-auto flex flex-row justify-end items-center gap-10">
                             <p className="text-4xl italic font-thin">My socials:</p>
                             <a 
-                                className="highlight-text"
+                                className="highlight-icon"
                                 href="https://www.linkedin.com/in/hoang-quan-nguyen-304705266/"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -96,7 +96,7 @@ function IntroductionSection() {
                                 <SiLinkedin className="text-4xl" />
                             </a>
                             <a
-                                className="highlight-text"
+                                className="highlight-icon"
                                 href="https://github.com/HarryNguyenUSYD/"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -246,9 +246,13 @@ function MyBlogsSection() {
                             nguyenhoangquan2122@gmail.com
                         </span>.
                     </p>
-                    <p className="text-4xl">
-                        You can view my full list of blogs <Link className="highlight-text" href="/blogs">here</Link>.
-                    </p>
+                    <Link
+                        href="/blogs"
+                        className="w-auto h-auto text-4xl font-bold cursor-pointer border-4 border-white
+                            px-5 py-3 hover:bg-white hover:text-black duration-200 self-end"
+                    >
+                        <p>Check out my blogs!</p>
+                    </Link>
                 </div>
             </div>
         </SectionWrapper>
@@ -268,9 +272,13 @@ function MyProjectsSection() {
                         Game development is my way of learning new knowledge and techniques of the tools I use.
                         It also challenges my software design skills, most importantly on system design and improving user experience.
                     </p>
-                    <p className="text-4xl">
-                        You can view my full list of games and other projects <Link className="highlight-text" href="/projects">here</Link>.
-                    </p>
+                    <Link
+                        href="/projects"
+                        className="w-auto h-auto text-4xl font-bold cursor-pointer border-4 border-white
+                            px-5 py-3 hover:bg-white hover:text-black duration-200 self-end"
+                    >
+                        <p>Check out my projects!</p>
+                    </Link>
                 </div>
             </div>
         </SectionWrapper>

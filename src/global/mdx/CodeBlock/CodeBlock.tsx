@@ -5,19 +5,19 @@ import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export default function CodeBlock({
     language,
-    desc,
-    code
+    code,
+    alt
 } : {
     language: string,
-    desc: string,
-    code: string
+    code: string,
+    alt?: string
 }) {
     return (
         <div className='w-full h-auto flex flex-col justify-start items-center gap-1 lg:gap-3 text-xs lg:text-base'>
             <SyntaxHighlighter language={language} style={nightOwl}>
                 {code}
             </SyntaxHighlighter>
-            <p className='text-sm lg:text-xl italic font-thin text-center'>{desc}</p>
+            {alt && <p className='text-sm lg:text-xl italic font-thin text-center'>{alt}</p>}
         </div>
     );
 }
