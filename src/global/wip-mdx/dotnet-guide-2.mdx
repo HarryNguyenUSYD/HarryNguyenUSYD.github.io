@@ -1,8 +1,8 @@
 import Image from "@/global/mdx/Image/Image";
 import References from "@/global/mdx/References/References";
 import CodeBlock from "@/global/mdx/CodeBlock/CodeBlock";
-import Code from "@/global/mdx/Code/Code";
 import Redirect from "@/global/mdx/Redirect/Redirect";
+import StructureTree from "@/global/mdx/StructureTree/StructureTree";
 
 # Welcome Back!
 
@@ -12,11 +12,11 @@ This includes installation, file structures, initiating the base project, and ho
 If you want to know more about the history of .NET, its structure and why you should use it, check out the previous episode
 <Redirect name='here' url='/blogs/dotnet-guide-1' />.
 
-# The .NET SDK
+# The First Step
 
 Everything you need to begin using .NET has been neatly packed into a tool box called the .NET Software Development Kit (.NET SDK). As discussed during
 <Redirect name='episode 1' url='/blogs/dotnet-guide-1' />, the SDK contains core tools and programs for every .NET project, including compilers,
-the <Code>dotnet</Code> driver, .NET CLI, etc. You can download the SDK from Microsoft's website
+the `dotnet` driver, .NET CLI, etc. You can download the SDK from Microsoft's website
 <Redirect name='here' url='https://dotnet.microsoft.com/en-us/download/dotnet' />.
 
 <Image
@@ -27,7 +27,61 @@ the <Code>dotnet</Code> driver, .NET CLI, etc. You can download the SDK from Mic
     alt='.NET Download Website (Source: Microsoft)'
 />
 
-Once on the website, click the highlighted link to download the newest active version. .NET is available for Linux, macOS, and Windows. Depending on
-your device, pick a version that works for you.
+Once on the website, click the highlighted link to download the newest active version. .NET is available for Linux, macOS, and Windows. Pick a version that
+matches your device.
 
-> Note: For this series, we will be using the newest version of the platform, .NET 9 (Windows version).
+> Note: For this series, we will be using the .NET 9 Windows version.
+
+Once the installer is downloaded, double-click on it to begin. Click on the **Install** button and simply wait for the installation to complete.
+Congratulations, you have successfully downloaded .NET to your machine (thus beginning an era of suffering)!
+
+<Image
+    url='blogs/dotnet-guide-2'
+    src='dotnet-installer.jpg'
+    width={1274}
+    height={753}
+    alt='Start window of the installer'
+/>
+
+<Image
+    url='blogs/dotnet-guide-2'
+    src='dotnet-installer-complete.jpg'
+    width={1274}
+    height={753}
+    alt='End window of the installer'
+/>
+
+# Hello, World!
+
+Create an empty directory and open it with your favorite code editor or IDEs. Visual Studio and Visual Studio Code are strongly suggested,
+since they are developed by Microsoft to be fully integrated with .NET projects, but other tools such as JetBrains Rider can also be used.
+
+> Note: For this series, we will be using VS Code.
+
+Open the terminal. Use the command `dotnet new console -o sample` to create a new sample project. You will see a directory named `sample` in your
+workspace, whose structure is as follows:
+
+<StructureTree node={{
+    name: "Hello",
+    children: [{
+        name: "Hi",
+        children: [
+            {
+                name: "2",
+                children: []
+            },
+            {
+                name: "1",
+                children: []
+            }
+        ]
+    }]
+}} />
+
+<References ref={[
+    {
+        name: "Download .NET",
+        author: "Microsoft",
+        url: "https://dotnet.microsoft.com/en-us/download/dotnet"
+    },
+]}/>

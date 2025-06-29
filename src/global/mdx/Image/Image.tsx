@@ -31,7 +31,7 @@ export default function ImageGallery({
 
     return (
         <div className='relative w-full h-[50vh] lg:h-[75vh] flex flex-col justify-center items-center'>
-            <div className="relative w-full h-full overflow-x-auto my-3 lg:my-10 flex justify-center items-center">
+            <div className="relative w-[100%*0.5] h-full overflow-x-auto my-3 lg:my-10 flex justify-center items-center">
                 {imageSrc && <Image src={imageSrc} alt={alt ?? ""} width={width} height={height} className='w-auto h-full' />}
             </div>
             {alt && <p className='text-sm lg:text-xl italic font-thin text-center'>{alt}</p>}

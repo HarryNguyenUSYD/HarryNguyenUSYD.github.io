@@ -1,6 +1,5 @@
 import References from "@/global/mdx/References/References";
 import CodeBlock from "@/global/mdx/CodeBlock/CodeBlock";
-import Code from "@/global/mdx/Code/Code";
 import Redirect from "@/global/mdx/Redirect/Redirect";
 
 # Welcome To a New Series!
@@ -28,23 +27,23 @@ and a steep learning curve; Classic ASP had a variety of security issues that ca
 MFC and VB6 were too complex for simple tasks and lacked structured exception handling, just to name a few. But the most significant problem with all of
 these tools was their dependence on COM and its variants as a "glue", and that led to plenty of issues around Windows development at that time.
 
-The most infamous of those issues were <Code>.dll</Code> files. DLLs, or Dynamic Link Libraries, are files that contain reusable code, data, and resources that can
+The most infamous of those issues were `.dll` files. DLLs, or Dynamic Link Libraries, are files that contain reusable code, data, and resources that can
 be shared across multiple programs on Windows. Most of the tools listed above would have one or more of these, as well as any extra software or other
-tools you need to work with. When a developer writes a class that implements one or more COM interfaces, that code will be compiled into a <Code>.dll</Code> file.
+tools you need to work with. When a developer writes a class that implements one or more COM interfaces, that code will be compiled into a `.dll` file.
 The DLL is then registered in the Windows Registry, which maps each COM class to the its file path, allowing COM to find and load it.
 
 DLLs were great for their purpose: They enable reusable code and runtime loading, they help with separating components,
-and most importantly, they allow developers to extend the functionality of existing applications without modifying the core codebase. However, all <Code>.dll</Code>
+and most importantly, they allow developers to extend the functionality of existing applications without modifying the core codebase. However, all `.dll`
 files have a major problem regarding versioning, specifically because DLLs were only identified by their file names and not by version number,
 build date, or signature. Installing a new DLL, even with changes, would silently overwrote an older version, causing other applications using the
 original version to crash or behave unpredictably. This was amplified by the fact that DLLs were frequently installed into the System32 directory
-(e.g. <Code>C:\Windows\System32</Code>), and that multiple applications shared the same copy of a DLL. This would lead to a phenomenon known as "DLL Stomping",
+(e.g. `C:\Windows\System32`), and that multiple applications shared the same copy of a DLL. This would lead to a phenomenon known as "DLL Stomping",
 where a newly-installed application overwrites an existing DLL with an earlier, incompatible version.
 
 This issue gave rise to the term "DLL Hell", a term that symbolises the problems developers may face when dealing with DLLs in older Windows systems. These
 problems manifest themselves in many ways, such as programs suddenly not working correctly, or would not run at all. Developers would spend hours tracking
 down what went wrong, only to realise that the DLLs they were using has been replaced with a wrong version at some point. And since each application has
-its own copies of <Code>.dll</Code> files, and most projects need to use dozens of applications, it is easy to understand the frustration every Windows developer of the
+its own copies of `.dll` files, and most projects need to use dozens of applications, it is easy to understand the frustration every Windows developer of the
 era had to go through.
 
 To deal with all of those issues, as well as to compete against the rise of Java as a platform for web and enterprise applications, Microsoft began to
@@ -59,7 +58,7 @@ every project. These can be installed all at once as the <Redirect name=".NET SD
 
 - Compilers for .NET languages (C#, F# and VB.NET).
 - MSBuild, the project build engine, responsible for compiling, resolving references, transforming assets, etc.
-- .NET Class Library, also known as the .NET API, consisting of the <Code code="System" /> namespace, types, data structures, and many internal APIs.
+- .NET Class Library, also known as the .NET API, consisting of the `System` namespace, types, data structures, and many internal APIs.
 These are the developers' main access point to the .NET platform.
 - NuGet, the .NET package manager. It allows .NET projects to get external dependencies without downloading DLLs manually.
 - .NET CLI, a cross-platform toolchain for developing, building, running, and publishing .NET applications. It consists of the dotnet driver, commands, and
