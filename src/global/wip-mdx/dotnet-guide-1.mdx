@@ -1,6 +1,7 @@
 import References from "@/global/mdx/References/References";
 import CodeBlock from "@/global/mdx/CodeBlock/CodeBlock";
 import Redirect from "@/global/mdx/Redirect/Redirect";
+import Image from "@/global/mdx/Image/Image";
 
 # Welcome To a New Series!
 
@@ -14,7 +15,7 @@ you need to start programming.
 
 Without further ado, let's begin with every old programmer's nightmare.
 
-# "DLL Hell" and The Birth of .NET
+# "DLL Hell"
 
 So back in the olden days of the early 2000s, developing Windows applications required a wide range of tools that, surprisingly, did not work well with
 each other. C/C++ with Win32 API was the most commonly used back-end languages, combined with ActiveX Data Objects (ADO) for database connection,
@@ -46,14 +47,22 @@ down what went wrong, only to realise that the DLLs they were using has been rep
 its own copies of `.dll` files, and most projects need to use dozens of applications, it is easy to understand the frustration every Windows developer of the
 era had to go through.
 
+<Image
+    url='blogs/dotnet-guide-1'
+    src='xkcd-1579.png'
+    width={468}
+    height={415}
+    alt='Relevant xkcd: #1579 - Tech Loops'
+/>
+
 To deal with all of those issues, as well as to compete against the rise of Java as a platform for web and enterprise applications, Microsoft began to
 develop a framework called Next Generation Windows Services (NGWS), which became later known as .NET. The project began in the late 1990s, with the first
 beta version released in late 2001. Over the years and across many updates, .NET has proven itself to be a powerful open-source, cross-platform developer
 platform for building modern applications, with the newest version (as of writing this blog) being .NET 9.
 
-# The Structure of .NET
+# An anatomical view of .NET
 
-As a platform, .NET has a long list of components that keep getting longer every releases. That said, there are some components that are vital for
+As a platform, .NET has a long list of components that keep getting changed every releases. That said, there are some components that are vital for
 every project. These can be installed all at once as the <Redirect name=".NET SDK" url="https://dotnet.microsoft.com/en-us/download" />, which includes:
 
 - Compilers for .NET languages (C#, F# and VB.NET).

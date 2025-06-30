@@ -356,14 +356,14 @@ function Post({
     return (
         <div className="w-full h-[35vh] rounded-xl flex flex-col justify-center items-center gap-10">
             <div className="w-full h-full flex flex-row justify-center items-start overflow-hidden">
-                <Link href={"/blogs/" + blog.url} className="w-[30vw] h-full overflow-hidden">
+                <Link href={"/blogs/" + blog.url} className="w-[35vw] h-full overflow-hidden">
                     {avatarSrc !== null && <Image src={avatarSrc} width={1000} height={500} alt="Post's image" className="w-full h-full object-cover object-center hover:scale-110 duration-150" />}
                 </Link>
-                <div className="w-full h-full p-5 flex flex-col justify-start items-start">
+                <div className="w-[65vw] flex-none h-full p-5 flex flex-col justify-start items-start">
                     <Link href={"/blogs/" + blog.url} className="w-full h-full cursor-pointer group">
-                        <div className="w-full h-auto flex flex-row justify-between items-start">
-                            <p className="text-5xl font-bold whitespace-nowrap group-hover:text-blue-highlighted duration-150">{blog.title}</p>
-                            <p className="text-2xl font-thin italic">{new Date(blog.date).toLocaleDateString()}</p>
+                        <div className="w-full h-auto flex flex-row justify-between items-center">
+                            <p className="w-full text-5xl font-bold truncate group-hover:text-blue-highlighted duration-150">{blog.title}</p>
+                            <p className="w-auto flex-none text-2xl font-thin italic text-right ml-5">{new Date(blog.date).toLocaleDateString()}</p>
                         </div>
                         <p className="text-2xl w-full h-full pt-2 text-left group-hover:text-blue-highlighted duration-150">
                             {blog.desc}
