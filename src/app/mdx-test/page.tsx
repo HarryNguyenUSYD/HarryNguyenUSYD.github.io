@@ -35,13 +35,9 @@ export default function MdxTest() {
         return () => window.removeEventListener('resize', update);
     }, [])
   
-    return (isDesktop) ? (
+    return (
         <Suspense>
-            <DesktopView TestMdx={TestMdx} mdxData={mdxData} />
-        </Suspense>
-    ) : (
-        <Suspense>
-            <MobileView TestMdx={TestMdx} mdxData={mdxData} />
+            {(isDesktop) ? <DesktopView TestMdx={TestMdx} mdxData={mdxData} /> : <MobileView TestMdx={TestMdx} mdxData={mdxData} />}
         </Suspense>
     )
 }
