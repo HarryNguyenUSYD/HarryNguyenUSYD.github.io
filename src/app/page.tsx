@@ -11,7 +11,7 @@ export default function Home() {
 
     useEffect(() => {
         const update = () => {
-            setIsDesktop(window.innerWidth >= 1024);
+            setIsDesktop((window.innerWidth >= 1024) && (window.innerWidth >= window.innerHeight));
         };
         update();
 
