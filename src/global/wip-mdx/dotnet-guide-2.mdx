@@ -1,4 +1,4 @@
-import Image from "@/global/mdx/Image/Image";
+import SingleImage from "@/global/mdx/SingleImage/SingleImage";
 import References from "@/global/mdx/References/References";
 import CodeBlock from "@/global/mdx/CodeBlock/CodeBlock";
 import Redirect from "@/global/mdx/Redirect/Redirect";
@@ -18,7 +18,7 @@ Everything you need to begin using .NET has been neatly packed into a tool box c
 the `dotnet` driver, .NET CLI, etc. You can download the SDK from Microsoft's website
 <Redirect name='here' url='https://dotnet.microsoft.com/en-us/download/dotnet' />.
 
-<Image
+<SingleImage
     url='blogs/dotnet-guide-2'
     src='dotnet-download.jpg'
     width={1274}
@@ -32,22 +32,14 @@ matches your device.
 > Note: For this series, we will be using the .NET 9 Windows version.
 
 Once the installer is downloaded, double-click on it to begin. Click on the **Install** button and simply wait for the installation to complete.
-Congratulations, you have successfully downloaded .NET to your machine (thus beginning an era of suffering)!
+Congratulations, you have successfully downloaded .NET to your machine, the first step in building your first project!
 
-<Image
+<SingleImage
     url='blogs/dotnet-guide-2'
     src='dotnet-installer.jpg'
     width={1274}
     height={753}
     alt='Start window of the installer'
-/>
-
-<Image
-    url='blogs/dotnet-guide-2'
-    src='dotnet-installer-complete.jpg'
-    width={1274}
-    height={753}
-    alt='End window of the installer'
 />
 
 # Hello, World!
@@ -59,7 +51,7 @@ since they are developed by Microsoft to be fully integrated with .NET projects,
 
 Open the terminal. Use the command:
 
-<CodeBlock language="bash" code="dotnet new console -o sample" />
+<CodeBlock language="bash" copiable={true} code="dotnet new console -o sample" />
 
 ...to create a new sample project. You will see a directory named `sample` in your workspace, consisting of:
 
@@ -68,6 +60,70 @@ Open the terminal. Use the command:
 - `sample.csproj`: An SDK-style project file that tells MSBuild you are building an executable for the latest .NET target.
 
 > Reminder: MSBuild is the .NET projects' build system. It's used to compile source code, generate binaries, and manage the entire build pipeline.
+
+Navigate to the sample project by entering `cd sample/` into the terminal. Then run the project using `dotnet run`. The program will then be compiled into
+a `bin` folder (you will most likely never touch this during your work), and an output will be printed onto the terminal.
+
+<CodeBlock
+    language="bash"
+    code={`$ cd sample/
+$ dotnet run
+Hello, World!`} />
+
+This output matches the statement in the `Program.cs` file.
+
+> Try changing the "Hello, World!" text into something else! What will be printed then?
+
+<SingleImage
+    url='blogs/dotnet-guide-2'
+    src='sample-structure.jpg'
+    width={508}
+    height={357}
+    alt='What your project structure should look like'
+/>
+
+# First Changes
+
+Let's pay our attention to the `Program.cs` only for now. As mentioned earlier, this will be the entry point of your project. We can customize this
+file to expand our project from the sample.
+
+Since we are only starting to use .NET, let's make something simple: a greeting program. The program will ask you for your name and print out
+a greeting for you.
+
+Change the content of `Program.cs` to the following:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`Console.WriteLine("Welcome to my first .NET app!");
+
+Console.Write("What's your name? ");
+string? name = Console.ReadLine();
+
+Console.WriteLine($"Nice to meet you, {name}!");`} />
+
+We will explain how exactly this code works in the next episode. For now, save the file, then run `dotnet run`. The output should look something like
+this:
+
+<CodeBlock
+    language="bash"
+    code={`$ dotnet run
+Welcome to my first .NET app!
+What's your name? <type-your-name-here>
+Nice to meet you, <your-name>!`} />
+
+And you're done! You have implemented a feature to your first .NET project. While your project is small for now, it will undoubtedly grow larger and
+better as you learn.
+
+# Conclusion
+
+And that's all for today's episode. Next week we will take a look at the basic concepts of C#, and further expand upon your project.
+
+All the code used for this guide (all of my guides in fact) will be available on my
+<Redirect name='GitHub' url='https://github.com/HarryNguyenUSYD/BlogsCode' />. Have some fun with it!
+
+Make sure to give this post a like and share it with your friends. If you have any feedback, perhaps an idea for a blog, send me an email and I'll respond as
+soon as I can. For now, have fun learning!
 
 <References ref={[
     {

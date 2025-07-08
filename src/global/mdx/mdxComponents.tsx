@@ -1,5 +1,5 @@
 import type { MDXComponents } from 'mdx/types'
-import Image from './Image/Image';
+import Image from './SingleImage/SingleImage';
 import ImageGallery from './ImageGallery/ImageGallery';
 import References from './References/References';
 import CodeBlock from './CodeBlock/CodeBlock';
