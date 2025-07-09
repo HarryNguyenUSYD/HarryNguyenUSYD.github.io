@@ -6,14 +6,14 @@ import Redirect from "@/global/mdx/Redirect/Redirect";
 # Welcome Back!
 
 Welcome to the second instalment of my "Introduction to .NET" series. In this episode, we will be discussing how to get started with your first .NET project.
-This includes installation, file structures, initiating the base project, and how to make your first changes.
+This includes installation, base project initiation, and making your first changes.
 
 If you want to know more about the history of .NET, its structure and why you should use it, check out the previous episode
 <Redirect name='here' url='/blogs/dotnet-guide-1' />.
 
 # The First Step
 
-Everything you need to begin using .NET has been neatly packed into a tool box called the .NET Software Development Kit (.NET SDK). As discussed during
+Everything you need to begin using .NET has been neatly packed into a toolbox called the .NET Software Development Kit (.NET SDK). As discussed during
 <Redirect name='episode 1' url='/blogs/dotnet-guide-1' />, the SDK contains core tools and programs for every .NET project, including compilers,
 the `dotnet` driver, .NET CLI, etc. You can download the SDK from Microsoft's website
 <Redirect name='here' url='https://dotnet.microsoft.com/en-us/download/dotnet' />.
@@ -26,8 +26,8 @@ the `dotnet` driver, .NET CLI, etc. You can download the SDK from Microsoft's we
     alt='.NET Download Website (Source: Microsoft)'
 />
 
-Once on the website, click the highlighted link to download the newest active version. .NET is available for Linux, macOS, and Windows. Pick a version that
-matches your device.
+Once on the website, click the highlighted link to download the newest active version. .NET is available for Linux, macOS, and Windows.
+Pick a version that matches your operating system.
 
 > Note: For this series, we will be using the .NET 9 Windows version.
 
@@ -44,8 +44,8 @@ Congratulations, you have successfully downloaded .NET to your machine, the firs
 
 # Hello, World!
 
-Create an empty directory and open it with your favorite code editor or IDEs. Visual Studio and Visual Studio Code are strongly suggested,
-since they are developed by Microsoft to be fully integrated with .NET projects, but other tools such as JetBrains Rider can also be used.
+Create an empty directory and open it with your favorite code editor or IDE. Visual Studio and Visual Studio Code are strongly suggested,
+since they are developed by Microsoft to be fully integrated with .NET projects. However, other tools such as JetBrains Rider can also be used.
 
 > Note: For this series, we will be using VS Code.
 
@@ -53,13 +53,13 @@ Open the terminal. Use the command:
 
 <CodeBlock language="bash" copiable={true} code="dotnet new console -o sample" />
 
-...to create a new sample project. You will see a directory named `sample` in your workspace, consisting of:
+...to create a new sample project. You will see a directory named `sample` in your workspace. It contains:
 
 - `obj/`: Contains the intermediary "object" files and generated MSBuild artefacts produced during compilation.
 - `Program.cs`:	Holds the top-level statements. This is the entry point of your project.
 - `sample.csproj`: An SDK-style project file that tells MSBuild you are building an executable for the latest .NET target.
 
-> Reminder: MSBuild is the .NET projects' build system. It's used to compile source code, generate binaries, and manage the entire build pipeline.
+> Reminder: MSBuild is the build system used for .NET projects. It's used to compile source code, generate binaries, and manage the entire build pipeline.
 
 Navigate to the sample project by entering `cd sample/` into the terminal. Then run the project using `dotnet run`. The program will then be compiled into
 a `bin` folder (you will most likely never touch this during your work), and an output will be printed onto the terminal.
@@ -84,10 +84,10 @@ This output matches the statement in the `Program.cs` file.
 
 # First Changes
 
-Let's pay our attention to the `Program.cs` only for now. As mentioned earlier, this will be the entry point of your project. We can customize this
+Let's only focus on the `Program.cs` for now. As mentioned earlier, this will be the entry point of your project. We can customize this
 file to expand our project from the sample.
 
-Since we are only starting to use .NET, let's make something simple: a greeting program. The program will ask you for your name and print out
+Since we are just starting to use .NET, let's make something simple: a greeting program. The program will ask for your name and print out
 a greeting for you.
 
 Change the content of `Program.cs` to the following:
@@ -112,14 +112,14 @@ Welcome to my first .NET app!
 What's your name? <type-your-name-here>
 Nice to meet you, <your-name>!`} />
 
-And you're done! You have implemented a feature to your first .NET project. While your project is small for now, it will undoubtedly grow larger and
-better as you learn.
+And you're done! You have implemented a feature to your first .NET project. While your project is small for now, it will undoubtedly grow as
+you continue learning.
 
 # Conclusion
 
-And that's all for today's episode. Next week we will take a look at the basic concepts of C#, and further expand upon your project.
+And that's all for today's episode. Next week, we'll take a look at the basic concepts of C# and continue building on your project.
 
-All the code used for this guide (all of my guides in fact) will be available on my
+All the code used for this guide (all of my guides, in fact) will be available on my
 <Redirect name='GitHub' url='https://github.com/HarryNguyenUSYD/BlogsCode' />. Have some fun with it!
 
 Make sure to give this post a like and share it with your friends. If you have any feedback, perhaps an idea for a blog, send me an email and I'll respond as
