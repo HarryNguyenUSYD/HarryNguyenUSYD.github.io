@@ -1,5 +1,5 @@
 import type { MDXComponents } from 'mdx/types'
-import Image from './SingleImage/SingleImage';
+import SingleImage from './SingleImage/SingleImage';
 import ImageGallery from './ImageGallery/ImageGallery';
 import References from './References/References';
 import CodeBlock from './CodeBlock/CodeBlock';
@@ -23,7 +23,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
             <code className='bg-gray-200 dark:bg-gray-800 rounded px-1 py-0.5 text-sm lg:text-xl text-gray-200 break-all' {...props} />
         ),
         ImageGallery,
-        Image,
+        SingleImage,
         References,
         CodeBlock,
         Redirect,
