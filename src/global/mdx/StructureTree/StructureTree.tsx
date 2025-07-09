@@ -23,6 +23,6 @@ function recursiveBuild(node: TreeNode, prefix: string = "", isLast: boolean = t
 export default function StructureTree({node}: { node: TreeNode }) {
     console.log(recursiveBuild(node));
     return (
-        <CodeBlock language="js" code={recursiveBuild(node)} />
+        <CodeBlock language="js" copiable={false} code={recursiveBuild(node)} />
     )
 }

@@ -11,12 +11,12 @@ import { useCopiableTextContext } from '@/global/component/CopiableText';
 export default function CodeBlock({
     language,
     code,
-    copiable = false,
+    copiable,
     alt
 } : {
     language: string,
     code: string,
-    copiable: boolean,
+    copiable?: boolean,
     alt?: string
 }) {
     const [isCopied, setIsCopied] = useState(false);
@@ -38,7 +38,7 @@ export default function CodeBlock({
             <div className='w-full h-auto flex flex-row justify-center items-center'>
                 <div className='max-w-full w-auto h-auto flex flex-col justify-center items-center'>
                     <button
-                        style={{ display: copiable ? "flex" : "none" }}
+                        style={{ display: (copiable != undefined && copiable) ? "flex" : "none" }}
                         className='flex-row justify-end px-3 py-1 bg-blue-950 text-blue-200 items-center gap-1
                             text-xs lg:text-sm cursor-pointer rounded-t-md self-end'
                         onClick={() => handleCopyTextToClipboard(code)}
