@@ -33,13 +33,13 @@ export default function SingleImage({
 
     return (
         <>
-            <div className='relative w-full max-h-[50vh] lg:max-h-[75vh] flex flex-col justify-center items-center'>
+            <div className='relative w-full max-h-[70vh] lg:max-h-[100vh] flex flex-col justify-center items-center'>
                 <button
-                    className="relative w-[100%*0.5] h-auto overflow-x-auto my-3 lg:my-10 flex justify-center items-center
+                    className="relative w-auto h-auto my-3 lg:my-10 flex justify-center items-center
                         border-2 border-white p-1 lg:p-2 lg:hover:border-blue-highlighted lg:duration-150 lg:cursor-pointer"
                     onClick={() => setIsShowingZoomedImage(true)}
                 >
-                    {imageSrc && <Image src={imageSrc} alt={alt ?? ""} width={width} height={height} className='w-auto h-full' />}
+                    {imageSrc && <Image src={imageSrc} alt={alt ?? ""} width={width} height={height} className='min-w-[25vw] min-h-[25vh] w-auto h-full' />}
                 </button>
                 {alt && <p className='text-sm lg:text-xl italic font-thin text-center'>{alt}</p>}
             </div>

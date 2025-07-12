@@ -1,4 +1,4 @@
-import SingleImage from "@/global/mdx/Images/SingleImage";
+import SingleImage from "@/global/mdx/SingleImage/SingleImage";
 import References from "@/global/mdx/References/References";
 import CodeBlock from "@/global/mdx/CodeBlock/CodeBlock";
 import Redirect from "@/global/mdx/Redirect/Redirect";
@@ -37,6 +37,14 @@ Nowadays, professional programmers (also known as developers) is one of the most
 the massive growth of AI that can write huge programs in the matter of minutes. Programming is also no longer just limited to nerds who can afford college
 tuition, since everyone can now learn to code using a wide range of resources available online for free (such as this one!).
 
+<SingleImage
+    url='blogs/programming-1'
+    src='xkcd-844.png'
+    width={455}
+    height={695}
+    alt="Relevant xkcd: #844 - Good Code"
+/>
+
 # Before There Was Programming, There Was Programmable Devices
 
 Programming started as, and has always been, a method of automating repeated tasks. The first known programmable device was an automated mechanical flute
@@ -53,12 +61,10 @@ ENIAC and IBM tabulators.
 
 <SingleImage
     url='blogs/programming-1'
-    image={{
-        src: 'jacquard-loom-cards.jpg',
-        width: 249,
-        height: 333,
-        alt: "A Jacquard loom's chain and its punchcards. Source: Wikipedia"
-    }}
+    src='jacquard-loom-cards.jpg'
+    width={498}
+    height={666}
+    alt="A Jacquard loom's chain and its punchcards. Source: Wikipedia"
 />
 
 While programmable devices was created much sooner in history, the first so-called computer program was only created in 1843 by Ada Lovelace. Ada Lovelace
@@ -127,7 +133,7 @@ That being said, there are three candidates I recommend for you first language:
 Python is arguably the easiest of the three, and one of the easiest language to learn in general. Python:
 
 - is dynamically-typed, so you don't have to worry about data types early on.
-- has very simple syntax (e.g. `print("Hello, world!")`)
+- has very simple syntax
 - is object-oriented.
 - is one of the most popular languages on the market, especially in data science, web, and AI.
 
@@ -138,6 +144,8 @@ On the other hand, Python:
 - has very slow performance compared to other languages.
 
 Python is the best option if you don't do programming very often, or if you want something easy to learn for your first project.
+
+<CodeBlock language="python" code="print('Hello, World!')" alt='A Python code snippet that prints "Hello, World!"' />
 
 ## Java
 
@@ -156,6 +164,12 @@ On the other hand, Java:
 
 Java is the best option if you want to build something big, or if you want to learn efficient Object-Oriented Programming.
 
+<CodeBlock language="java" code={`public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}`} alt='A Java code snippet that prints "Hello, World!"' />
+
 ## C++
 
 C++ is the hardest of the three, but it is very commonly used for competitive programming due to its speed, as well as having great educational value. C++:
@@ -172,6 +186,13 @@ On the other hand, C++:
 - in terms of building projects, C++ is the slowest of the three.
 
 C++ is the best option if you want to code competitively, or if you want to start learning low-level languages.
+
+<CodeBlock language="cpp" code={`#include <iostream>
+
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}`} alt='A C++ code snippet that prints "Hello, World!"' />
 
 # Conclusion
 
