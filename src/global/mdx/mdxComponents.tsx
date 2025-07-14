@@ -4,7 +4,8 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import References from './References/References';
 import CodeBlock from './CodeBlock/CodeBlock';
 import Redirect from './Redirect/Redirect';
- 
+import Table from './Table/Table';
+
 export function useMDXComponents(components?: MDXComponents): MDXComponents {
     return {
         h1: (props) => <h1 className="text-2xl my-2 lg:text-4xl lg:my-8 font-bold" {...props} />,
@@ -27,6 +28,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
         References,
         CodeBlock,
         Redirect,
+        Table,
         ...components
     };
 }

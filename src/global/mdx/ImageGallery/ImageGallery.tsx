@@ -45,7 +45,7 @@ export default function ImageGallery({
             <div className="w-auto h-full flex flex-row justify-start items-center gap-2 lg:gap-5 pb-3 lg:pb-5">
                 {images.map((image, i) => {
                     return (
-                        <div key={id + i} className='relative w-auto h-full flex-none'>
+                        <div key={id + "_" + i} className='relative w-auto h-full flex-none'>
                             <Image src={image.src} alt={image.alt ?? ""} width={image.width} height={image.height} className='w-auto h-full' />
                         </div>
                     )
