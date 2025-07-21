@@ -13,7 +13,7 @@ export default function PageWrapper({
     children: React.ReactNode
 }) {
     return (
-        <div className="w-full h-auto p-10 overflow-x-hidden text-white">
+        <div className="w-full max-w-[2048px] h-auto p-10 overflow-x-hidden text-white">
             <Navbar />
             <Background />
             {children}

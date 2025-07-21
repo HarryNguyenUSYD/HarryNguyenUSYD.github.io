@@ -6,7 +6,11 @@ import { Suspense, useEffect, useState } from "react";
 const DesktopView = dynamic(() => import('./components/DesktopView'));
 const MobileView = dynamic(() => import('./components/MobileView'));
 
+<<<<<<< Updated upstream
 import TestMdx from "@/global/wip-mdx/dotnet-guide-3.mdx";
+=======
+import TestMdx from "@/global/wip-mdx/dotnet-guide-4.mdx";
+>>>>>>> Stashed changes
 
 export default function MdxTest() {
     const [isDesktop, setIsDesktop] = useState(true);

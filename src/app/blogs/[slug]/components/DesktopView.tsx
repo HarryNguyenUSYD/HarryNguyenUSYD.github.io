@@ -18,6 +18,7 @@ import ErrorPage from "@/global/component/error-page/DesktopErrorPage";
 import { useMDXComponents } from "@/global/mdx/mdxComponents";
 import Link from "next/link";
 import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/component/CopiableText";
+import Suggestions from "@/global/component/suggestions/DesktopSuggestions";
 
 export default function BlogPage({ params } : { params: Promise<{slug: string}>}) {
     const { slug: blogUrl } = use(params);
@@ -60,15 +61,20 @@ export default function BlogPage({ params } : { params: Promise<{slug: string}>}
     return (
         <CopiableTextContextProvider>
             <PageWrapper>
-                <div className="w-full h-full p-10 mt-10">
+                <div className="w-full h-full px-20 py-5 mt-10">
                     {
                         (loading) ? <LoadingScreen /> : 
                         (blogUrl === null || blog === null || blogMdx === null) ? <ErrorPage /> :
                         (
                             <>
                                 <BlogHeader blog={blog} />
-                                <div className="w-full h-auto p-10 mt-5 bg-[#000000af] rounded-3xl">
-                                    {(loading || blogMdx === null) ? <LoadingScreen /> : <MDXRemote {...blogMdx} components={components} />}
+                                <div className="w-full flex flex-row justify-between items-start">
+                                    <div className="w-full max-w-[800px] h-auto p-10 mt-5 grow bg-[#000000af] rounded-3xl">
+                                        {(loading || blogMdx === null) ? <LoadingScreen /> : <MDXRemote {...blogMdx} components={components} />}
+                                    </div>
+                                    <div className="w-full h-auto p-10 mt-5 ml-15 flex-1 bg-[#000000af] rounded-3xl">
+                                        <Suggestions blog={blog} />
+                                    </div>
                                 </div>
                             </>
                         )

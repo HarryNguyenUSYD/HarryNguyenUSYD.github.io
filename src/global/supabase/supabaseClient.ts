@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import { Blog, Project } from './tables';
+import { Blog, Project, Series } from './tables';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -70,6 +70,19 @@ export async function fetchBlogs(page: number, name: string, tag: string, order:
             .order(column, { ascending });
     }
 
+}
+
+/**
+ * Get the [count] most recent posts. Defaults to 3.
+ * @param count The number of posts
+ * @returns the [count] most recent posts
+ */
+export async function fetchRecentBlogs(count: number = 3) {
+    return await supabase
+        .from('Blog')
+        .select('*')
+        .order('date', { ascending: false })
+        .limit(count); 
 }
 
 export async function fetchBlogFromUrl(url: string) {
@@ -171,4 +184,18 @@ export async function fetchImage(url: string, imgSrc: string) {
         .storage
         .from('mdx-bucket')
         .getPublicUrl(url + "/" + imgSrc);
+}
+
+export async function fetchSeriesFromId(id: number) {
+    return await supabase
+        .from('Series')
+        .select("*")
+        .eq("id", id);
+}
+
+export async function fetchSeriesAvatar(series: Series) {
+    return await supabase
+        .storage
+        .from('mdx-bucket')
+        .getPublicUrl('series/' + series.avatar);
 }

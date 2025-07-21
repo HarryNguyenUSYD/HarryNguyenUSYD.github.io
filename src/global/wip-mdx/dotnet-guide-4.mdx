@@ -1,0 +1,105 @@
+import SingleImage from "@/global/mdx/SingleImage/SingleImage";
+import References from "@/global/mdx/References/References";
+import CodeBlock from "@/global/mdx/CodeBlock/CodeBlock";
+import Redirect from "@/global/mdx/Redirect/Redirect";
+import Table from '@/global/mdx/Table/Table';
+
+# Welcome Back!
+
+Hello everyone to the latest episode of my series on .NET. Last week we tackled some of the basic topics about C#, such as simple I/O, variable types, and
+operators (read it <Redirect name="here" url="/blogs/dotnet-guide-3"/>!). Today we will use those topics to talk about conditionals and loops, as well as some keywords relating to them. These topics will be useful
+for writing more complex programs using C#, which will transfer nicely into our goal of making .NET projects.
+
+Without further ado, let's get into it!
+
+# Conditionals
+
+Conditionals in C# revolve around three main keywords: `if`, `else`, and `switch`.
+
+`if` is the simplest: do something if true. Typically, that "something" is either a boolean variable, or an expression that resolves to a boolean value.
+
+We can make an `if`-statement using this syntax:
+
+<CodeBlock
+    language="csharp"
+    code={`if (<expression>) {
+    // Do something
+}`}
+/>
+
+> Note: Oh, notice the `//` in that code snippet? Typing that allows you to write comments, essentially text that aren't considered to be
+part of the code. Use that to make your code clearer.
+
+Occasionally, you might want to do something if a condition is met, but do something **else** otherwise. That's where the `else` keyword comes in. `else`
+extends the `if` statement to do some other things when the condition returns `false`.
+
+<CodeBlock
+    language="csharp"
+    code={`if (<expression>) {
+    // Do something
+} else {
+    // Do some other thing
+}`}
+/>
+
+You can stack multiple `else` statements in a row by writing what's known as `else if` statements. This is helpful if you want to do something differently
+depending on what condition is met (e.g. return 1 if true, 0 if false, -1 if there was an error).
+
+<CodeBlock
+    language="csharp"
+    code={`if (<expression_1>) {
+    // Do something
+} else if (<expression_2>) {
+    // Do some other thing
+} else {
+    // Do some final thing
+}`}
+/>
+
+Let's make an example. Say you are writing a program that, depending on their age, prints out the group a user belongs to. They are `Children` if their age
+is lower than 12, `Teenagers` if they are between 12 and 18, and `Adults` if they are older or equal to 18. A conditional statement for that would
+look something like this:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`string? input = Console.ReadLine();
+
+int age = Convert.ToInt32(input);
+if (age < 12) {
+    Console.WriteLine("You are in group Children!");
+} else if (age >= 12 && age < 18) {
+    Console.WriteLine("You are in group Teenagers!");
+} else {
+    Console.WriteLine("You are in group Adults!");
+}`}
+/>
+
+> Note: We discussed variable casting and operators in last week's episode. Check it out <Redirect name="here" url="/blogs/dotnet-guide-3"/>!
+
+Another way we can check for multiple conditions is using the `switch` statement. `switch` statements are cleaner, has better readability and has access
+to some cool features from C# 7+. However, it only works when all of your conditions revolve around one variable.
+
+We can write a `switch` statement like this:
+
+<CodeBlock
+    language="csharp"
+    code={`switch (<variable>) {
+    case <value_1>:
+        // Do something
+        break;
+    case <value_2>:
+        // Do something
+        break;
+    // Some other cases here...
+    default:
+        // Do something
+        break;
+}`}
+/>
+
+`switch` statements can have as many cases as there are possible values of the variable. If you want to make a "catch-all" case that all the other cases may
+miss, use the `default` keyword (as seen above).
+
+Also, notice how at the end of each case there is a `break` keyword? `break` is used when you need to end a case in a `switch` statement. C# will not compile
+if you don't do that, so make sure to include it in each case.
