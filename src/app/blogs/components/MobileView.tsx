@@ -358,15 +358,15 @@ function Post({
     }, [blog]);
     
     return (
-        <div className="w-full h-[80vh] rounded-xl flex flex-col justify-center items-center gap-5">
+        <div className="w-full h-[max(650px,70vh)] rounded-xl flex flex-col justify-center items-center gap-5">
             <div className="w-full h-full flex flex-col justify-start items-center overflow-hidden">
-                <Link href={"/blogs/" + blog.url} className="w-full h-[40%] flex-none overflow-hidden">
+                <Link href={"/blogs/" + blog.url} className="w-full h-[min(250px,40vh)] flex-none overflow-hidden">
                     {avatarSrc !== null && <Image src={avatarSrc} width={1000} height={500} alt="Post's image" className="w-full h-full object-cover object-center" />}
                 </Link>
                 <div className="w-full h-full p-5 flex flex-col justify-start items-start">
                     <Link href={"/blogs/" + blog.url} className="w-full h-full cursor-pointer">
                         <div className="w-full h-auto flex flex-col justify-between items-start">
-                            <p className="text-3xl font-bold whitespace-nowrap">{blog.title}</p>
+                            <p className="text-3xl font-bold">{blog.title}</p>
                             <p className="text-base font-thin italic">{new Date(blog.date).toLocaleDateString()}</p>
                             <p className="text-xl w-full h-full pt-2 text-left">
                                 {blog.desc}

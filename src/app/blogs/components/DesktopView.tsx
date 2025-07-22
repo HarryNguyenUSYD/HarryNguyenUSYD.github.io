@@ -354,16 +354,16 @@ function Post({
     }, [blog]);
 
     return (
-        <div className="w-full h-[35vh] rounded-xl flex flex-col justify-center items-center gap-10">
-            <div className="w-full h-full flex flex-row justify-center items-start overflow-hidden">
-                <Link href={"/blogs/" + blog.url} className="w-[35vw] h-full overflow-hidden">
+        <div className="w-full h-[min(400px,35vh)] rounded-xl flex flex-col justify-center items-center gap-10">
+            <div className="w-full h-full flex flex-row justify-start items-start overflow-hidden">
+                <Link href={"/blogs/" + blog.url} className="w-[min(30vw,500px)] flex-none h-full overflow-hidden">
                     {avatarSrc !== null && <Image src={avatarSrc} width={1000} height={500} alt="Post's image" className="w-full h-full object-cover object-center hover:scale-110 duration-150" />}
                 </Link>
-                <div className="w-[65vw] flex-none h-full p-5 flex flex-col justify-start items-start">
+                <div className="w-full h-full p-5 flex flex-col justify-start items-start">
                     <Link href={"/blogs/" + blog.url} className="w-full h-full cursor-pointer group">
-                        <div className="w-full h-auto flex flex-row justify-between items-center">
-                            <p className="w-full text-5xl font-bold truncate group-hover:text-blue-highlighted duration-150">{blog.title}</p>
-                            <p className="w-auto flex-none text-2xl font-thin italic text-right ml-5">{new Date(blog.date).toLocaleDateString()}</p>
+                        <div className="w-full h-auto flex flex-row justify-between items-start">
+                            <p className="w-auto text-5xl font-bold group-hover:text-blue-highlighted duration-150">{blog.title}</p>
+                            <p className="flex-none w-[15%] text-2xl font-thin italic text-right ml-5">{new Date(blog.date).toLocaleDateString()}</p>
                         </div>
                         <p className="text-2xl w-full h-full pt-2 text-left group-hover:text-blue-highlighted duration-150">
                             {blog.desc}
@@ -374,7 +374,7 @@ function Post({
                             <p className="mr-3">Tags:</p>
                             {blog.tags.map((tag) => (stringToTagButton(tag, blog.id + tag)))}
                         </div>
-                        <div className="w-auto h-auto self-end flex flex-row justify-end items-center gap-5">
+                        <div className="h-auto self-end flex flex-row justify-end items-center gap-5">
                             <div className="flex flex-row justify-center items-center gap-2">
                                 <BsEye className="font-thin opacity-50" />
                                 <p className="font-thin opacity-50">{blog.view_count}</p>
