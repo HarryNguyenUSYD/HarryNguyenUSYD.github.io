@@ -6,15 +6,16 @@ import Table from '@/global/mdx/Table/Table';
 
 # Welcome Back!
 
-Hello everyone to the latest episode of my series on .NET. Last week we tackled some of the basic topics about C#, such as simple I/O, variable types, and
+Hello and welcome to the latest episode of my series on .NET. Last week we tackled some of the basic topics about C#, such as simple I/O, variable types, and
 operators (read it <Redirect name="here" url="/blogs/dotnet-guide-3"/>!). Today we will use those topics to talk about conditionals and loops, as well as some keywords relating to them. These topics will be useful
 for writing more complex programs using C#, which will transfer nicely into our goal of making .NET projects.
 
 Without further ado, let's get into it!
 
-# Conditionals
+# "Go To The Store And Buy A Bottle Of Milk. If They Have Eggs, Buy 12."
 
-Conditionals in C# revolve around three main keywords: `if`, `else`, and `switch`.
+Conditionals are ways to tell the program to do different things depending on its state. In C#, that revolves around three main keywords: `if`, `else`,
+and `switch`.
 
 `if` is the simplest: do something if true. Typically, that "something" is either a boolean variable, or an expression that resolves to a boolean value.
 
@@ -77,7 +78,7 @@ if (age < 12) {
 
 > Note: We discussed variable casting and operators in last week's episode. Check it out <Redirect name="here" url="/blogs/dotnet-guide-3"/>!
 
-Another way we can check for multiple conditions is using the `switch` statement. `switch` statements are cleaner, has better readability and has access
+Another way we can check for multiple conditions is using the `switch` statement. `switch` statements are cleaner, have better readability and has access
 to some cool features from C# 7+. However, it only works when all of your conditions revolve around one variable.
 
 We can write a `switch` statement like this:
@@ -98,8 +99,238 @@ We can write a `switch` statement like this:
 }`}
 />
 
-`switch` statements can have as many cases as there are possible values of the variable. If you want to make a "catch-all" case that all the other cases may
-miss, use the `default` keyword (as seen above).
+`switch` statements do something different depending on which `case` the variable belongs to. There can be as many cases as there are possible values of
+the variable. If you want to make a "catch-all" case that all the other cases may miss, use the `default` keyword (as seen above).
 
-Also, notice how at the end of each case there is a `break` keyword? `break` is used when you need to end a case in a `switch` statement. C# will not compile
-if you don't do that, so make sure to include it in each case.
+As an example, say you want to print out a greeting message depending on the type of the user:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`string? input = Console.ReadLine();
+
+switch (input) {
+    case "admin":
+        Console.WriteLine("Welcome, Admin!");
+        break;
+    case "member":
+        Console.WriteLine("Welcome, Member!");
+        break;
+    default:
+        Console.WriteLine("Invalid user!");
+        break;
+}`}
+/>
+
+Here, the program will print `Welcome, Admin!` if you typed in "admin", and print `Welcome, Member!` if you typed in "member". If you typed in anything
+else though, it will print out `Invalid user!` instead.
+
+Also, notice how there is a `break` keyword at the end of each case? `break` is used when you need to end a case in a `switch` statement. Without that
+keyword, C# will throw a compile-time error. The only time you can remove it is when the case is empty (known as label grouping), essentially
+combine multiple cases into one. For instance:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`string? input = Console.ReadLine();
+
+int number = Convert.ToInt32(input);
+switch (number) {
+    case 1:
+    case 2:
+        Console.WriteLine("Case 1 and 2");
+        break;
+    case 3:
+        Console.WriteLine("Case 3");
+        break;
+    default:
+        Console.WriteLine("Neither 1, 2, or 3");
+        break;
+}`}
+/>
+
+Here, if you type in either 1 or 2, the program will print out `Case 1 and 2`.
+
+> What will happen if you type in 3? What if you typed in another number?
+
+Finally, just a quick reminder before our next section: you can use logical operators (`&&` and `||`) in `if` and `if-else` statements to combine multiple
+conditions in one statement (e.g. `if (a == 1 || a == 2)` will trigger if `a` equals 1 or 2), but this doesn't work in `switch` statements!
+
+# "Go To The Store And Buy A Bottle Of Milk. While You're There, Get Some Bread."
+
+Loops are ways that a program can repeat the same actions multiple times. Loops in `C#` falls into three types: `for`, `while`, and `foreach`-loops.
+
+`for`-loops in C# are the same as the ones in Java or C/C++. For those who don't know, they work following this structure:
+
+<CodeBlock
+    language="csharp"
+    code={`for (<statement_1>; <statement_2>; <statement_3>) {
+    // Do something
+}`}
+/>
+
+- `<statement_1>`: executed once when the loop begins (sort of like initializing the loop).
+- `<statement_2>`: condition for the loop to run (checked after executing `<statement_3>`), stop the loop if this returns `false`.
+- `<statement_3>`: executed once every loop cycle (repeat this at the end of each cycle).
+
+That might sound complex, but it will be much easier to understand using an example:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`for (int i = 0; i < 10; i++) {
+    Console.WriteLine("Loop with i = " + i);
+}`}
+/>
+
+The result will be:
+
+<CodeBlock
+    language="csharp"
+    code={`Loop with i = 0
+Loop with i = 1
+Loop with i = 2
+Loop with i = 3
+Loop with i = 4
+Loop with i = 5
+Loop with i = 6
+Loop with i = 7
+Loop with i = 8
+Loop with i = 9`}
+/>
+
+As you can see, the loop starts by declaring a variable `int i = 0`. The loop then repeat itself, calling `i++` at the end of each step (`i++` means
+increment `i` by 1 every call) until `i < 10` is no longer true. This is why you can see the program print
+out values `i` from 0 to 9, but not 10, since the loop ends when `i` is greater or equal to 10.
+
+`for`-loops are the best when you know roughly how many times the loop will run. They have great readability and is much easier to implement
+than our next loop: `while`-loops.
+
+`while`-loops are again similar to the ones in Java and C/C++. They work like this:
+
+<CodeBlock
+    language="csharp"
+    code={`while (<condition>) {
+    // Do something    
+}`}
+/>
+
+`while`-loops will simply do something while the condition is true. Take a look at this code:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`int i = 0;
+
+while (i < 10) {
+    Console.WriteLine("Loop with i = " + i);
+    i++; // Try removing this line
+}`}
+/>
+
+Here, the program prints out the values of `i` from 0 to 9, just like the `for`-loop. Unlike the `for`-loop, however, you have to declare the variables before
+the loop begins, and the increment within the loop.
+
+But what if you remove the `i++` line? You will find that the loop goes on forever, printing `Loop with i = 0` each time.
+
+> Note: If you are stuck in an infinite loop, press `Ctrl + C` (or `Cmd + C` for Mac users) on the terminal. This will interrupt and end the program.
+
+`while`-loops are easier to implement and work better than `for`-loops in many scenarios, but they come with reduced readability and risk of creating infinite
+loops. These are often really hard to debug (your program might randomly freeze without you knowing!), so make sure to add the increment step in
+the loop.
+
+Finally, we have `foreach`-loops. `foreach`-loops are rarer among programming languages (they don't exist in C, and they share the same keywords as `for`-loops
+in C++ and Java), but they are one of the more useful loops in OOP languages such as C#. `foreach`-loops are used to traverse over a list, an array,
+or other iterable data structures. We will tackle this loop next week when we discuss arrays and other common data structures in C#.
+
+# Breaking and... Continuing?
+
+There are two keywords that are really useful in loops: `break` and `continue`.
+
+You may remember `break` as the keyword in `switch` statements as mentioned above. In loops, however, it comes with the purpose of stopping the loop early.
+This is useful if you have met the exit condition early, or if there is an exception you want to catch. Take a look at this loop:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`for (int i = 0; i < 10; i++) {
+    if (i == 5) {
+        Console.WriteLine("Early exit");
+        break;
+    }
+
+    Console.WriteLine("Loop with i = " + i);
+}`}
+/>
+
+The output will be:
+
+<CodeBlock
+    language="csharp"
+    code={`Loop with i = 0
+Loop with i = 1
+Loop with i = 2
+Loop with i = 3
+Loop with i = 4
+Early exit`}
+/>
+
+The loop repeat until it gets to `i == 5`. Although the looping condition is still true, the loop exits early due to the `break` keyword.
+
+`continue` is similar to `break`, but instead of skipping the rest of the loop, it just skips over this iteration. For instance, if we replace `break` with
+`continue` on the code above:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`for (int i = 0; i < 10; i++) {
+    if (i == 5) {
+        Console.WriteLine("Skipped");
+        continue;
+    }
+
+    Console.WriteLine("Loop with i = " + i);
+}`}
+/>
+
+The output will be:
+
+<CodeBlock
+    language="csharp"
+    code={`Loop with i = 0
+Loop with i = 1
+Loop with i = 2
+Loop with i = 3
+Loop with i = 4
+Skipped
+Loop with i = 6
+Loop with i = 7
+Loop with i = 8
+Loop with i = 9`}
+/>
+
+`continue` is useful for the same reason as `break`, but in some different scenarios.
+
+While both of these keywords are great in loops, it is often recommended not to use them often, as they significantly reduce code readability and make
+code maintenance much more difficult. Make sure to use them wisely.
+
+# Conclusion
+
+And that's it! We have discussed two of the most important topics in C#, conditionals and loops. We still have much more about C# to cover in the upcoming
+weeks, so make sure to stay tuned for that!
+
+Make sure to give this post a like and share it with your friends. If you have any feedback, perhaps an idea for a blog, send me an email and I'll respond as
+soon as I can. For now, have fun learning!
+
+<References ref={[
+    {
+        name: "C# Tutorial",
+        author: "W3Schools",
+        url: "https://www.w3schools.com/cs/index.php"
+    },
+    {
+        name: "Bad Programming Jokes",
+        author: "Reddit",
+        url: "https://www.reddit.com/r/Jokes/comments/5qyxar/a_programmer_goes_shopping/"
+    }
+]}/>
