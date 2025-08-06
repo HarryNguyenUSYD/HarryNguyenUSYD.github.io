@@ -1,0 +1,345 @@
+import SingleImage from "@/global/mdx/SingleImage/SingleImage";
+import References from "@/global/mdx/References/References";
+import CodeBlock from "@/global/mdx/CodeBlock/CodeBlock";
+import Redirect from "@/global/mdx/Redirect/Redirect";
+import Table from '@/global/mdx/Table/Table';
+
+# Welcome Back!
+
+Hello and welcome to the latest episode of my series on .NET. Last week we tackled conditionals and loops in C#, two important topics in any programming languages
+(read it <Redirect name="here" url="/blogs/dotnet-guide-4"/>!). Today we will tackle arrays and some other common data structures in C#. These are useful
+data containers used in most .NET projects, making them a must-know for every beginners.
+
+Without further ado, let's get into it!
+
+# Arrays
+
+Array is a basic data structure that we can use directly without any imports in C#, similar to most programming languages. In simple terms, an array is
+a series of variable stored consecutively in memory. This allows them to be referred to either as a whole, or each individually using indices. Moreover,
+arrays can be iterated over, letting us repeat our actions on all of the variables using loops.
+
+However, arrays have a weakness that is they are constant size, meaning they are stuck with a certain length once we declare them. This makes them useful
+for dealing with constant size data (since they are extremely fast for those) but terrible if the data is growing, or if we don't know the sizes beforehand.
+
+In C#, we can declare an array using any of the following syntaxes:
+
+<CodeBlock
+    language="csharp"
+    code={`<type>[] <array_name> = { <values_separated_by_commas> }
+<type>[] <array_name> = new <type>[<size>]
+<type>[] <array_name> = new <type>[] { <values_separated_by_commas> }`}
+/>
+
+For example, if we are declaring an array of `int`s:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`int[] array_a = { 1, 2, 3 }
+int[] array_b = new int[3]
+int[] array_c = new int[] { 1, 2, 3 }`}
+/>
+
+We can access each variable individually like this:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`int value = array_a[0]; // Get the value of an array variable
+array_a[0] = 10; // Set the value of an array variable`}
+/>
+
+> Note: In C# (and most other languages), indexing begins from 0. So the first element in an array `arr` is `arr[0]`, the second is `arr[1]`, and so on. The
+last element in an array is `arr[<size_of_arr - 1>]`!
+
+If we want to make a change over the whole array, or read the value of every variable in an array, we can iterate over it. The best way of doing this
+is using a `foreach`-loop:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`foreach (int x in array_a) {
+    Console.WriteLine(x); // This will print out the value of all variables in array_a
+}`}
+/>
+
+Note that the type of each variable must be declared in the `foreach`-loops (hence the `int` in the `foreach...` line).
+
+To get the length of an array, we can use the `Length` property of an array, like this: `arr.Length`.
+
+Finally, there are some useful functions we can use with arrays. Most of them come from the class `Array`, but some can be directly accessed from the array's
+instance. These are:
+
+<Table
+    columns={["Function", "Use", "Example"]}
+    content={[
+        ["Array.IndexOf()", "Returns the first index of a value", "Array.IndexOf(arr, 1)"],
+        ["Array.LastIndexOf()", "Returns the last index of a value", "Array.LastIndexOf(arr, 1)"],
+        ["Array.Sort()", "Sorts in ascending order", "Array.Sort(arr)"],
+        ["Array.Reverse()", "Reverses the array", "Array.Reverse(arr)"],
+        ["Array.Copy()", "Copies elements from one array to another", "Array.Copy(arr, newArr, length)"],
+        ["Array.Resize()", "Changes the size of an array", "Array.Resize(ref arr, 10)"],
+        ["Array.Clear()", "Resets elements to default", "Array.Clear(arr, 0, arr.Length)"],
+        ["arr.Clone()", "Creates a shallow copy", "var newArr = (int[])arr.Clone()"]
+    ]}
+/>
+
+Some more functions can be used by importing the `System.Linq` namespace:
+
+<Table
+    columns={["Function", "Use", "Example"]}
+    content={[
+        ["arr.Any()", "Checks if any element satisfies a condition", "arr.Any(x => x > 5)"],
+        ["arr.All()", "Checks if all elements satisfy a condition", "arr.All(x => x > 0)"],
+        ["arr.Where()", "Filters array based on condition", "arr.Where(x => x % 2 == 0).ToArray()"],
+        ["arr.Select()", "Projects each element into a new form", "arr.Select(x => x * x).ToArray()"],
+        ["arr.Sum()", "Adds all elements", "arr.Sum()"],
+        ["arr.Max()", "Finds the maximum element", "arr.Max()"],
+        ["arr.Min()", "Finds the minimum element", "arr.Min()"],
+        ["arr.Average()", "Calculates the average", "arr.Average()"]
+    ]}
+/>
+
+# Multidimensional Arrays
+
+Unlike most languages, where multidimensional arrays are simply arrays containing other arrays, C# created its own multidimensional array objects that
+functions slightly differently than its counterparts.
+
+> Note: Arrays containing other arrays are called jagged arrays in C#. Since they are practically the same as normal arrays, we won't cover them here.
+
+To declare a 2D array, we can use these syntaxes:
+
+<CodeBlock
+    language="csharp"
+    code={`<type>[,] <array_name> = new <type>[<num_rows>, <num_columns>];
+<type>[,] <array_name> = {
+    <values>
+};`}
+/>
+
+For example:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`int[,] matrix_a = new int[3, 4];
+int[,] matrix_b = {
+    { 1, 2, 3, 4 },
+    { 5, 6, 7, 8 },
+    { 9, 10, 11, 12 }
+};`}
+/>
+
+Notice how 2D arrays have one comma `,` in its declaration? We can declare 3D arrays by having two commas (e.g. `int[,,]`), and so on.
+
+We can access each variable like this:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`int value = matrix_a[0, 1]; // Get the value of an array variable
+matrix_a[0, 1] = 10; // Set the value of an array variable`}
+/>
+
+And we can iterate over these arrays like this:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`foreach (int x in array_a) {
+    Console.WriteLine(x);
+}`}
+/>
+
+Note that unlike in other languages, iterating using loops like this in C# will let you access every **cell** in the multidimensional array instead of
+each row/column. If you wish to do that, it's better to use a `for`-loop like this:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`for (int row = 0; row < matrix.GetLength(0); row++) // Rows
+{
+    for (int col = 0; col < matrix.GetLength(1); col++) // Columns
+    {
+        Console.Write(matrix[row, col] + " ");
+    }
+    Console.WriteLine();  // New line for each row
+}`}
+/>
+
+For multidimensional arrays, each dimension can have its own length. We can get the length of each dimension using the `.GetLength()` function, whose input
+is the index of the dimension we want to get. For instance, for a 2D array:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`int[,] matrix = new int[3, 4];
+Console.WriteLine("Row length: " + matrix.GetLength(0));
+Console.WriteLine("Column length: " + matrix.GetLength(1));`}
+/>
+
+Otherwise, most functions for normal arrays also work for multidimensional arrays.
+
+# Common Data Structures Gallery
+
+## List
+
+Lists in C# is a class that represents a linked list data structure. Linked list is similar to an array with flexible sizes. To use them, import the
+namespace `System.Collections.Generic` at the top of your file. We will talk about imports in more details next week.
+
+Linked list is a great data structure to store data of uncertain sizes or growing data (such as the information of users). However, they can be much slower
+than arrays, especially as the size of the list grows larger. That said, this is still one of the most common data structures you will see in all sorts
+of projects, including .NET ones. 
+
+We can declare a `List` like this:
+
+<CodeBlock
+    language="csharp"
+    code={`List<<type>> list = new List<<type>>();`}
+/>
+
+Where `<type>` is the variable type. For instance, for a list of integers:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`List<int> numbers = new List<int>();`}
+/>
+
+Similar to arrays, we can access each element in the list using indices, such as `numbers[0]`.
+
+There are a wide variety of functions that are designed to work with Lists. These are:
+
+<Table
+    columns={["Function", "Use", "Example"]}
+    content={[
+        ["numbers.Add(10)", "Adds an element", "numbers.Add(10);"],
+        ["numbers.Remove(10)", "Removes the first occurrence of an item", "numbers.Remove(10);"],
+        ["numbers.RemoveAt(0)", "Removes an element at a specific index", "numbers.RemoveAt(0);"],
+        ["numbers.Insert(1, 20)", "Inserts item at a specific position", "numbers.Insert(1, 20);"],
+        ["numbers.Contains(20)", "Checks if the item exists", "numbers.Contains(20);"],
+        ["numbers.IndexOf(20)", "Gets the index of the item", "numbers.IndexOf(20);"],
+        ["numbers.Clear()", "Removes all elements", "numbers.Clear();"],
+        ["numbers.Count", "Returns the number of elements", "int total = numbers.Count;"],
+        ["numbers.Sort()", "Sorts the list in ascending order", "numbers.Sort();"],
+        ["numbers.Reverse()", "Reverses the list", "numbers.Reverse();"]
+    ]}
+/>
+
+And finally, we can iterate over a `List` the same way we iterate over arrays:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`foreach (int num in numbers)
+{
+    Console.WriteLine(num);
+}`}
+/>
+
+## Dictionary
+
+Dictionary in C# is a class that represents a hash map data structure. Every entry in a Dictionary is a key-value pair, allowing us to look up
+keys and access data quickly. To use them, import the namespace `System.Collections.Generic` at the top of your file.
+
+Dictionaries are best used when you have data that can be searched through using some form of unique ID. They are reasonably fast for large amount of data,
+but come with large storage overhead.
+
+We can declare a `Dictionary` like this:
+
+<CodeBlock
+    language="csharp"
+    code={`Dictionary<<key_type>, <value_type>> dict = new Dictionary<<key_type>, <value_type>>();`}
+/>
+
+For example, say you have a list of numbers identified by name:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`Dictionary<string, int> dict = new Dictionary<string, int>();`}
+/>
+
+We can access each value in the Dictionary using its key (e.g. `dict["adam"]`). Be careful about using a key not in the dictionary, since it will throw
+a runtime error!
+
+We also have a range of functions associated with Dictionaries:
+
+<Table
+    columns={["Function", "Use", "Example"]}
+    content={[
+        ["dict.Add(\"Tom\", 35)", "Adds a new key-value pair", "dict.Add(\"Tom\", 35);"],
+        ["dict.Remove(\"Tom\")", "Removes a key-value pair", "dict.Remove(\"Tom\");"],
+        ["dict.ContainsKey(\"Alice\")", "Checks if a key exists", "dict.ContainsKey(\"Alice\");"],
+        ["dict.ContainsValue(30)", "Checks if a value exists", "dict.ContainsValue(30);"],
+        ["dict.TryGetValue(\"Alice\", out age)", "Gets a value safely without throwing", "dict.TryGetValue(\"Alice\", out age);"],
+        ["dict.Count", "Number of items in the dictionary", "int total = dict.Count;"],
+        ["dict.Keys", "Returns all keys", "foreach (var key in dict.Keys)"],
+        ["dict.Values", "Returns all values", "foreach (var value in dict.Values)"],
+        ["dict.Clear()", "Removes all entries", "dict.Clear();"]
+    ]}
+/>
+
+Unlike arrays or Lists, iterating over Dictionaries can be done either over all the keys, the values, or both at the same time. They can all be done using
+the `foreach`-loop as follows:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`// Iterating over keys
+foreach (string key in dict.Keys)
+{
+    Console.WriteLine(key);
+}
+
+// Iterating over values
+foreach (int value in dict.Values)
+{
+    Console.WriteLine(value);
+}
+
+// Iterating over both
+foreach (var pair in dict)
+{
+    Console.WriteLine(pair.Key + " " + pair.Value);
+}`}
+/>
+
+# Some More C# Data Structures That Are Too Long For This Episode
+
+Look, I have to be honest with you, C# offers a lot of data structures readily available to use straight out of the box, so much so that covering all of
+them will take a couple episodes. While I can write up all of them (easy episodes to write is great for me anyway), I think it will be very boring and un-useful,
+especially since other than Arrays, Lists, and perhaps Dictionaries, it is quite rare to see other data structures being used in normal projects.
+
+I will definitely make an episode/mini-series covering all the common data structures in programming in the future. But for now, I will simply
+mention, in quick succession, all the data structure classes available in C#. I hope you don't get mad at me for doing this, but I do believe that reading
+through all of the data structures in full detail will take you to bed faster than any of your worst lecturers.
+
+So, here's a speedrun of the rest of the data structures in C#:
+
+<Table
+    columns={["Name", "Description", "Based On", "Namespace"]}
+    content={[
+        ["HashSet<T>", "Stores unique values with no particular order and prevents duplicates.", "Hash table", "System.Collections.Generic"],
+        ["Queue<T>", "A FIFO (First In, First Out) collection.", "Queue", "System.Collections.Generic"],
+        ["Stack<T>", "A LIFO (Last In, First Out) collection.", "Stack", "System.Collections.Generic"],
+        ["LinkedList<T>", "A doubly linked list that allows fast insertion and deletion.", "Doubly linked list", "System.Collections.Generic"],
+        ["SortedDictionary<TKey, TValue>", "A dictionary sorted by key.", "Binary search tree", "System.Collections.Generic"],
+        ["SortedList<TKey, TValue>", "A sorted key-value collection with fast lookup by index or key.", "Sorted array", "System.Collections.Generic"],
+        ["ConcurrentDictionary<TKey, TValue>", "Thread-safe dictionary for concurrent access.", "Hash table", "System.Collections.Concurrent"],
+        ["ObservableCollection<T>", "A dynamic list that provides notifications when items are added or removed.", "Dynamic array + observer pattern", "System.Collections.ObjectModel"]
+    ]}
+/>
+
+# Conclusion
+
+And that's it! We have discussed most of the basic data structures in C#. I understand that this topic is quite boring to talk about since there are a
+lot of repitition, especially if you have known these structures beforehand (or it's probably my fault of being a bad blogger). If you want to know more
+about these topics, feel free to send me a message, I will directly write you a detailed explanation of anything about this topic you'd like to know,
+provided I know about it as well (if not, I'll do some research and get back to you).
+
+Next week we will talk about functions in C#, as well as a quick section on imports. I hope we can get all the basic topics out of the way to talk about
+OOP, which is one of C#'s main selling point and a topic I am very excited for.
+
+Finally, make sure to give this post a like and share it with your friends. If you have any feedback, perhaps an idea for a blog, send me an email and I'll respond as
+soon as I can. For now, have fun learning!

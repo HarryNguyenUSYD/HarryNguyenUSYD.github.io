@@ -1,0 +1,329 @@
+import SingleImage from "@/global/mdx/SingleImage/SingleImage";
+import References from "@/global/mdx/References/References";
+import CodeBlock from "@/global/mdx/CodeBlock/CodeBlock";
+import Redirect from "@/global/mdx/Redirect/Redirect";
+import Table from '@/global/mdx/Table/Table';
+
+# Welcome Back!
+
+Hello everyone, and welcome back to my series "Absolute Basics", where we explore the basics of programming and learn all the concepts necessary to become
+a great programmer.
+
+Today, we will discuss even more concepts regarding Python, specifically one of Python's most important features: functions. This topic is probably one
+of the simplest to grasp, but there are some details you should know before writing some functions of your own. We will explore parameters, return values,
+flow of execution, as well as some rules for writing great functions.
+
+If you haven't already installed Python and want to learn some of its basics, check out the previous episode <Redirect name="here" url="/blogs/programming-2" />.
+
+Without further ado, let's get straight into it.
+
+# A Nice Packet Of Reusable Code
+
+## Problem
+
+Let's start with a problem. Say you are writing a program for your boss that calculates the sum of two numbers that the user types in. And let's say your
+boss wants you to do this three times for some reason. Given that you have learnt a bit of Python from previous episodes, you make something like this:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`num_1 = int(input("Type in the first number: "))
+num_2 = int(input("Type in the second number: "))
+
+print("Their sum is:", num_1 + num_2)
+print("Let's do it again!")
+
+num_3 = int(input("Type in the first number: "))
+num_4 = int(input("Type in the second number: "))
+
+print("Their sum is:", num_3 + num_4)
+print("One more time!")
+
+num_5 = int(input("Type in the first number: "))
+num_6 = int(input("Type in the second number: "))
+print("Their sum is:", num_5 + num_6)`}
+/>
+
+The program works really well (great job!), but now your annoying boss wants to change from calculating their sums to calculating their product.
+Since you do the calculations three times, you have to change the `+` sign to `*` sign three times, as well as changing the "sum" in each message
+to "product". Annoying, but bearable.
+
+But now your boss wants to repeat this input-and-product process ten times! You don't really have time to change this piece of code again (and knowing
+your boss, he will definitely change his mind later). If only there was a way to write the code once, so you can repeat it as many times as you need
+and make all the changes only once...
+
+Well, Python does have a solution: functions!
+
+## Definition
+
+You may have heard the word "function" before in math, where they are simply a method of mapping a value
+from a set (e.g. a number from a list of numbers) to another value of another set. For example, the function "f(x) = 2x^2 + 3x + 5" will map the value 0 to 5,
+or value 1 to 10. Every mathematical function has a list of possible input values (called arguments), a specific series of transformation, and a list of
+possible output values.
+
+We reuse some of these definitions in programming, but we implement these definitions in code. In Python, a function has the following structure:
+
+<CodeBlock
+    language="python"
+    code={`def <function_name> (<arguments>):
+    # Do something here
+    <body>
+
+    # Optionally return something
+    return <return_value>`}
+/>
+
+> Note: Oh, notice the `#` in that code snippet? Typing that allows you to write comments, essentially text that aren't considered to be
+part of the code. We'll discuss it more below!
+
+Let's analyse this step-by-step:
+
+- `def` is the Python keyword for creating new functions.
+- `<function_name>` refers to the name given to the function (such as `f` in f(x)). In Python, function names follow the same rules as variable names.
+- `<arguments>` refers to the list of arguments a function takes in. In programming, these are also called parameters. Much like in math, a function
+can have any number of arguments (including 0), but Python also allows variadic functions (function with variable number of arguments), and optional
+arguments (arguments you can choose to omit).
+- `<body>` refers to the actual code inside the function.
+- `<return_value>` refers to the output of a function. Unlike mathematical functions however, programming functions may not return anything (we call
+these void functions).
+
+For example, take the "f(x) = 2x^2 + 3x + 5" function above. That function in Python may look something like this:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def f(x):
+    result = 2 ** x + 3 * x + 5
+    
+    return result`}
+/>
+
+You can call the function like this:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`# Change 5 to an argument you want
+f(5)`}
+/>
+
+> Note: If you just run the code as it is, you won't see any results on the terminal. If you want to see the function's output, remember to wrap
+it in a `print()` function!
+
+## Type Hinting
+
+Remember when we talked about Python's dynamic-typing? Python doesn't explicitly require users to define the variable's type, but rather infer it from
+its data. This becomes an issue for functions, specifically arguments.
+
+Take a look at this function:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def double(x):
+    result = x * 2
+    
+    return result`}
+/>
+
+A quick glimpse at this function suggests it doubles the value of its input, right?
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`print(double(3)) # Prints "6"`}
+/>
+
+Now, you may think that this function only works for numbers. But what happens if you call it using a string input?
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`print(double("ABC")) # Prints "ABCABC"`}
+/>
+
+That's weird, isn't it? In Python, strings can also be multiplied with integers to repeat itself (e.g. "ABC" * 2 = "ABCABC"). Just by looking at the function
+and its name, there's no way to tell if this function is meant to be called with numbers or string, or even both. This can quickly become a problem in big
+programs and projects, where functions can take handfuls of arguments and be hundreds of lines long!
+
+A pseudo-solution to this problem is type hinting. This Python feature allows developers to mark the arguments of a function by putting its type in the
+function declaration. Note that this doesn't prevent the function from being called with the wrong types; it just gives a **hint** on how the function should
+be called.
+
+A type-hinted version of the above function looks like this:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def double(x: int):
+    result = x * 2
+    
+    return result`}
+/>
+
+Now you know that the `double` function is meant to be called with integers!
+
+## Comments
+
+Comments are text written in the code file, but not considered to be part of the code. They are a way for developers to leave notes for other
+people (or themselves) to read and understand what's going on. It is generally recommended to write comments often, and to make them short but descriptive.
+
+There are two ways to write comments in Python.
+
+Single-line comments in Python can be written using the `#` symbol. Everything to the right of this symbol on a line is considered comment. For example:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`# Everything here is a comment
+# Even ones that look like code
+
+# print("Hello World!")`}
+/>
+
+During development, you can comment out sections of code to temporarily remove it for debugging.
+
+Multi-line comments in Python by writing text between two blocks of three single quotation marks `'''`. For example:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`'''
+Everything here is a comment
+You can put multiple lines between these blocks
+Even ones that look like code
+
+print("Hello World!")
+'''
+`}
+/>
+
+The best way to use these is by putting them in functions at the start. This way you can comment functions to further explain their functionality.
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def double(x: int):
+    '''
+    Doubles an integer
+    Please don't put strings in here
+    '''
+    result = x * 2
+    
+    return result
+`}
+/>
+
+## How To Write Your Functions
+
+Functions are one of the strongest tools in programming, but they are also one of the easiest to misuse. Bad functions writing can make your code ugly,
+hard to read, debug, or expand upon.
+
+These are some tips you can use to make the best functions for your code:
+
+- Functions should be simple: they do one thing really well, and that's it. Have each of your functions focus on one task and one task only.
+- If you have a lot of reused code, make a function out of it. It will save hours of rewriting and debugging.
+- Name your functions clearly and descriptively.
+- Comment your functions, and use type-hinting.
+
+# Flow Of Execution
+
+This may be a simple fact, but all Python programs execute from top to bottom. We can see this by comparing these two code snippets:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`print("This line first!")
+print("This line second!")`}
+/>
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`print("This line second!")
+print("This line first!")`}
+/>
+
+Both snippets print out the messages from top to bottom, regardless of the message's content. This ordering of execution also applies to
+variable declaration:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`# Doesn't work!
+print(a)
+a = 10`}
+/>
+
+This code snippet doesn't work because the variable `a` has not been declared yet when the `print` line was reached.
+
+Now, you might think this is awfully obvious (and that I'm wasting your time reading this). However, some weird things happen when it comes to functions:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def function_1():
+    function_2()
+
+def function_2():
+    print("Hello!")
+    
+function_1()`}
+/>
+
+If you haven't caught it yet, notice how the definition of `function_1` requires `function_2`. If Python truly executes from top to bottom,
+`function_2` isn't defined yet when `function_1` was defined. So why does this work?
+
+The short answer is: Python does read top to bottom, but when it reads a function definition, it does not execute it immediately.
+Rather, it just records the function's name and body for later use. In other words, Python doesn't care whether `function_2` exists at the time of
+definition, only that it exists at the time of execution (i.e. when you call it later).
+
+This is beneficial for Python developers, since it means functions doesn't have to be defined in the order of reference. This is unlike some
+other languages, such as C, where functions have to be defined before it is referenced by other functions. In Python, you can define functions that reference
+each other in any order you want.
+
+# main()
+
+In most programming languages, there is an entry point in the form of a function called `main()`. This entry point
+is considered mandatory in many languages (such as C/C++ and Java), and the program simply refuses to compile without it.
+
+In Python, however, the `main` function isn't strictly necessary. On one hand, this is good for developers since we are given a bit more freedom to
+structure our programs as we want. On the other hand, this is bad when you are reading someone else's code, since you have no idea where the code begins.
+
+To counteract this, many developers create a pseudo-`main` function in Python. It works exactly like `main` functions in other languages, providing an entry
+point to the code, but doing so in a "Pythonic" way.
+
+A `main` function in Python looks something like this:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def main():
+    # Do something here
+    print("Hello, World!")
+
+if (__name__ == "__main__"):
+    main()`}
+/>
+
+See that weird `if` block at the bottom? That's commonly referred to as "the main guard". When your program is imported by another file
+(we will discuss this in future weeks), the main guard checks if this file is the entry point of the whole program. If it is (signified by the global
+variable `__name__` being equal to `"__main__"`), Python will call the `main()` function within that file. If not, the `main` function is ignored.
+
+We will discuss `if`-statements next week.
+
+# Conclusion
+
+And that's it for now. We have talked about functions and some important knowledge about using them. Next week, we will talk about conditionals and loops,
+two of the most important topics for any programming languages.
+
+Make sure to give this post a like and share it with your friends. If you have any feedback, perhaps an idea for a blog, send me an email and I'll respond as
+soon as I can. For now, have fun learning!
+
+<References ref={[
+    {
+        name: "What is the benefit of using main method in Python? [closed]",
+        author: "Stack Overflow",
+        url: "https://stackoverflow.com/questions/19578308/what-is-the-benefit-of-using-main-method-in-python"
+    }
+]}/>

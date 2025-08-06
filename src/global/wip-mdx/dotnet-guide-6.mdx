@@ -1,0 +1,264 @@
+import SingleImage from "@/global/mdx/SingleImage/SingleImage";
+import References from "@/global/mdx/References/References";
+import CodeBlock from "@/global/mdx/CodeBlock/CodeBlock";
+import Redirect from "@/global/mdx/Redirect/Redirect";
+import Table from '@/global/mdx/Table/Table';
+
+# Welcome Back!
+
+Hello and welcome to the sixth episode of my series on .NET, where we are discussing everything you need to know about .NET and it's languages,
+primarily C#.
+
+Today we will talk about methods in C#. Methods are the C#'s equivalent of functions from other programming languages (in fact we use both terms
+interchangeably). They are useful tools that allow us to reuse code, but more importantly, they are a core element in C#'s OOP, being basic building
+blocks for classes and objects (we will talk more about this next week).
+
+While discussing this topic, we will give some examples relating to C# data structures, a topic we covered last week.
+If you want to know more about it, feel free to check it out <Redirect name="here" url="/blogs/dotnet-guide-5" />.
+
+Today's topic is both important and interesting, so let's get straight into it.
+
+# Basic Syntax
+
+Much like functions in other languages like Java and Python, C# methods may take in some number of inputs and return some number of outputs. We include all
+of these inputs/outputs along with the method's name at declaration.
+
+C# methods can be declared in a similar fashion to Java functions:
+
+<CodeBlock
+    language="csharp"
+    code={`<return_type> <method_name>(<arguments>) {
+    // Do something...
+    
+    return <return_value>
+}`}
+/>
+
+- `<return_type>` is the type of the method's return value. These can be anything, ranging from variable types, objects, and even other methods. If a method
+doesn't return anything, its return type will be `void`.
+- `<method_name>` is the name of the method. It follows the same rules as variable naming, but there are some common convention for naming methods. You can
+check them out <Redirect name="here" url="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/identifier-names" />.
+- `<arguments>` is the list of inputs the method can take. We separate these inputs using a comma `,`.
+- `<return_value>` is the value the method outputs.
+
+For example, say you want to make a method that takes two numbers and return their sum. It would look something like this:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`double sum(double intA, double intB) {
+    return intA + intB;
+}`}
+/>
+
+Simple, right? To call that method, we simply use the method's name and its inputs:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`double result = sum(1.15, 2.10);
+
+Console.WriteLine(result);
+
+// Output: 3.25`}
+/>
+
+# Tricks With Arguments
+
+## Named Arguments
+
+C# allows us to refer to each argument by name when calling a method. For instance, given a function like this:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`void printEverything(int i, string s, double d) {
+    Console.WriteLine(i);
+    Console.WriteLine(s);
+    Console.WriteLine(d);
+}`}
+/>
+
+There are a wide variety of ways you can call this method. Here are just some examples:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`printEverything(5, "Hello", 3.14);
+printEverything(i: 5, "Hello", 3.14);
+printEverything(i: 5, s: "Hello", d: 3.14);
+printEverything(s: "Hello", i: 5, d: 3.14);`}
+/>
+
+All of these calls result in the same outputs. The ability to call arguments by name is known as named arguments, allowing you to shuffle arguments in
+whatever way we want. Note that when used with positional arguments, named arguments are only valid when either:
+
+- They're not followed by any positional arguments. (e.g. `printEverything(i: 5, s: "Hello", d: 3.14)`)
+- They're used in the correct position. (e.g. `printEverything(i: 5, "Hello", 3.14);`)
+
+By itself, it's not really useful in most scenarios. But it will be, when you combine this feature with...
+
+## Optional Values
+
+Let's say you are making a method that returns the top elements of a C# List. Given that all of your use cases for this function is to get the first 5, you
+decide to hard-code the number of elements to 10. Not exactly a good decision, but hey, it's your code.
+
+Since you have learnt how C# Lists work from last week, you make something like this:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`List<int> getHead(List<int> inList)
+{
+    List<int> outList = new List<int>();
+    for (int i = 0; i < 5; i++)
+    {
+        outList.Add(inList[i]);
+    }
+
+    return outList;
+}
+
+// Create the input List
+List<int> list = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+// Create the output List
+List<int> result = getHead(list);
+
+// Print out all elements in the new List
+foreach (int element in result)
+{
+    Console.Write(element + ", ");
+}
+
+/*
+Output:
+1
+2
+3
+4
+5
+*/`}
+/>
+
+Great, your code works well (well done!) and is seemingly bug-free (not really). You make a bunch of calls to this function all over your program,
+and everything is looking fine.
+
+But now you realised you need to make this method work for ANY number of top elements. It can be 5, it can be 10, even 100 (let's ignore some
+potential bugs for now). The simplest and best idea is to add an argument to your method, taking in an extra integer. However, this requires you to change
+all of your previous calls from `getHead(list)` to `getHead(list, 5)`, which is extremely time consuming. If only there was a way for you to keep the old
+syntax and still have the same functionality...
+
+Luckily, C# does support default values for methods, known as optional arguments. This feature allows you to define a default value for any argument, and
+unless it is overriden by a call, the method will treat the default value as the input (hence "optional").
+
+For instance, we can modify the above method to something like this:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`List<int> getHead(List<int> inList, int count = 5)
+{
+    List<int> outList = new List<int>();
+    for (int i = 0; i < count; i++)
+    {
+        outList.Add(inList[i]);
+    }
+
+    return outList;
+}
+
+// Create the input List
+List<int> list = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+// Create the output List for default input
+List<int> defaultResult = getHead(list);
+
+// Print out all elements in the default List
+foreach (int element in defaultResult)
+{
+    Console.Write(element + ", ");
+}
+
+// Output: 1, 2, 3, 4, 5, 
+
+// Create line for new output:
+Console.WriteLine("");
+
+// Create the output List for overriden input
+List<int> overridenResult = getHead(list, 3);
+
+// Print out all elements in the overriden List
+foreach (int element in overridenResult)
+{
+    Console.Write(element + ", ");
+}
+
+// Output: 1, 2, 3, `}
+/>
+
+Notice how we put `int count = 5` in the arguments? Here, `5` is the default value of the `count` argument, meaning the method will use `count = 5` if
+not overriden. This is useful since we don't have to replace previous calls when extending functionality for a currently used method, or
+when we know this method will most likely be called with a certain value and we want to save time for those calls.
+
+Note that optional arguments have to be placed at the end of the argument list, after all the non-optional ones.
+
+## Combine These Together
+
+What happens when there are multiple optional arguments? Suppose there's a function like this:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`void printEverything(int i = 5, string s = "Hello", double d = 3.14) {
+    Console.WriteLine(i);
+    Console.WriteLine(s);
+    Console.WriteLine(d);
+}`}
+/>
+
+Overriding `i` is simple (e.g. `printEverything(10)`), but what if you want to override `s`? This is where named arguments become usefull:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`printEverything(s: "World");`}
+/>
+
+Here, we used named arguments to override `s` and skip the other values.
+
+# Overloading
+
+Let's say you are making a simple function that takes in an integer and print it out with some extra message:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`void printInt(int input) {
+    Console.WriteLine("You typed in integer: " + input);
+}`}
+/>
+
+This is simple, it takes in an integer and print out a line. Now let's say you want to make something like this, but for strings:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`void printString(string? input) {
+    Console.WriteLine("You typed in string: " + input);
+}`}
+/>
+
+Great. And now let's make one for floats:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`void printFloat(float input) {
+    Console.WriteLine("You typed in float: " + input);
+}`}
+/>
+
+Notice how all of these functions have similar functionality, but you have to remember the correct name to use it with your
+desired input (you can't use `printInt` with `"Hello"`)? Luckily, C# does have a way to let you keep the same name for all of those functions. This is called
+overloading.
