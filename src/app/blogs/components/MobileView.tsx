@@ -178,6 +178,7 @@ function SearchMenu({
                     <div className="w-auto h-auto flex flex-row justify-start items-center gap-5">
                         {stringToTagButton("Admin", "search-admin")}
                         {stringToTagButton("Devlog", "search-devlog")}
+                        {stringToTagButton("Sidequest", "search-sidequest")}
                     </div>
                     <div className="w-auto h-auto flex flex-row justify-start items-center gap-5">
                         {stringToTagButton("Guide", "search-guide")}

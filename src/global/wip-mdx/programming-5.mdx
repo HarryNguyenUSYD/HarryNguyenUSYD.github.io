@@ -1,0 +1,206 @@
+import SingleImage from "@/global/mdx/SingleImage/SingleImage";
+import References from "@/global/mdx/References/References";
+import CodeBlock from "@/global/mdx/CodeBlock/CodeBlock";
+import Redirect from "@/global/mdx/Redirect/Redirect";
+import Table from '@/global/mdx/Table/Table';
+
+# Welcome Back (0)
+
+Hello and welcome to the fifth episode of our "Absolute Basics" series, where we are talking about everything you need to know to write your first programs
+using Python. This week, we will talk about loops, the most basic method of repeating your work not only in Python but also in most programming languages.
+
+Today's topic will make use of conditionals and boolean statements as we have discussed last week. For a quick refresher on that, check last week's blog out
+<Redirect name="here" url="/blogs/programming-4" />.
+
+So, without further ado, let's get right into loops!
+
+# Welcome Back (1)
+
+Take a look at this function, which prints the same string 3 times in a row, with a number that increases by one each time, like some sort of counter:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def printManyTimes():
+    print("Printing line 1!")
+    print("Printing line 2!")
+    print("Printing line 3!")`}
+/>
+
+Now let's say we want to increase from printing 3 times to 5 times. Sure, we can just copy and paste the print statements, as well as changing some numbers.
+That's not too difficult with modern computers, right?
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def printManyTimes():
+    print("Printing line 1!")
+    print("Printing line 2!")
+    print("Printing line 3!")
+    print("Printing line 4!")
+    print("Printing line 5!")`}
+/>
+
+But what if we want to increase the number to 10 times? 100 times? 1000 times? Every print statement is slightly different from each other, so we have
+to manually change each of them (and don't you dare miscount once!). Surely there's a better way than that, right?
+
+This is where loops come in. Loops are powerful tools that allows us to repeat our actions in code. Instead of copy-pasting statements a hundred times
+to do something, loops reduce that to just a few lines. This increases productivity, readability, and is simply much more satisfying to make.
+
+One type of loops Python offers is the `for`-loop, which can be used like this:
+
+<CodeBlock
+    language="python"
+    code={`for <variable> in range(<count>):
+    # Do something`}
+/>
+
+Here, we combine the `for`-loop with the `range` function, allowing us to repeat the code inside `<count>` number of times (if `<count>` is 3, the code
+will repeat 3 times). `<variable>` is a variable we use to loop. Indexing in Python starts from 0, so `<variable>` will have value 0 in loop 1, 1 in loop 2,
+and so on. For instance, we can modify our function above to something like this:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def printManyTimes():
+    for i in range(5):
+        print(f"Printing line {i + 1}!")`}
+/>
+
+> Note: Notice the strange string syntax? Those are called f-strings, or format strings. These are very useful if you want to put variables in the middle
+of your strings. You can take a look at them in detail <Redirect name="here" url="https://www.w3schools.com/python/python_string_formatting.asp" />.
+
+This function does exactly the same thing, but much much sorter and cleaner than the old one. More importantly, this implementation lets us increase the
+number of iterations by changing the number in the `range` function. So now, if I want to change to 1000 times:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def printManyTimes():
+    for i in range(1000): # Change from 5 to 1000
+        print(f"Printing line {i + 1}!")`}
+/>
+
+That's it! Much better, right?
+
+Another useful aspect of loops is the ability to repeat code an unknown number of times. Let's say we only want the user to decide the number of times to
+print that line. A user can type in a number anywhere from 0 to infinity, making it impossible to put print statements in preparation (we will not talk
+about invalid inputs in this example).
+
+To add the ability to take inputs, we can modify our function like this:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def printManyTimes():
+    count = int(input("How many iterations do you want? "))
+
+    # A simple check in case the user wants to type in something negative
+    if (count < 0):
+        count = 0
+
+    for i in range(count):
+        print(f"Printing line {i + 1}!")`}
+/>
+
+Now, we can dynamically print as many lines as the user wants. Try it on your computer!
+
+# Welcome Back (2)
+
+Another common loop we can use in Python is called a `while`-loop. This loop is similar to the `for`-loop, but much more useful for when we can't tell
+beforehand how many iterations will be called.
+
+`while`-loops can be made like this:
+
+<CodeBlock
+    language="python"
+    code={`while (<condition>):
+    # Do something`}
+/>
+
+Looks simple, right? `<condition>` are boolean statements, the same ones we use for conditionals (like `if`-statements). `while`-loops will continously
+run until `<condition>` becomes `False`, meaning we can run the loop as long as it needs to.
+
+We can modify the function we have above using the `while`-loop like this:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def printManyTimes():
+    count = int(input("How many iterations do you want? "))
+
+    # A simple check in case the user wants to type in something negative
+    if (count < 0):
+        count = 0
+
+    # While loop instead!
+    i = 0
+    while (i < count): # Condition
+        print(f"Printing line {i + 1}!")
+        
+        i += 1 # This line is important!`}
+/>
+
+Notice the `i += 1` at the end? Unlike `for`-loops, `while`-loops need a way of changing the condition as it iterates. In other words, we have to contruct
+the loop in such a way that `<condition>` will become `False` at some point. Failing to do so, and you might end up with something known as an infinite loop.
+
+Suppose we remove the last line from the function:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def printManyTimes():
+    count = int(input("How many iterations do you want? "))
+
+    # A simple check in case the user wants to type in something negative
+    if (count < 0):
+        count = 0
+
+    # While loop instead!
+    i = 0
+    while (i < count): # Condition
+        print(f"Printing line {i + 1}!")
+        
+        # Uh oh...`}
+/>
+
+And then we run this function. What will happen is that the function will run infinitely (if the input is greater than 0). Since the condition of the `while`-loop
+is always satisfied, the loop will not break by itself. Your program will print the lines infinitely!
+
+> Note: If you accidentally made one of these and run it, you can forcefully stop the program by hitting Ctrl + C (Cmd + C for Mac). This will interrupt
+the program and quit it.
+
+Like mentioned earlier, `while`-loops are useful when we don't know in advance how many iterations will be called. An example of this is the Collatz
+Conjecture. Given a positive integer `n`, we do one of two things:
+
+- If `n` is odd, we multiply it by 3, then add 1.
+- If `n` is even, we divide it by 2.
+
+We repeat this until we hit the number 1, since after that the number will be stuck in a loop 1 -> 4 -> 2 -> 1.
+A Python implementation of solving a number would be something like this:
+
+<CodeBlock
+    language="python"
+    copiable={true}
+    code={`def collatzSolve(n: int):
+    while (n != 1):
+        print(n)
+
+        if (n % 2 == 0): # n is even
+            n = n / 2
+        else: # n is odd
+            n = 3 * n + 1`}
+/>
+
+Since `n` can be bigger or smaller after each iteration, it's impossible to tell if we are approaching `n == 1` or not.
+
+> Note: Try to run the function with any positive number. If a number causes the function to go infinite, you might have had disproved the Collatz
+Conjecture!
+
+# Welcome Back (3)
+
+And that's it! We have talked about `for`-loops and `while`-loops in Python! We will discuss more use cases for loops in the next few weeks, especially
+next week, where we talk about common data structures in Python.
+
+Make sure to give this post a like and share it with your friends. If you have any feedback, perhaps an idea for a blog, send me an email and I'll respond as
+soon as I can. For now, have fun learning!

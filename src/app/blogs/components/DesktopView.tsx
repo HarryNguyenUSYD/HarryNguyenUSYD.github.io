@@ -178,6 +178,7 @@ function SearchMenu({
                     {stringToTagButton("Admin", "search-admin")}
                     {stringToTagButton("Devlog", "search-devlog")}
                     {stringToTagButton("Guide", "search-guide")}
+                    {stringToTagButton("Sidequest", "search-sidequest")}
                     {stringToTagButton("Self Promotion", "search-selfpromotion")}
                 </div>
             </div>

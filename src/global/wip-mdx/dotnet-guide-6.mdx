@@ -35,7 +35,7 @@ C# methods can be declared in a similar fashion to Java functions:
 />
 
 - `<return_type>` is the type of the method's return value. These can be anything, ranging from variable types, objects, and even other methods. If a method
-doesn't return anything, its return type will be `void`.
+doesn't return anything, its will be declared as `void`.
 - `<method_name>` is the name of the method. It follows the same rules as variable naming, but there are some common convention for naming methods. You can
 check them out <Redirect name="here" url="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/identifier-names" />.
 - `<arguments>` is the list of inputs the method can take. We separate these inputs using a comma `,`.
@@ -67,7 +67,7 @@ Console.WriteLine(result);
 
 ## Named Arguments
 
-C# allows us to refer to each argument by name when calling a method. For instance, given a function like this:
+C# allows us to refer to each argument by name when calling a method. For instance, given a method like this:
 
 <CodeBlock
     language="csharp"
@@ -100,7 +100,7 @@ By itself, it's not really useful in most scenarios. But it will be, when you co
 
 ## Optional Values
 
-Let's say you are making a method that returns the top elements of a C# List. Given that all of your use cases for this function is to get the first 5, you
+Let's say you are making a method that returns the top elements of a C# List. Given that all of your use cases for this method is to get the first 5, you
 decide to hard-code the number of elements to 10. Not exactly a good decision, but hey, it's your code.
 
 Since you have learnt how C# Lists work from last week, you make something like this:
@@ -132,16 +132,11 @@ foreach (int element in result)
 }
 
 /*
-Output:
-1
-2
-3
-4
-5
+Output: 1, 2, 3, 4, 5, 
 */`}
 />
 
-Great, your code works well (well done!) and is seemingly bug-free (not really). You make a bunch of calls to this function all over your program,
+Great, your code works well (well done!) and is seemingly bug-free (not really). You make a bunch of calls to this method all over your program,
 and everything is looking fine.
 
 But now you realised you need to make this method work for ANY number of top elements. It can be 5, it can be 10, even 100 (let's ignore some
@@ -205,7 +200,7 @@ Note that optional arguments have to be placed at the end of the argument list, 
 
 ## Combine These Together
 
-What happens when there are multiple optional arguments? Suppose there's a function like this:
+What happens when there are multiple optional arguments? Suppose there's a method like this:
 
 <CodeBlock
     language="csharp"
@@ -227,38 +222,93 @@ Overriding `i` is simple (e.g. `printEverything(10)`), but what if you want to o
 
 Here, we used named arguments to override `s` and skip the other values.
 
-# Overloading
+# Ref and Out
 
-Let's say you are making a simple function that takes in an integer and print it out with some extra message:
+Finally, let's talk about two keywords you will occasionally see in C#: `ref` and `out`. These two are both argument modifiers, meaning you can add either
+of them in front of arguments to make them behave differently.
 
-<CodeBlock
-    language="csharp"
-    copiable={true}
-    code={`void printInt(int input) {
-    Console.WriteLine("You typed in integer: " + input);
-}`}
-/>
+`ref` is a keyword for when you want to pass a variable into a method, but to do so specifically as a reference (instead of by value). This might sound
+confusing, but it will be much easier to understand with an example.
 
-This is simple, it takes in an integer and print out a line. Now let's say you want to make something like this, but for strings:
+Take a look at these two methods: `addToInt` and `addToIntWithRef`.
 
 <CodeBlock
     language="csharp"
     copiable={true}
-    code={`void printString(string? input) {
-    Console.WriteLine("You typed in string: " + input);
-}`}
+    code={`// Add 10 to a variable without ref
+int addToInt(int input)
+{
+    input += 10;
+
+    return input;
+}
+
+// Add 10 to a variable with ref
+int addToIntWithRef(ref int input)
+{
+    input += 10;
+
+    return input;
+}
+
+// Call the methods
+int i = 10;
+
+Console.WriteLine("Without ref: " + addToInt(i));
+Console.WriteLine("Current i value: " + i);
+Console.WriteLine("With ref: " + addToIntWithRef(ref i));
+Console.WriteLine("Current i value: " + i);`}
 />
 
-Great. And now let's make one for floats:
+Notice how the value stored in `i` changed after calling the method with `ref`? Since `i` was passed in as a reference, the data stored in the original
+variable is changed as well, instead of staying the same (as seen when calling the regular `addToInt`). This is useful if you want to pass a value-type
+variable (like `int`, `float`, `char`, etc.) but you want the original variable to be changed at the same time.
+
+`out` is another keyword that behaves very similarly, but slightly different:
 
 <CodeBlock
     language="csharp"
     copiable={true}
-    code={`void printFloat(float input) {
-    Console.WriteLine("You typed in float: " + input);
-}`}
+    code={`// Set a variable to 10 without out
+// In VSCode, you might see the message "Parameter 'input' can be removed; its initial value is never used" when hovering "input".
+int setInt(int input)
+{
+    input = 10;
+
+    return input;
+}
+
+// Set a variable to 10 with out
+int setIntWithOut(out int input)
+{
+    input = 10;
+
+    return input;
+}
+
+// Call the methods
+int i = 0;
+
+Console.WriteLine("Without out: " + setInt(i));
+Console.WriteLine("Current i value: " + i);
+Console.WriteLine("With out: " + setIntWithOut(out i));
+Console.WriteLine("Current i value: " + i);`}
 />
 
-Notice how all of these functions have similar functionality, but you have to remember the correct name to use it with your
-desired input (you can't use `printInt` with `"Hello"`)? Luckily, C# does have a way to let you keep the same name for all of those functions. This is called
-overloading.
+Unlike `ref`, which assumes that the variable is already defined prior to being passed, `out` allows you to declare the variable inside the method,
+reflecting that change outside the method as well. This is useful since it effectively allows methods to return multiple values, one normally, and
+one more for every `out` variables.
+
+It is difficult to list all the differences between `ref` and `out` without diving deeper into C# and how it works in the background. Therefore, if you
+want to know more about them, check out <Redirect name="this" url="https://www.c-sharpcorner.com/UploadFile/ff2f08/ref-vs-out-keywords-in-C-Sharp/" />
+interesting post I found.
+
+# Conclusion
+
+And that's it! We have discussed methods and some related features of C#.
+
+Next week we will talk about my favourite topic in C#: OOP. I hope everyone reading this is as excited as I am (judging by the number of views, there's
+not that many of you guys, so I really appreciate the support).
+
+Finally, make sure to give this post a like and share it with your friends. If you have any feedback, perhaps an idea for a blog, send me an email and I'll respond as
+soon as I can. For now, have fun learning!

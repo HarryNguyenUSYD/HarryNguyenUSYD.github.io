@@ -50,6 +50,10 @@ export const PostTags = {
         name: "Self Promotion",
         bgColor: "bg-yellow-500"
     },
+    Sidequest: {
+        name: "Sidequest",
+        bgColor: "bg-teal-600"
+    },
     Null: {
         name: "Null",
         bgColor: "bg-gray-700"

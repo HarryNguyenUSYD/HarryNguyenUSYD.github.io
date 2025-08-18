@@ -1,0 +1,57 @@
+
+# Overloading
+
+Let's say you are making a simple function that takes in an integer and print it out with some extra message:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`void printInt(int input) {
+    Console.WriteLine("You typed in integer: " + input);
+}`}
+/>
+
+This is simple, it takes in an integer and print out a line. Now let's say you want to make something like this, but for strings:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`void printString(string? input) {
+    Console.WriteLine("You typed in string: " + input);
+}`}
+/>
+
+Great. And now let's make one for floats:
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`void printFloat(float input) {
+    Console.WriteLine("You typed in float: " + input);
+}`}
+/>
+
+Notice how all of these functions have similar functionality, but you have to remember the correct name to use it with your
+desired input (you can't use `printInt` with `"Hello"`)? Luckily, C# does have a way to let you keep the same name for all of those functions. This is called
+overloading.
+
+<CodeBlock
+    language="csharp"
+    copiable={true}
+    code={`void print(int input) {
+    Console.WriteLine("You typed in integer: " + input);
+}
+
+void print(string? input) {
+    Console.WriteLine("You typed in string: " + input);
+}
+
+void print(float input) {
+    Console.WriteLine("You typed in float: " + input);
+}
+
+// Try them!
+print(1);
+print("Hello");
+print(0.2f);`}
+/>

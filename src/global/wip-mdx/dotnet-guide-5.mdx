@@ -87,16 +87,16 @@ instance. These are:
 Some more functions can be used by importing the `System.Linq` namespace:
 
 <Table
-    columns={["Function", "Use", "Example"]}
+    columns={["Function", "Use", "Example", "Time Complexity"]}
     content={[
-        ["arr.Any()", "Checks if any element satisfies a condition", "arr.Any(x => x > 5)"],
-        ["arr.All()", "Checks if all elements satisfy a condition", "arr.All(x => x > 0)"],
-        ["arr.Where()", "Filters array based on condition", "arr.Where(x => x % 2 == 0).ToArray()"],
-        ["arr.Select()", "Projects each element into a new form", "arr.Select(x => x * x).ToArray()"],
-        ["arr.Sum()", "Adds all elements", "arr.Sum()"],
-        ["arr.Max()", "Finds the maximum element", "arr.Max()"],
-        ["arr.Min()", "Finds the minimum element", "arr.Min()"],
-        ["arr.Average()", "Calculates the average", "arr.Average()"]
+        ["arr.Any()", "Checks if any element satisfies a condition", "arr.Any(x => x > 5)", "O(n) worst, O(1) best (if early match)"],
+        ["arr.All()", "Checks if all elements satisfy a condition", "arr.All(x => x > 0)", "O(n) worst, O(1) best (if early failure)"],
+        ["arr.Where()", "Filters array based on condition", "arr.Where(x => x % 2 == 0).ToArray()", "O(n)"],
+        ["arr.Select()", "Projects each element into a new form", "arr.Select(x => x * x).ToArray()", "O(n)"],
+        ["arr.Sum()", "Adds all elements", "arr.Sum()", "O(n)"],
+        ["arr.Max()", "Finds the maximum element", "arr.Max()", "O(n)"],
+        ["arr.Min()", "Finds the minimum element", "arr.Min()", "O(n)"],
+        ["arr.Average()", "Calculates the average", "arr.Average()", "O(n)"]
     ]}
 />
 
@@ -184,12 +184,12 @@ Otherwise, most functions for normal arrays also work for multidimensional array
 
 ## List
 
-Lists in C# is a class that represents a linked list data structure. Linked list is similar to an array with flexible sizes. To use them, import the
-namespace `System.Collections.Generic` at the top of your file. We will talk about imports in more details next week.
+Lists in C# is a class that represents an array list data structure. Array list is similar to a normal array, but it can grow larger as the number of
+elements it has increases. To use them, import the namespace `System.Collections.Generic` at the top of your file.
 
-Linked list is a great data structure to store data of uncertain sizes or growing data (such as the information of users). However, they can be much slower
-than arrays, especially as the size of the list grows larger. That said, this is still one of the most common data structures you will see in all sorts
-of projects, including .NET ones. 
+Array list is a great data structure to store data of uncertain sizes or growing data (such as the information of users). Functionally, they are the same
+as normal arrays, with the same time complexities in most cases. However, array lists have to occasionally resize if the number of element becomes too high,
+making them slightly slower than normal arrays in some cases.
 
 We can declare a `List` like this:
 
@@ -211,18 +211,18 @@ Similar to arrays, we can access each element in the list using indices, such as
 There are a wide variety of functions that are designed to work with Lists. These are:
 
 <Table
-    columns={["Function", "Use", "Example"]}
+    columns={["Function", "Use", "Example", "Time Complexity"]}
     content={[
-        ["numbers.Add(10)", "Adds an element", "numbers.Add(10);"],
-        ["numbers.Remove(10)", "Removes the first occurrence of an item", "numbers.Remove(10);"],
-        ["numbers.RemoveAt(0)", "Removes an element at a specific index", "numbers.RemoveAt(0);"],
-        ["numbers.Insert(1, 20)", "Inserts item at a specific position", "numbers.Insert(1, 20);"],
-        ["numbers.Contains(20)", "Checks if the item exists", "numbers.Contains(20);"],
-        ["numbers.IndexOf(20)", "Gets the index of the item", "numbers.IndexOf(20);"],
-        ["numbers.Clear()", "Removes all elements", "numbers.Clear();"],
-        ["numbers.Count", "Returns the number of elements", "int total = numbers.Count;"],
-        ["numbers.Sort()", "Sorts the list in ascending order", "numbers.Sort();"],
-        ["numbers.Reverse()", "Reverses the list", "numbers.Reverse();"]
+        ["numbers.Add(10)", "Adds an element", "numbers.Add(10);", "O(1) amortized"],
+        ["numbers.Remove(10)", "Removes the first occurrence of an item", "numbers.Remove(10);", "O(n)"],
+        ["numbers.RemoveAt(0)", "Removes an element at a specific index", "numbers.RemoveAt(0);", "O(n) (shifts elements)"],
+        ["numbers.Insert(1, 20)", "Inserts item at a specific position", "numbers.Insert(1, 20);", "O(n) (shifts elements)"],
+        ["numbers.Contains(20)", "Checks if the item exists", "numbers.Contains(20);", "O(n)"],
+        ["numbers.IndexOf(20)", "Gets the index of the item", "numbers.IndexOf(20);", "O(n)"],
+        ["numbers.Clear()", "Removes all elements", "numbers.Clear();", "O(n) (resets internal array)"],
+        ["numbers.Count", "Returns the number of elements", "int total = numbers.Count;", "O(1)"],
+        ["numbers.Sort()", "Sorts the list in ascending order", "numbers.Sort();", "O(n log n)"],
+        ["numbers.Reverse()", "Reverses the list", "numbers.Reverse();", "O(n)"]
     ]}
 />
 
@@ -243,7 +243,8 @@ Dictionary in C# is a class that represents a hash map data structure. Every ent
 keys and access data quickly. To use them, import the namespace `System.Collections.Generic` at the top of your file.
 
 Dictionaries are best used when you have data that can be searched through using some form of unique ID. They are reasonably fast for large amount of data,
-but come with large storage overhead.
+but come with large storage overhead. Occasionally, however, adding data into the dictionary may trigger an action known as "rehashing", meaning adding
+new data will take longer as the dictionary grows.
 
 We can declare a `Dictionary` like this:
 
@@ -266,17 +267,17 @@ a runtime error!
 We also have a range of functions associated with Dictionaries:
 
 <Table
-    columns={["Function", "Use", "Example"]}
+    columns={["Function", "Use", "Example", "Time Complexity"]}
     content={[
-        ["dict.Add(\"Tom\", 35)", "Adds a new key-value pair", "dict.Add(\"Tom\", 35);"],
-        ["dict.Remove(\"Tom\")", "Removes a key-value pair", "dict.Remove(\"Tom\");"],
-        ["dict.ContainsKey(\"Alice\")", "Checks if a key exists", "dict.ContainsKey(\"Alice\");"],
-        ["dict.ContainsValue(30)", "Checks if a value exists", "dict.ContainsValue(30);"],
-        ["dict.TryGetValue(\"Alice\", out age)", "Gets a value safely without throwing", "dict.TryGetValue(\"Alice\", out age);"],
-        ["dict.Count", "Number of items in the dictionary", "int total = dict.Count;"],
-        ["dict.Keys", "Returns all keys", "foreach (var key in dict.Keys)"],
-        ["dict.Values", "Returns all values", "foreach (var value in dict.Values)"],
-        ["dict.Clear()", "Removes all entries", "dict.Clear();"]
+        ["dict.Add(\"Tom\", 35)", "Adds a new key-value pair", "dict.Add(\"Tom\", 35);", "O(1) average, O(n) worst (rehash)"],
+        ["dict.Remove(\"Tom\")", "Removes a key-value pair", "dict.Remove(\"Tom\");", "O(1) average"],
+        ["dict.ContainsKey(\"Alice\")", "Checks if a key exists", "dict.ContainsKey(\"Alice\");", "O(1) average"],
+        ["dict.ContainsValue(30)", "Checks if a value exists", "dict.ContainsValue(30);", "O(n)"],
+        ["dict.TryGetValue(\"Alice\", out age)", "Gets a value safely without throwing", "dict.TryGetValue(\"Alice\", out age);", "O(1) average"],
+        ["dict.Count", "Number of items in the dictionary", "int total = dict.Count;", "O(1)"],
+        ["dict.Keys", "Returns all keys", "foreach (var key in dict.Keys)", "O(1) (enumeration is O(n))"],
+        ["dict.Values", "Returns all values", "foreach (var value in dict.Values)", "O(1) (enumeration is O(n))"],
+        ["dict.Clear()", "Removes all entries", "dict.Clear();", "O(n)"]
     ]}
 />
 
