@@ -32,7 +32,7 @@ export function CopiedTextNotification() {
         <div
             className={`fixed bottom-0 right-0 mr-10 mb-10 ${value ? "opacity-100" : "opacity-0"} duration-200
                 px-5 py-2 bg-blue-500 text-white text-3xl
-                flex justify-center items-center`}
+                flex justify-center items-center pointer-events-none`}
         >
             <p>Copied to clipboard!</p>
         </div>

@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
 import { Blog, Project, Series } from './tables';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -8,16 +8,12 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 /**
  * Returns 10 blogs by page and search params
- * @param page the page number
  * @param name the name number
  * @param order the order to fetch in
  * @param tag the tag to search for, "" means all posts
  * @returns the 10 blogs in page
  */
-export async function fetchBlogs(page: number, name: string, tag: string, order: string) {
-    const min = Math.max(10 * Math.floor(page), 0);
-    const max = 10 * Math.floor(page) + 9;
-
+export async function fetchBlogs(name: string, tag: string, order: string) {
     let column = 'date';
     let ascending = false;
 
@@ -49,14 +45,12 @@ export async function fetchBlogs(page: number, name: string, tag: string, order:
             .select("*")
             .ilike('title', `%${name}%`)
             .contains('tags', [tag])
-            .range(min, max)
             .order(column, { ascending });
     } else {
         return await supabase
             .from('Blog')
             .select("*")
             .ilike('title', `%${name}%`)
-            .range(min, max)
             .order(column, { ascending });
     }
 

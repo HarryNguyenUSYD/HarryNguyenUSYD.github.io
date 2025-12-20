@@ -32,7 +32,6 @@ export default function MyBlogs() {
 
 function BlogsContainer() {
     const searchParams = useSearchParams();
-    const page = Number(searchParams.get('page'));
     const searchTitle = searchParams.get('title') ?? "";
     const searchTag = searchParams.get('tag') ?? "";
     const searchOrder = searchParams.get('order') ?? "newest";
@@ -41,7 +40,7 @@ function BlogsContainer() {
 
         useEffect(() => {
         async function fetchData() {
-            const { data: pageItems, error: pageItemsError } = await fetchBlogs(page, searchTitle, searchTag, searchOrder);
+            const { data: pageItems, error: pageItemsError } = await fetchBlogs(searchTitle, searchTag, searchOrder);
         
             if (pageItemsError) {
                 console.error('Error fetching page items:', pageItemsError);
@@ -51,7 +50,7 @@ function BlogsContainer() {
         }
     
         fetchData();
-    }, [page, searchOrder, searchTag, searchTitle]);
+    }, [searchOrder, searchTag, searchTitle]);
 
     return (
         <div className="w-full h-auto flex flex-col justify-start items-center gap-5">
@@ -185,6 +184,31 @@ function SearchMenu({
     );
 }
 
+function PageButton({ toPage, isCurrent = false, children } : { toPage: number, isCurrent?: boolean, children: React.ReactNode }) {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const href = (() => {
+        const params = new URLSearchParams(searchParams)
+        params.set('page', toPage.toString());
+        return (`/blogs?${params.toString()}`);
+    })();
+
+    return (
+        <Link
+            className={`p-2 ${isCurrent && "border-2 border-white"}`}
+            href={href}
+            onClick={(e) => {
+                e.preventDefault();
+                router.push(href, { scroll: false });
+            }}
+            aria-current="page"
+        >
+            {children}
+        </Link>
+    )
+}
+
 /**
  * Creates the bar for users to select which page to navigate to
  * @returns The PageBar element
@@ -194,7 +218,7 @@ function PageBar({ blogs } : { blogs: Blog[] }) {
 
     const searchParams = useSearchParams();
     const router = useRouter();
-    const page = Number(searchParams.get('page'));
+    const page = Number(searchParams.get('page') ?? "1");
 
     const handleChangePage = (toPage: number) => {
         const params = new URLSearchParams(searchParams)
@@ -203,56 +227,56 @@ function PageBar({ blogs } : { blogs: Blog[] }) {
     }
 
     useEffect(() => {
-        setPageCount(Math.floor(blogs.length / 10));
+        setPageCount(Math.ceil(blogs.length / 10));
     }, [blogs.length]);
 
     return (
         <div className="w-full h-full flex flex-row justify-center items-center gap-1 text-xl">
-            <button onClick={() => handleChangePage(0)} className="p-2 cursor-pointer">
+            <PageButton toPage={1}>
                 <MdKeyboardDoubleArrowLeft />
-            </button>
-            <button onClick={() => handleChangePage(Math.max(page - 1, 0))} className="p-2 cursor-pointer">
+            </PageButton>
+            <PageButton toPage={Math.max(page - 1, 1)}>
                 <MdKeyboardArrowLeft />
-            </button>
-            {(page - 2 > 0) && (<p className="p-2">...</p>)}
+            </PageButton>
+            {(page - 3 > 0) && (<p className="p-3">...</p>)}
+            {
+                (page - 2 > 0) && (
+                    <PageButton toPage={page - 2}>
+                        {page - 2}
+                    </PageButton>
+                )
+            }
             {
                 (page - 1 > 0) && (
-                    <button onClick={() => handleChangePage(page - 2)} className="p-2 cursor-pointer">
+                    <PageButton toPage={page - 1}>
                         {page - 1}
+                    </PageButton>
+                )
+            }
+            <PageButton toPage={page} isCurrent>
+                {page}
+            </PageButton>
+            {
+                (page + 1 <= pageCount) && (
+                    <button onClick={() => handleChangePage(page + 1)} className="p-3 hover:bg-white hover:text-black duration-100 cursor-pointer">
+                        {page + 1}
                     </button>
                 )
             }
             {
-                (page > 0) && (
-                    <button onClick={() => handleChangePage(page - 1)} className="p-2 cursor-pointer">
-                        {page}
-                    </button>
-                )
-            }
-            <button onClick={() => handleChangePage(page)} className="p-2 border-2 border-white cursor-pointer">
-                {page + 1}
-            </button>
-            {
-                (page < pageCount) && (
-                    <button onClick={() => handleChangePage(page + 1)} className="p-2 cursor-pointer">
+                (page + 2 <= pageCount) && (
+                    <button onClick={() => handleChangePage(page + 2)} className="p-3 hover:bg-white hover:text-black duration-100 cursor-pointer">
                         {page + 2}
                     </button>
                 )
             }
-            {
-                (page + 1 < pageCount) && (
-                    <button onClick={() => handleChangePage(page + 2)} className="p-2 cursor-pointer">
-                        {page + 3}
-                    </button>
-                )
-            }
-            {(page + 2 < pageCount) && (<p className="p-2">...</p>)}
-            <button onClick={() => handleChangePage(Math.min(page + 1, pageCount))} className="p-2 cursor-pointer">
+            {(page + 3 <= pageCount) && (<p className="p-3">...</p>)}
+            <PageButton toPage={Math.min(page + 1, pageCount)}>
                 <MdKeyboardArrowRight />
-            </button>
-            <button onClick={() => handleChangePage(pageCount)} className="p-2 cursor-pointer">
+            </PageButton>
+            <PageButton toPage={pageCount}>
                 <MdKeyboardDoubleArrowRight />
-            </button>
+            </PageButton>
         </div>
     );
 }
@@ -262,6 +286,9 @@ function PostDisplay({
 } : {
     blogs: Blog[]
 }) {
+    const searchParams = useSearchParams();
+    const page = Number(searchParams.get('page') ?? "1");
+
     return (
         <div className="relative w-full h-auto flex flex-col justify-start items-center gap-10">
             <div className="w-full h-auto flex flex-col justify-start items-center gap-10">
@@ -270,7 +297,7 @@ function PostDisplay({
                         <p className="text-xl italic font-thin">No post found. Try a different search?</p>
                     </div>
                 )}
-                {blogs.map((blog) => (<Post key={blog.id} blog={blog} />))}
+                {blogs.slice((page - 1) * 10, page * 10).map((blog) => (<Post key={blog.id} blog={blog} />))}
             </div>
         </div>
     );
