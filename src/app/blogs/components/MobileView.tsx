@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSearchParams } from 'next/navigation'
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from 'next/navigation'
 
-import { fetchBlogAvatar, fetchBlogs, fetchBlogsCount, incrementBlogLike, incrementBlogShare } from "@/global/supabase/supabaseClient";
+import { fetchBlogAvatar, fetchBlogs, incrementBlogLike, incrementBlogShare } from "@/global/supabase/supabaseClient";
 
 import PageWrapper from "@/global/component/page-wrapper/MobilePageWrapper";
 import Image from "next/image";
@@ -18,16 +18,28 @@ import Link from "next/link";
 import { CopiableTextContextProvider, CopiedTextNotification, useCopiableTextContext } from "@/global/component/CopiableText";
 
 export default function MyBlogs() {
-    const [items, setItems] = useState<Blog[]>([]);
-    const [loading, setLoading] = useState(true);
+    return (
+        <CopiableTextContextProvider>
+            <PageWrapper>
+                <Suspense fallback={<LoadingScreen />}>
+                    <BlogsContainer />
+                </Suspense>
+                <CopiedTextNotification />
+            </PageWrapper>
+        </CopiableTextContextProvider>
+    );
+}
 
+function BlogsContainer() {
     const searchParams = useSearchParams();
     const page = Number(searchParams.get('page'));
     const searchTitle = searchParams.get('title') ?? "";
     const searchTag = searchParams.get('tag') ?? "";
     const searchOrder = searchParams.get('order') ?? "newest";
 
-    useEffect(() => {
+    const [items, setItems] = useState<Blog[]>([]);
+
+        useEffect(() => {
         async function fetchData() {
             const { data: pageItems, error: pageItemsError } = await fetchBlogs(page, searchTitle, searchTag, searchOrder);
         
@@ -36,35 +48,18 @@ export default function MyBlogs() {
             } else {
                 setItems(pageItems || []);
             }
-
-            setLoading(false);
         }
     
         fetchData();
     }, [page, searchOrder, searchTag, searchTitle]);
 
     return (
-        <CopiableTextContextProvider>
-            <PageWrapper>
-                {loading ? <LoadingScreen /> : <BlogsContainer blogs={items} />}
-                <CopiedTextNotification />
-            </PageWrapper>
-        </CopiableTextContextProvider>
-    );
-}
-
-function BlogsContainer({
-    blogs
-} : {
-    blogs: Blog[]
-}) {
-    return (
         <div className="w-full h-auto flex flex-col justify-start items-center gap-5">
             <Title />
             <SearchBar />
-            <PageBar />
-            <PostDisplay blogs={blogs} />
-            <PageBar />
+            <PageBar blogs={items} />
+            <PostDisplay blogs={items} />
+            <PageBar blogs={items} />
         </div>
     );
 }
@@ -73,7 +68,7 @@ function Title() {
     return (
         <div className="w-full h-auto flex flex-col justify-start items-start gap-2">
             <p className="text-xl font-bold whitespace-nowrap">My Blogs</p>
-            <p className="text-sm font-thin italic whitespace-nowrap">- Guides, Devlogs and other things that happened</p>
+            <p className="text-sm font-thin italic whitespace-nowrap">- Guides, Devlogs and other interesting things</p>
         </div>
     )
 }
@@ -194,31 +189,22 @@ function SearchMenu({
  * Creates the bar for users to select which page to navigate to
  * @returns The PageBar element
  */
-function PageBar() {
+function PageBar({ blogs } : { blogs: Blog[] }) {
     const [pageCount, setPageCount] = useState(0);
 
     const searchParams = useSearchParams();
+    const router = useRouter();
     const page = Number(searchParams.get('page'));
 
     const handleChangePage = (toPage: number) => {
         const params = new URLSearchParams(searchParams)
         params.set('page', toPage.toString());
-        window.location.href = `/blogs?${params.toString()}`;
+        router.push(`/blogs?${params.toString()}`);
     }
 
     useEffect(() => {
-        async function fetchData() {
-            const { count: postCount, error: postCountError } = await fetchBlogsCount();
-        
-            if (postCountError) {
-                console.error('Error fetching post count:', postCountError);
-            } else {
-                setPageCount(Math.floor(Number(postCount) / 10));
-            }
-        }
-    
-        fetchData();
-    });
+        setPageCount(Math.floor(blogs.length / 10));
+    }, [blogs.length]);
 
     return (
         <div className="w-full h-full flex flex-row justify-center items-center gap-1 text-xl">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 import { CopiableTextContextProvider, CopiedTextNotification } from "@/global/component/CopiableText";
 import PageWrapper from "@/global/component/page-wrapper/MobilePageWrapper";
@@ -11,7 +11,6 @@ import { fetchProjectAvatar, fetchProjects } from "@/global/supabase/supabaseCli
 
 export default function Projects() {
     const [items, setItems] = useState<Project[]>([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchData() {
@@ -22,8 +21,6 @@ export default function Projects() {
             } else {
                 setItems(projectItems || []);
             }
-
-            setLoading(false);
         }
     
         fetchData();
@@ -32,7 +29,9 @@ export default function Projects() {
     return (
         <CopiableTextContextProvider>
             <PageWrapper>
-                {loading ? <LoadingScreen /> : <ProjectsContainer projects={items} />}
+                <Suspense fallback={<LoadingScreen />}>
+                    <ProjectsContainer projects={items} />
+                </Suspense>
                 <CopiedTextNotification />
             </PageWrapper>
         </CopiableTextContextProvider>

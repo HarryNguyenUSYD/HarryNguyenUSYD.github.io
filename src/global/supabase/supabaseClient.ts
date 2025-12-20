@@ -7,16 +7,6 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 /**
- * Returns the total number of blogs
- * @returns the number of blogs
- */
-export async function fetchBlogsCount() {
-    return await supabase
-        .from('Blog')
-        .select('*', { count: 'exact', head: true });
-}
-
-/**
  * Returns 10 blogs by page and search params
  * @param page the page number
  * @param name the name number
