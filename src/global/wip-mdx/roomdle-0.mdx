@@ -1,0 +1,56 @@
+import Redirect from "@/global/mdx/Redirect/Redirect";
+import SingleImage from "@/global/mdx/SingleImage/SingleImage";
+
+# A Brand New DevBlog Series!
+
+Welcome back to my website! It has been a while since the exams has finished, with a lot of stuff going on in my life (I'm currently back in Vietnam for a holiday). But now that I've settled in, it's time to kickstart a new series. This time, instead of going into boring guides that can literally ChatGPT-ed in a few minutes, I figured it would be more interesting if I showcase my typical workflow for a solo project. In this series, creatively-named after the project itself, I will walk through every step I take to build a software from start to finish: planning, designing, programming, deployment, etc. I will try my best to explain my thought process going into every major decision, as well as open-sourcing the code so every reader can study this project in depth.
+
+For this episode 0, there will not be a single line of code. Rather, I will explain my choice of tech stack for this project, which is simply the collection of tools and frameworks I am going to use. After that, I will initialise the foundations of the project, such that when the episode 1 begins (which is next week!), I will have everything prepared for development.
+
+If you want to stay updated with this project, as well as my weekly blogs in general, please follow me on <Redirect name="LinkedIn" url="https://www.linkedin.com/in/hoang-quan-nguyen-304705266/" />.
+
+With all that being said, let's get into today's episode.
+
+# First Of All, What Do I Want?
+
+Typically, in order to start a project, the development team would need to meet with a client(s), where the goals of the project is established and the deadlines are formed. In this solo project, however, I am both the one-man development team and client, meaning I'm essentially just talking to myself. For many starting developers, this encourages them to simply "go with the wind", and "vibe-code" their way to the end of the project, assuming they can make it there. Obviously, this approach doesn't work in any workplace environment, especially not when I'm trying to make an entire devlog series. Therefore, a more careful planning approach is required.
+
+So what do I want for this project? First of all, I want to make a simple puzzle game. The idea is simple:
+
+- The player starts with a empty room represented with a 5x5 grid.
+- They are then given given 14 different pieces of furniture, each of which has a certain orientation and can be placed on the grid, taking up a certain area (think of the items in <Redirect name="Backpack Hero" url="https://store.steampowered.com/app/1970580/Backpack_Hero/" />).
+- The player's goal is to guess which furniture belong to which section of the room in 6 guesses. Incorrect guesses will change the color of the grid and furniture, guiding the player towards the true solution.
+- The actual solution is randomized daily, making this a daily puzzle game.
+
+As you can probably tell, this game takes heavy inspiration from daily puzzle games such as <Redirect name="Wordle" url="https://www.nytimes.com/games/wordle/index.html" />, as well as grid-based puzzle games like <Redirect name="Block Blast" url="https://blockblastonline.com/" />. I call this game "Roomdle", since you are in a role of an interior designer making a room for your client.
+
+I'm probably not the best person when it comes to describing my ideas, so to illustrate, here's how I imagine the game, beautifully drawn using MS Paint:
+
+<SingleImage
+    url="blogs/roomdle-0"
+    src="roomdle-paint.png"
+    width="1147"
+    height="837"
+    alt="A talented rendition of the game using MS Paint" />
+
+Amazing, right? Still better than those AI slop.
+
+Other than the gameplay, there are still a few requirements I need to quickly talk about.
+
+Firstly, every phase of development of this project should be FREE. This includes programming, accquiring assets, publishing/hosting, etc. Since I am a University student who barely makes enough money for rent, I really don't want to spend any on a project only a handful of people is going to play.
+
+Secondly, this game should not require players to download. Most people would (hopefully) be skeptical when downloading any online program, let alone from a student who hasn't made a name for himself yet. While free hosting download sites exists (e.g. itch.io), I think everyone would much prefer playing a game without having to spend 5 minutes installing it first.
+
+Finally, I intend to have some form of data storage for this game, mainly to store things like high scores and number of players. I just really want to know how well this project will go, and these statistics can be super helpful. Of course, the data storage should be free, which greatly limits my options.
+
+So with all of the requirements out of the way, what are my options for the tech stack?
+
+# Tech Stack? No, They Aren't Physical Things
+
+Here comes the hard part of deciding which framework I can use. When talking about game development, most people often go to very established game engine such as Unity or GoDot. There is no debating that these tools are great for large-scale projects with complex graphics and code, but given my project is considerably small, using these tools is probably a waste of resources. In addition, any program generated from these game engines will need to be installed to be play, much like most Steam games, conflicting with our second requirement.
+
+A solution for this issue is simple: browser-based games. The idea is to make a website that functionally acts like a game, and can be publicly hosted on a domain for practically no cost. In fact, <Redirect name="Wordle was developed" url="https://en.wikipedia.org/wiki/Wordle" /> just by using the simple web development stack of HTML + CSS + JavaScript, which also inspired many variations of the game made using similar tools (e.g. <Redirect name="LoLdle" url="https://loldle.net/" />, <Redirect name="Pokedle" url="https://pokedle.net/" />).
+
+For modern web development, a website is generally split into a front-end (the UI/UX users can see and interact with) and a back-end (the data storage, algorithms, and other code-based features). Choosing a tech stack would typically refer to picking a framework for each of these two parts, plus some extra tools for things like databases and authentication. Alternatively, one can also use a full-stack framework which often comes with everything they need, but also greatly limits their options and comes with large overhead cost.
+
+Given the small scale of my project, I think it wouldn't make sense to use a full-stack framework

@@ -25,7 +25,7 @@ export async function fetchBlogsCount() {
  * @returns the 10 blogs in page
  */
 export async function fetchBlogs(page: number, name: string, tag: string, order: string) {
-    const min = Math.min(10 * Math.floor(page), 0);
+    const min = Math.max(10 * Math.floor(page), 0);
     const max = 10 * Math.floor(page) + 9;
 
     let column = 'date';

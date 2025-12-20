@@ -28,6 +28,7 @@ export default function MyBlogs() {
     const searchOrder = searchParams.get('order') ?? "newest";
 
     useEffect(() => {
+        console.log(page);
         async function fetchData() {
             const { data: pageItems, error: pageItemsError } = await fetchBlogs(page, searchTitle, searchTag, searchOrder);
         
@@ -204,7 +205,7 @@ function PageBar() {
 
     useEffect(() => {
         async function fetchData() {
-            const { data: postCount, error: postCountError } = await fetchBlogsCount();
+            const { count: postCount, error: postCountError } = await fetchBlogsCount();
         
             if (postCountError) {
                 console.error('Error fetching post count:', postCountError);

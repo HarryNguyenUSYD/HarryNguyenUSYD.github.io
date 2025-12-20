@@ -4,3 +4,72 @@ import CodeBlock from "@/global/mdx/CodeBlock/CodeBlock";
 import Redirect from "@/global/mdx/Redirect/Redirect";
 import Table from '@/global/mdx/Table/Table';
 
+# A Brief Introduction
+
+## Greetings!
+
+Hello and welcome to my blogs! What you're reading is my first ever blog tagged **Sidequest**, which are simply random things I stumbled on during my study/work that I want to talk about, but doesn't really fit into an existing series, nor it is worth creating a new series on. Think of these as random "fun facts" about programming that I spent hours researching on (for you to read for free!). These episodes are meant to be long since I will talk about all sort of things relating to the topics, but I promise it will be worth reading from beginning to end.
+
+If you are new to the website: Welcome! My name is Harry, and I write weekly blogs about everything relating to programming and codes. As of now, I am a third year Bachelor of Advanced Computing student at the University of Sydney, and these blogs are how I practice my writing skills, learning new topics, and (in a futile fashion) try to make myself known on the ever-growing job market. If you enjoy these blogs, there are more to read on this website, and make sure to leave a like and share these with your peers.
+
+> Author's Note: I spent a lot of effort implementing those features!
+
+## So... Why CI/CD?
+
+Good question actually. Recently I have been applying for internship jobs online, as any penultimate student would, and I dug around a few job seeking sites (LinkedIn Jobs, Seek, Indeed, etc.). One thing I noticed across all of these job postings, primarily software engineer ones, is that a lot of them require knowledge on CI/CD, along with plenty of other things. The reason I want to focus on CI/CD is because (a) this is one of the concepts they don't often talk about in school; and (b) because of that, I don't know anything about CI/CD either.
+
+<SingleImage
+    url='blogs/cicd'
+    src='cicd.png'
+    width={1143}
+    height={542}
+    alt='A few snapshots of CI/CD references on LinkedIn Jobs'
+/>
+
+So, after some hours of research and QnA-ing my employed friends, I think I now understand what CI/CD actually means. And to demonstrate that, I'm going to talk about the history of CI/CD, the problem it solved, and how its principles are being used in practically every software development companies.
+
+Without further ado, let's get into it!
+
+# A Brief History of CI/CD
+
+## "Integration Hell"
+
+Before diving into the topic, I think it would make more sense to first talk about every developer's favorite practice: version control. Any form of work done on a computer needs to be saved, either locally or on a server. This is even more important for software development, since it requires multiple developers to work on hundreds of files at the same time. The need to maintain large codebases and allow concurrent work on them gave rise to version control systems, or VCSs. Nowadays, VCSs are often associated with Git and Git-hosting services, like GitHub, but that was not the case back then.
+
+For one thing, unlike GitHub which is fully distributed and stored on an online cloud, most VCSs are stored locally by each company, hosted on a company server. This meant that branching, one of the most important features of version control, was discouraged, mostly because the cost of storage was expensive and the time spent setting those branches up could have been used for actual development. For context, branching is the ability to create a separate line of development for a repository. If a developer wants to implement a feature, fix a bug, or do some experiment, the best practice is to create a copy of the main branch, do some work on that copy, then merge it back to main. In modern projects, there are typically tens of branches active at any given time, with the main branch being the deployed ("production") version.
+
+But the bigger reason why branching was not common was due to how poorly these features were designed in older VCSs generations. Take Subversion (SVN) for example, a system which was rising in popularity right before Git's invention. When you create a branch using SVN, you essentially create a directory stored on a central server, along with a record stored in the repository metadata. This record marks down where the branch was created from, removing the need to duplicate every file. Then, once you start commiting changes to that branch, the system will start recording new file revisions under that branch's path. When there are merge conflicts, SVN would create three files for each conflicting file: `.mine` for your version, `.rOLD` (e.g. `.r123`) for the base version, and `.rNEW` (e.g. `.r125`) for the incoming version. You would then resolve these manually (prior to version 1.6) or use interactive prompts (from 1.6+).
+
+This system of branching has two main weaknesses. Firstly, the central server is most likely hosted locally in the company's network, as mentioned two paragraphs ago. This meant every branch operation (create, merge, diff, etc.) required connecting to the company's internet at all time, and if the internet is down, no work could be done at all. Secondly, resolving merge conflicts required juggling tens or hundreds of files, only using the base CLI. The process was tedious and painful, not to mention a waste of time (again, why managing braches instead of developing?). And all of that is without mentioning the fact that SVN was already a huge improvement over the previous generations of VCSs, some of which were much, much worse.
+
+Because of these challenges, developers back then came up with a strategy. They would work independently on their own features, and only merge all of the branches together when it was time for testing and deployment. This would minimize the need to use VCSs as much as possible, and give them more time to work on features instead. Sounds good, right?
+
+Wrong.
+
+What would happen was that since every branch is so different from each other, merging them would create tons of conflict. It was total chaos: everyone's work would collide with everyone else's, every working build would break, and none of the tests work anymore. Developers would have to spend days trying to fix all of those, leading to delayed deadlines and receeding hairlines. And don't forget that all of this had to be done manually, including testing, since the automation tool for those haven't existed yet. This phenomenon was termed **Integration Hell**, and it was one of the largest problems within the industry at that time.
+
+## The CI In CI/CD
+
+So after all of that had been going on for a while, one developer came up with a brilliant idea. His name was Grady Booch, known to many as the inventor of the concept of Continuous Integration, or CI for short. In 1994, he published a paper titled "Object-Oriented Analysis and Design". He first theorized that any software development projects happen at two levels: macro processes and micro processes. Macro process is the big picture lifecycle of a project, including steps such as requirements, analysis, design, implementation, test, and maintenance. This process defines the overall schedule and milestones. In contrast, micro process is the small, iterative cycle developers follow inside each phase of the macro process. According to Booch, these are simple, every day steps developers take to work on any project: identify classes/objects, define their semantics, specify relationships, implement/test them, and integrate into the system.
+
+> "The micro process is more closely related to Boehm's spiral model of development, and serves as the framework for an iterative and incremental approach to development. The macro process is more closely related to the traditional waterfall life cycle, and serves as the controlling framework for the micro process." - Grady Booch
+
+He then proposed that every micro process must have closure, meaning every process must end with a tangible, integrated outcome and prevent leaving risks unresolved. This "outcome" can either be an internal release (a working version), a behavioral prototype (used to explore risks), or anything that proves progress is being made. And to make sure that this is always true, Booch proposed the idea of continuous integration, nowadays referred to as CI:
+
+> "The needs of the micro process dictate that many more internal releases to the development team will be accomplished, with only a few executable releases turned over to external parties. These internal releases represent a sort of continuous integration of the system, and exist to force closure of the micro process." - Grady Booch
+
+In short, according to Booch, CI is a discipline that encourages developers to release working versions at quicker intervals (i.e. merging branches). This practice reduces the number of merge conficts, reduces risk of errors and bugs, and ensures rapid progress on the project.
+
+It is worth noting, however, that CI was not yet a common practice in software development, rather simply an idea circulating around the industry. It wasn't until 1997 when two developers Kent Beck and Ron Jeffries invented Extreme Programming (XP), a software development methodology with CI at its core, that the practice became widespread. By the early 2000s, automated tools had been invented to support Booch's vision, known as CI servers. They are tools connected to VCSs and monitor their commits, and once a commit has been pushed, the server handles automatic linting, building, testing, test reports, and everything else required to make CI as smooth as possible.
+
+## The CD In CI/CD
+
+While CI solved a massive issue surrounding integration and development, problems regarding deployment (shipping the product to customers) still remained. In modern days, deployment is practically automatic, allowing updates to be shipped weekly and hotfixes instantly delivered. In the past however, it was considered one of the most tedious, risky, and labour-intensive part of software development.
+
+To understand why, we need to talk about how deployment used to be done. After the code was built by CI servers, an artifact is created. "Artifact" is the common term for anything CI servers output, from executable packages and compiled binaries, to test reports and auto-generated documentation. These artifacts are then sent to an experienced developer, known as a Release Engineer, for verifying, packaging, and producing a singular release bundle. This bundle is then sent to a dedicated Operations Team (or Ops Team for short). Unlike the Development Team (Dev Team for short) whose job is to build the software, Ops Team's goal is to keep the underlying systems stable, secure, and always running. In the deployment context, this team will be responsible for setting up the servers, handle database changes, and monitor the software after deployment.
+
+Being an Operations team member back then was not an easy task. For one thing, Dev and Ops are like two sides of a coin, and the two do not like each other. Ops team is directly responsible for the operation of the company's software (it's in their name after all), meaning if a deployment fails for whatever reason, Ops will be the first to be blamed. In order to prevent that, Ops Team needs time to more carefully plan databases and create backups, but this contradicts the Dev Team's requirement to deliver products as soon as possible. To add to this, many builds would fail when ran on devices the Dev Team doesn't use. This problem of "But it worked on my machine!" created much conflict between the two teams, since it was sometimes impossible to tell whose team was at fault.
+
+> Not-So-Fun Fact: Ops Team has to make sure the software is working AT ALL TIMES! If an error happens at 2 a.m., there's no sleeping until the error is fixed. Imagine the frustration of having to lose sleep because someone on the Dev Team might have done something wrong!
+
+This is where the 

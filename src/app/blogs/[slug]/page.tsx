@@ -1,24 +1,26 @@
-"use client";
-
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { Metadata } from "next";
 
 const DesktopView = dynamic(() => import('./components/DesktopView'));
 const MobileView = dynamic(() => import('./components/MobileView'));
 
+export const metadata: Metadata = {
+    title: "Blog | HarryNguyenUSYD",
+    description: "Welcome to Harry's website, where you can find guides, devblogs, and everything there is to know about Harry (me).",
+};
+
 export default function BlogPage({ params } : { params: Promise<{slug: string}>}) {
-    const [isDesktop, setIsDesktop] = useState(true)
+    return (
+        <>
+            {/* Desktop */}
+            <div className="hidden lg:block">
+                <DesktopView params={params} />
+            </div>
 
-    useEffect(() => {
-        const update = () => {
-            setIsDesktop(window.innerWidth >= 1024);
-        };
-        update();
-
-        window.addEventListener('resize', update);
-        
-        return () => window.removeEventListener('resize', update);
-    }, [])
-  
-    return (isDesktop) ? <DesktopView params={params} /> : <MobileView params={params} />
+            {/* Mobile / Tablet */}
+            <div className="block lg:hidden">
+                <MobileView params={params} />
+            </div>
+        </>
+    )
 }

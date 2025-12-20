@@ -208,7 +208,7 @@ function PageBar() {
 
     useEffect(() => {
         async function fetchData() {
-            const { data: postCount, error: postCountError } = await fetchBlogsCount();
+            const { count: postCount, error: postCountError } = await fetchBlogsCount();
         
             if (postCountError) {
                 console.error('Error fetching post count:', postCountError);

@@ -17,6 +17,9 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
         blockquote: (props) => (
             <blockquote className="border-l-4 pl-4 italic mx-5 my-8" {...props} />
         ),
+        em: (props) => (
+            <em className="text-base lg:text-2xl my-8 font-thin italic" {...props} />
+        ),
         strong: (props) => (
             <strong className="text-base lg:text-2xl my-8 font-extrabold" {...props} />
         ),
