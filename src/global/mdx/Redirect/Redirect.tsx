@@ -15,7 +15,7 @@ export default function Redirect({
             rel="noopener noreferrer"
         >
             <span className="text-sm lg:text-2xl">{name}</span>
-            <LuSquareArrowOutUpRight className="text-xs lg:text-xl" />
+            <LuSquareArrowOutUpRight className="text-xs lg:text-lg" />
         </a>
     )
 }

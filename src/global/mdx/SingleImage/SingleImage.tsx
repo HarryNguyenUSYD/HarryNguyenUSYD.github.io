@@ -33,13 +33,13 @@ export default function SingleImage({
 
     return (
         <>
-            <div className='relative w-full max-h-[70vh] lg:max-h-[100vh] flex flex-col justify-center items-center'>
+            <div className='relative w-full flex flex-col justify-center items-center'>
                 <button
                     className="relative w-auto h-auto my-3 lg:my-10 flex justify-center items-center
                         border-2 border-white p-1 lg:p-2 lg:hover:border-blue-highlighted lg:duration-150 lg:cursor-pointer"
                     onClick={() => setIsShowingZoomedImage(true)}
                 >
-                    {imageSrc && <Image src={imageSrc} alt={alt ?? ""} width={width} height={height} className='min-w-[25vw] min-h-[25vh] w-auto h-full' />}
+                    {imageSrc && <Image src={imageSrc} alt={alt ?? ""} width={width} height={height} className='min-w-[25vw] min-h-[15vh] w-full h-full object-contain' />}
                 </button>
                 {alt && <p className='text-sm lg:text-xl italic font-thin text-center'>{alt}</p>}
             </div>
@@ -52,7 +52,7 @@ export default function SingleImage({
                         <MdOutlineClose className='text-5xl text-white lg:hover:text-blue-highlighted lg:duration-150 lg:cursor-pointer' />
                     </div>
                     <div className='relative w-3/4 h-3/4 lg:w-2/3 lg:h-2/3 flex flex-row justify-center items-center'>
-                        {imageSrc && <Image src={imageSrc} alt={alt ?? ""} width={width} height={height} className='object-contain' />}
+                        {imageSrc && <Image src={imageSrc} alt={alt ?? ""} width={width} height={height} className='w-full h-full object-contain' />}
                     </div>
                 </button>
             )}

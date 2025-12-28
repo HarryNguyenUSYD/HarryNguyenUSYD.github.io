@@ -23,7 +23,7 @@ export default function MdxTest({
             <PageWrapper>
                 <div className="w-full h-full p-10 mt-10">
                     <BlogHeader blog={mdxData} />
-                    <div className="w-full h-auto p-10 mt-5 bg-[#000000af] rounded-3xl">
+                    <div className="w-[50vw] h-auto p-10 mt-5 bg-[#000000af] rounded-3xl">
                         <TestMdx />
                     </div>
                 </div>

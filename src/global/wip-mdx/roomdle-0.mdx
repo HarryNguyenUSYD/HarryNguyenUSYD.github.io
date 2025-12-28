@@ -51,6 +51,34 @@ Here comes the hard part of deciding which framework I can use. When talking abo
 
 A solution for this issue is simple: browser-based games. The idea is to make a website that functionally acts like a game, and can be publicly hosted on a domain for practically no cost. In fact, <Redirect name="Wordle was developed" url="https://en.wikipedia.org/wiki/Wordle" /> just by using the simple web development stack of HTML + CSS + JavaScript, which also inspired many variations of the game made using similar tools (e.g. <Redirect name="LoLdle" url="https://loldle.net/" />, <Redirect name="Pokedle" url="https://pokedle.net/" />).
 
-For modern web development, a website is generally split into a front-end (the UI/UX users can see and interact with) and a back-end (the data storage, algorithms, and other code-based features). Choosing a tech stack would typically refer to picking a framework for each of these two parts, plus some extra tools for things like databases and authentication. Alternatively, one can also use a full-stack framework which often comes with everything they need, but also greatly limits their options and comes with large overhead cost.
+For modern web development, a website is generally split into a front-end (the UI/UX users can see and interact with) and a back-end (the data storage, algorithms, and other code-based features). Choosing a tech stack would typically refer to picking a framework for each of these two parts, plus some extra tools for things like databases and authentication. Alternatively, one can also use a full stack framework (like ASP.NET) which often comes with everything they need, but also greatly limits their options and comes with large overhead cost.
 
-Given the small scale of my project, I think it wouldn't make sense to use a full-stack framework
+Given the description of my project above, here's what (I think) I need:
+
+- Front-end: Most important, with heavy leaning into complex animations for activities such as drag-and-drop.
+- Back-end: Not as important, but required for puzzle generation and data storage connections.
+- Data Storage: Basic SQL is enough, does not need much storage space.
+- Security: Low priority, since we do not take user information except anonymous player count or high scores.
+- Hosting: Free is better, but I'd pay for a domain name if possible.
+
+Let's tackle this one by one.
+
+There is a wide range of front-end frameworks currently used: React, Angular, Vue, etc. Personally, I have had many experience using React, as well as other React-based frameworks such as Next.js or create-t3-app, but not much for the other two. Since I want to work with tool I'm familiar with (which would allow me to focus on explaining things better), I'll pick Next.js for this project.
+
+> Fun Fact: This website is made with Next.js!
+
+For back-end, I can actually get away with using JavaScript within Next.js for everything, without the need for Node.js servers. This is because the amount of data handling I plan to do is very minimal, and communication with data storage can be done directly in the front-end.
+
+Data storage can be handled by some free SQL database services such as Supabase or Neon. I'm picking Supabase because I have experience working with it (i.e. this website), but other minds may differ from my opinion.
+
+As I'm making a Next.js app, I can host for free on Vercel. If the project is well received however (and I do mean VERY well recieved), I might have to consider moving it elsewhere. For now, not a problem.
+
+In summary, I'm going to use Next.js for front/back-end, with Supabase for data storage. The project will be hosted on Vercel. In addition, I will also bring in a few packages for animations and styling (e.g. Tailwind, Framer Motion), the full list will be shown in future blogs.
+
+# Great! Let's Get Started!
+
+With all of my frameworks selected, I can start working on the project itself, starting from next week. I have created a public <Redirect name="GitHub repository" url="https://github.com/HarryNguyenUSYD/roomdle" /> and will be making changes to this project, as well as keeping weekly updates on this website.
+
+In addition, the repository contains a README file that has all the commit history and patch notes of this project. The messages format are taken from <Redirect name="here" url="https://www.conventionalcommits.org/en/v1.0.0/" />, so check it out if you want to learn how to make better commit messages.
+
+If you want to support my work, please follow me on LinkedIn, and check out my other series on this website. For now, thanks for reading!

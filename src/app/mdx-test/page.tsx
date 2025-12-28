@@ -6,18 +6,18 @@ import { Suspense, useEffect, useState } from "react";
 const DesktopView = dynamic(() => import('./components/DesktopView'));
 const MobileView = dynamic(() => import('./components/MobileView'));
 
-import TestMdx from "@/global/wip-mdx/cicd.mdx";
+import TestMdx from "@/global/wip-mdx/wordle-and-friends.mdx";
 
 export default function MdxTest() {
     const [isDesktop, setIsDesktop] = useState(true);
     const mdxData = {
         id: 0,
-        title: "Introduction to .NET - #2 - Getting Started",
+        title: "Wordle and the Rise of the Timeslike Genre",
         desc: "",
-        date: "01/01/2000",
+        date: "28/12/2025",
         src: "",
         url: "",
-        tags: ["Guide"],
+        tags: ["Sidequest"],
         like_count: 0,
         view_count: 0,
         share_count: 0,

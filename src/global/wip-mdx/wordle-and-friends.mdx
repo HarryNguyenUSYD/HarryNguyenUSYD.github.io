@@ -1,0 +1,236 @@
+import Redirect from "@/global/mdx/Redirect/Redirect";
+import SingleImage from "@/global/mdx/SingleImage/SingleImage";
+import References from "@/global/mdx/References/References";
+
+# A Notification Caught My Interest
+
+Over the past few months, fellow LinkedIn-enjoyers may have noticed the increasing popularity of in-app puzzle games, often in the form of notifications like these:
+
+<SingleImage
+    url="blogs/wordle-and-friends"
+    src="linkedin-notif.png"
+    width="716"
+    height="140"
+    alt="A notification for Zip I got on LinkedIn, with the person's name censored" />
+
+Zip (as seen in the screenshot) is just one of the many games hosted in LinkedIn's "Puzzle Games" section. In fact, at the time of writing, there are currently six: Zip, Mini Sudoku, Tango, Queens, Pinpoint, and Crossclimb. While each of these games are fundamentally different in design, they all share one common trait: easy-to-play daily puzzles designed for casual players.
+
+As a game enthusiast myself, I had to check these out, which included playing some of these for a few days and reading a lot of online tutorials. Deeper in the rabbit hole, however, I was surprised to see how massive this game genre really is. And since I am working on a puzzle game myself (check out <Redirect name="my other series" url="/blogs/roomdle-0" />!), I figured this would be a great opportunity to do some proper research and find out how these types of games came to be.
+
+So in this first episode of **Sidequest**, I will tell you a story about:
+
+- how Wordle and other daily puzzle games started;
+- how daily puzzle games can be their own genres;
+- what makes these genres of games so popular;
+- and how this genre might develop further in the future.
+
+Without further ado, let's meet our main protagonist: The New York Times's Wordle.
+
+# Have You Heard The Word(le)?
+
+## It Started Over A Decade Ago
+
+Our journey starts in early 2013, when a Welsh software engineer named Josh Wardle started developing an early prototype of a simple web-based word game. He initially called it "Mr. Bugs' Wordy Nugz", and it was a small project for him and his partner, Palak Shah. The game took heavy inspiration from the board game Mastermind, where a player (the codemaker) designs a secret 4-colour combination of pegs, and the other player (the codebreaker) has to guess that correct combination. By the end of 2014, the prototype was finished, but the couple lost interest in it and set it aside. When COVID-19 struck in early 2020, the couple came back to the project, with passion reignited by The New York Times (TNYT) daily puzzles at the time. By 2021, the first public version of the game was published, taking the name "Wordle" as a pun on the author's last name.
+
+<SingleImage
+    url="blogs/wordle-and-friends"
+    src="mastermind.jpg"
+    width="600"
+    height="637"
+    alt="A sample game of Mastermind. Source: User:ZeroOne on Wikipedia" />
+
+Wordle's gameplay is extremely simple. In every game, the player is given six attempts to guess the 5-letter word of the day. Incorrect attempts will highlight the individual characters: gray meaning the letter is unused, yellow means the letter is used in a different position, and green means the letter is correctly placed. The player's goal is to guess the solution using as few attempts as possible, and the game is lost when all six attempts are used incorrectly. Both the solution and every guess must be a valid English 5-letter word in the game's dictionary.
+
+> Fun Fact: Originally, Wordle was notably more difficult as it included all 13,000 five-letter words in the English language. This was later reduced to roughly 2,000 words based on Shah's familiarity with them.
+
+The game was initially shared among the couple's family and friends, and quickly gained social media attention by October 2021. Later on, Wardle learnt about an emoji-styled system for displaying results, which he immediately implemented. This led to the game becoming trending on Twitter (now X) by December of that year. By January 2022, the game had reached over 300,000 active players, and continues to grow to this day. On January 31, 2022, the New York Times Company accquired the game from Wardle for an undisclosed price. Nowadays, anyone can play Wordle for free on <Redirect name="TNYT's website" url="https://www.nytimes.com/games/wordle/index.html" />, with one puzzle available every day.
+
+<SingleImage
+    url="blogs/wordle-and-friends"
+    src="wordle.png"
+    width="457"
+    height="703"
+    alt="The 25/12/2025 solution of Wordle. Gameplay by me." />
+
+## One Of Many
+
+With Wordle's rising popularity, variants of the game started to appear all across the internet. Some of these versions (such as <Redirect name="Wordle Unlimited" url="https://wordleunlimited.org/" />) aimed to lift the one-puzzle-per-day limit by allowing repeated games, which promotes keeping a win-streak rather than solving quickly. Other versions try to expand upon the game's core mechanics in various ways, including increasing the number of words per game (<Redirect name="Quordle" url="https://www.merriam-webster.com/games/quordle/" />), allowing variable word length (<Redirect name="WordGuessr" url="https://engaging-data.com/wordguessr-wordle/" />), or simply limiting the dictionary to only allow certain categories (<Redirect name="Sweardle" url="https://sweardle.com/" />). More interestingly, some people have created Wordle variants using characters and concepts from other video games. My personal favorite is <Redirect name="LoLdle" url="https://loldle.net/" />, which uses League of Legends champions to create daily Wordle-like puzzles, and is actually well-received by the game's community, including streamers.
+
+<SingleImage
+    url="blogs/wordle-and-friends"
+    src="loldle.png"
+    width="1920"
+    height="1080"
+    alt="Thebausffs, a League of Legends streamer, playing LoLdle on one of his streams." />
+
+There is no doubt that Wordle had an impactful effect on internet culture and social media, capturing the attention of gamers and non-gamers alike. With more and more people playing Wordle every day, it became increasingly clear that one puzzle a day is not enough, and people started looking for other similar daily puzzle games. This brings us back to TNYT...
+
+Wordle is not the only game hosted on the <Redirect name="TNYT website" url="https://www.nytimes.com/crosswords" />. As mentioned earlier, Wordle's daily puzzle design was based on other games on the website at the time, specifically Spelling Bee and the daily Crossword puzzle. Both of these games are still available, along with Wordle and eight other puzzle games at the time of writing. Some of the most popular ones, except for the aforementioned, are:
+
+- <Redirect name="Connections" url="https://www.nytimes.com/games/connections" />: Given 16 different words, the player must group them into four groups of four based on their common topics.
+- <Redirect name="Sudoku" url="https://www.nytimes.com/games/sudoku" />: Fill numbers into a 9-by-9 grid such that all numbers in the same row, column, or set are unique.
+- <Redirect name="Pips" url="https://www.nytimes.com/games/pips" />: Given a set of dominoes, fill in the given slots such that the conditions are fulfilled.
+
+Much like Wordle or the games on LinkedIn, each of these games only has one puzzle per day, or one puzzle for each difficulty if the game has difficulty options. Individually, there is not much gameplay value, since a frequent player may only take around 10-20 minutes per day to complete each puzzle. As a collection, however, TNYT's games can provide 2-3 hours of daily gameplay, requiring relatively low cost to access (free for some games, or paid subscription for either 2 USD/4 weeks or 6 USD/year), with minimal effort to start a game (from the newsletter's website or <Redirect name="standalone app" url="https://play.google.com/store/apps/details?id=com.nytimes.crossword&hl=en" />), and tons of free online guides and tutorials.
+
+But more important than the games are the communities built around them. Reddit is one of the many go-to places when it comes to daily puzzles, with dedicated subreddits for puzzles in general (<Redirect name="r/puzzles" url="https://www.reddit.com/r/puzzles/" />) or each game individually (e.g. <Redirect name="r/wordle" url="https://www.reddit.com/r/wordle/" />, <Redirect name="r/sudoku" url="https://www.reddit.com/r/sudoku/" />). For more tech-familiar players, the <Redirect name="Puzzling Stack Exchange platform" url="https://puzzling.stackexchange.com/" /> is very active for puzzle-based questions and answers. Wordle has also occasionally sparked massive online discussions, such as a video by mathematics YouTuber 3Blue1Brown about <Redirect name="solving Wordle using Information Theory" url="https://www.youtube.com/watch?v=v68zYyaEmEA" />, or many posts based on the difficult Wordle puzzle on 19/12/2025:
+
+<SingleImage
+    url="blogs/wordle-and-friends"
+    src="myrrh.png"
+    width="864"
+    height="917"
+    alt="One popular posts on X about 19 December's solution (it was MYRRH)" />
+
+# Wordlelike and Timeslike
+
+From the effects of Wordle on the casual gaming landscape, and with the variety of games that have sprouted from it, I personally think it would be fair to group Wordle and other Wordle-based games into their own genre. I call this Wordlelike, similar to how Roguelike is the genre of games similar to Rogue, or Soulslike being the genre of games similar to Dark Souls. Based on some observations, a Wordlelike game would have the following characteristics:
+
+1. The solution and possible guesses belong in some form of collection (e.g. the 5-letter English dictionary for Wordle).
+2. The player must guess the hidden solution without any starting hint or clue.
+3. All possible solutions must have the same number of attributes (e.g. all words in Wordle have 5 characters, all champions in LoLdle have 7 different attributes).
+4. Each possible solution must be distinct to one another by some attributes categorically (e.g. the 26-letter alphabet can be seen as categories for each character position).
+5. Each invalid guess will hint the player toward the solution by colour highlighting (e.g. gray, yellow, and green in Wordle) or some other visual guides (e.g. up and down arrows for "Release Year" in LoLdle).
+6. (Optional) The game only allow one puzzle a day.
+
+That was a lengthy explanation, but the core idea is that the solution and possible guesses belong in a collection, and every wrong guess will guide the player towards the correct solution by eliminating possible guesses from that collection. This way, the player has to be strategic about which guesses can be made to potentially remove the greatest number of incorrect items. This is the core mechanic of the Wordlelike genre.
+
+But what about games like Connections, Pips or other TNYT games? Other than the fact that they are all puzzle games and only allow one puzzle daily, they have no other similarity in gameplay, visual, or design. Yet, it is clear that they have inspired other platforms and developers to release their own daily puzzle games, and many Wordlelike games have inherited this feature from TNYT games as well (e.g. LoLdle). A different genre can be made for these types of games, taking the name of TNYT themselves: Timeslike. A game can be considered to be in the Timeslike genre if they meet the following requirements:
+
+1. It is a puzzle game.
+2. Players can only play one puzzle a day.
+
+That's it. These types of games are designed to make players interact with the platform they are hosted in as much as possible on a daily basis. By spending around 10-20 minutes on the platform per day, you are much more likely to spend more time elsewhere on the website. These games are the focus of today's story.
+
+# But What Makes These Games So Attractive...
+
+## ...To Players?
+
+Daily puzzles have been a thing long before the advent of TNYT, even outdating the internet itself. The first recorded crossword puzzle was printed in the New York World newspaper in 21/12/1913 by British journalist and editor Arthur Wynne. The puzzle was an instant hit, and quickly became a weekly feature in the paper, which was later picked up by other news outlets at the time. In 11/11/1950, TNYT began publishing daily crossword puzzles, a business they have kept going to this today.
+
+> Fun Fact: At the time of crossword's rising popularity, TNYT initially refused to publish the game, stating that it was “a primitive sort of mental exercise” and a “sinful waste”. It was only after the Pearl Harbor bombing that the TNYT editors welcomed the game as a distraction to the grim wartime news.
+
+One of the main attracting points of puzzles is that they are easy to learn, yet hard to master. An easy puzzle can be solved by anyone regardless of their previous experience, as long as they can understand the rules. Many popular puzzle games, in fact, have very easy rules, meaning practically anyone can participate. However, as the difficulty of the puzzle rises, more and more knowledge and pattern recognition skill are required, which makes the games more entertaining. In game design terms, we can say puzzles have a low skill floor, but a high skill ceiling.
+
+Timeslike games take this concept a step further. Provided the puzzles are well designed, their difficulty should not fluctuate much over time, meaning someone who has solved yesterday's puzzle can probably also solve today's puzzle, and tomorrow's. This shifts the players' mindset from "try to solve a puzzle" to "try to maintain a win streak", an engagement tactic that has been shown to be very effective.
+
+Traditionally, a "win streak" refers to an unbroken series of victories, usually three or more consecutive successes in sports, games, or competitions. In daily puzzle games context, it is referring to the number of consecutive puzzles solved, with a minimum of one per day. Maintaining a win streak has been shown to increase user enjoyment in various video games, since it can be seen as a proof of commitment and determination. And since each puzzle's difficulty can be carefully designed to be fairly easy, winning consecutive games can be possible and appealing for casual players.
+
+## ...To Producers?
+
+With the increasing popularity of social media, practically every company has been coming up with ways to make users spend more time on their platforms. And with that, Timeslike games, or other methods of streak maintenance, have become an easy solution. 
+
+In fact, <Redirect name="Duolingo" url="https://www.duolingo.com/" />, a language teaching app, has been making use of this concept as their core business model, using a wide range of notifications, emails, and social media posts to constantly remind you to get back on the app every day. Each lesson on Duolingo is designed to be easy, paired with a lives system that regenerates over time to punish mistakes, yet relaxed enough for casual learners. While it can be debatable whether this actually helps with learning a new language, there is one thing it clearly boosts: engagement.
+
+<SingleImage
+    url="blogs/wordle-and-friends"
+    src="duolingo.jpg"
+    width="922"
+    height="1817"
+    alt="A Duolingo user (me :D) reaching the 700-day streak." />
+
+The numbers don't lie. According to <Redirect name="Reuters" url="https://www.reuters.com/business/media-telecom/new-york-times-misses-quarterly-revenue-estimates-2022-05-04/" />, in the first quarter following Wordle's release, TNYT had...
+
+> "...387,000 digital subscribers in the first quarter, up from 301,000 a year earlier"
+
+<Redirect name="Data from WordsRated" url="https://wordsrated.com/impact-of-wordle-on-nyt/" /> states that:
+
+> "In 2021, prior to the release of Wordle, there were 6.80 million TNYT digital subscribers in total [...]. Since then, digital subscribers have increased by 42.65% to reach 9.70 million [...]. As of the first quarter of 2024, 82.69% of NYT organic website traffic visited the Wordle page."
+
+On LinkedIn, where daily games were a recent addition from May 2024, users' play rate has been notably high. According to Nicholas Pezarro, LinkedIn’s Senior Product Manager of Games: 84% of players return the next day after first playing the game, while 80% come back within a week. Duolingo has also had a massive success utilising the daily streak business model, with over 50 million daily users according to <Redirect name="self-published statistics" url="https://investors.duolingo.com/news-releases/news-release-details/duolingo-surpasses-50-million-daily-active-users-grows-dau-36" />. All of these figures show that Timeslike games can be extremely valuable in attracting users and keeping them engaged with the platform.
+
+# How Will These Genres Evolve In The Future?
+
+## Wordlelike: Unlikely to Stay Popular
+
+Wordlelike games are in no way boring or bland. These games require a significant amount of strategy, calculation, and game knowledge to solve consistently. Given that the genre's fomulation can be applied to various topics and subjects (there already exists <Redirect name="Wordle for Pokémon" url="https://pokedle.net/" /> and <Redirect name="DOTA 2" url="https://dotadle.net/" />), the limit of this genre is far from being reached.
+
+However, games of this genre, if they were to strictly stick to their definitions, face two massive problems: lack of new content, and algorithmic solvability.
+
+The first one is sort of obvious: the list of possible puzzles cannot be easily increased. For instance, Wordle uses the vocabulary for 5-letter English words. It is already uncommon for a new English word to come into circulation (that is not a slang, meme, or trend), and even rarer for specifically 5-letter words to be added. This issue is shared across all text-based Wordlelikes, including the ones for 7-letter words, 4 words at a time, or limited vocabulary ones. Even for games like LoLdle for instance, the number of champions in League of Legends only increases by one every few months. This means the games can quickly become stale, and the lack of new content can make the daily user count drop.
+
+The second one is a problem that many puzzle games are also facing: the fact that they can be algorithmically solved. In other words, there is always a best possible strategy (or algorithm) that can always be followed step-by-step to solve the puzzle optimally. Now, whether such a strategy has been found is a massive topic for discussion, but attempts have been made to get us closer to it (see the 3Blue1Brown video linked above). Once the strategy is found, any person, provided they follow it well, can complete the game without much challenge or practice, much like any person can copy moves made by a Chess bot. This can make the game boring for ones willing to spend time learning the technique.
+
+## Timeslike: Powerful Engagement Tools
+
+One of the key strengths of Timeslike games is their daily split. In contrast to other puzzle games which let players solve many puzzles in one session, Timeslike intentionally split the puzzles into a one-per-day system. This forces players to open the app every day to continue playing, greatly increasing the chance of them spending more time elsewhere on the same platform. Paired with notifications and win streak reminders, this becomes an easy method for social media companies to attract daily users with minimal cost.
+
+Another key strength of Timeslikes is that they are not bounded to any specific puzzle game. Timeslikes can be developed from any puzzle game with (1) a clear separation of levels; and (2) a consistent difficulty (generally easy) across levels. This means puzzle games such as Sudoku, Wordle, and even modern ones like <Redirect name="Cut the Rope" url="https://en.wikipedia.org/wiki/Cut_the_Rope" /> can be redesigned into Timeslike games. This broadens the design space greatly, and even opens doors to older games to be "revived" for a new, younger audience.
+
+However, these games face the same drawback of most attendance systems: the reward may not be as tempting as most people would expect. Daily login systems have been a common video game feature for years, with many mobile games such as <Redirect name="Candy Crush" url="https://candycrush.zendesk.com/hc/en-us/articles/4402467400849--Daily-Treat-Machine#%20" /> or <Redirect name="King of Thieves" url="https://king-of-thieves.fandom.com/wiki/Daily_Rewards" /> utilising them to varying levels of effectiveness. However, it is ultimately the core gameplay of these games that dictates whether or not a user is likely to return, and without proper planning, many companies run the risk of spending vast resources for an underwhelming feature.
+
+<SingleImage
+    url="blogs/wordle-and-friends"
+    src="candy-crush.gif"
+    width="648"
+    height="1152"
+    alt="The Daily Login Rewards of Candy Crush. Source: Candy Crush's Website" />
+
+# And That's It Folks!
+
+With all that being said, thank you everyone for reading until the end. If you have learnt anything useful, or want to explore some of my other contents, please check out my website (that you are currently on), and follow my LinkedIn account to know when the next upload is live. If you have any suggestion for future topics, or have any questions/concerns, please feel free to reach out to me via LinkedIn or email (nguyenhoangquan2122@gmail.com).
+
+That is all for now. Thanks for reading!
+
+<References
+    ref={[
+        {
+            name: "Wordle Wikipedia",
+            author: "Wikipedia",
+            date: "18 December 2025",
+            url: "https://en.wikipedia.org/wiki/Wordle"
+        },
+        {
+            name: "Mastermind Wikipedia",
+            author: "Wikipedia",
+            date: "16 December 2025",
+            url: "https://en.wikipedia.org/wiki/Mastermind_(board_game)"
+        },
+        {
+            name: "The New York Times Games Website",
+            author: "The New York Times",
+            url: "https://www.nytimes.com/crosswords"
+        },
+        {
+            name: "A History Of Newspaper Puzzles",
+            author: "Charles Apple",
+            date: "5 February 2020",
+            url: "https://www.spokesman.com/stories/2020/feb/05/history-newspaper-puzzles/"
+        },
+        {
+            name: "Crossword Puzzle Trivia: Surprising Facts and History",
+            author: "PBS",
+            url: "https://www.pbs.org/wgbh/masterpiece/specialfeatures/crossword-puzzle-trivia-surprising-facts-and-history/"
+        },
+        {
+            name: "The Psychology of Hot Streak Game Design: How to Keep Players Coming Back Every Day Without Shame",
+            author: "Medium",
+            date: "14 October 2025",
+            url: "https://uxmag.medium.com/the-psychology-of-hot-streak-game-design-how-to-keep-players-coming-back-every-day-without-shame-3dde153f239c"
+        },
+        {
+            name: "New York Times adds more subscribers on Wordle push; weak ad sales weigh on revenue",
+            author: "Reuters",
+            date: "4 May 2022",
+            url: "https://www.reuters.com/business/media-telecom/new-york-times-misses-quarterly-revenue-estimates-2022-05-04/"
+        },
+        {
+            name: "Impact Of Wordle On The New York Times",
+            author: "Dean Talbot from WordsRated",
+            date: "26 April 2024",
+            url: "https://wordsrated.com/impact-of-wordle-on-nyt/"
+        },
+        {
+            name: "LinkedIn Bets On Games To Build Professional Connections, Daily Habits",
+            author: "Dragomir Stojkov from Net Influencer",
+            date: "22 December 2025",
+            url: "https://www.netinfluencer.com/linkedin-bets-on-games-to-build-professional-connections-daily-habits/"
+        },
+        {
+            name: "Duolingo Surpasses 50 Million Daily Active Users, Grows DAU 36% and Revenue 41% in Third Quarter 2025 Year over Year",
+            author: "Duolingo",
+            date: "5 November 2025",
+            url: "https://investors.duolingo.com/news-releases/news-release-details/duolingo-surpasses-50-million-daily-active-users-grows-dau-36"
+        },
+    ]}
+/>
