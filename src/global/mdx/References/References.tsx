@@ -27,7 +27,7 @@ export default function References({
                             rel="noopener noreferrer"
                         >
                             <span>{name + (author !== undefined ? ", " + author : "") + (date !== undefined ? ", " + date : "")}</span>
-                            <LuSquareArrowOutUpRight className="text-xs lg:text-sm" />
+                            <LuSquareArrowOutUpRight className="text-xs lg:text-sm flex-none" />
                         </a>
                     </div>
                 ))}
